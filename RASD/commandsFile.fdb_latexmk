@@ -1,0 +1,17 @@
+# Fdb version 4
+["pdflatex"] 1762532883.53354 "commandsFile.tex" "commandsFile.pdf" "commandsFile" 1762532883.73226 2
+  "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
+  "/usr/local/texlive/2025/texmf-dist/tex/latex/tools/xspace.sty" 1717359999 4545 e3f4de576c914e2000f07f69a891c071 ""
+  "/usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf" 1739380943 42148 61becc7c670cd061bb319c643c27fdd4 ""
+  "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1762526122 3345738 506ccc6817ccbfd172dccfd6dd6cfe36 ""
+  "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
+  "commandsFile.aux" 1762532804.215 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "commandsFile.tex" 1762532883.36239 3384 2c2478fa1aa972bf96a0396aa533e736 ""
+  "util/abbrev.tex" 1493209496 463 6eaaf442846fbee20367b2cd35d459f2 ""
+  "util/highlight.tex" 1493209496 2200 bdafbaf852cc33096d9d2e1cc54b31fe ""
+  (generated)
+  "commandsFile.aux"
+  "commandsFile.log"
+  "commandsFile.pdf"
+  (rewritten before read)
