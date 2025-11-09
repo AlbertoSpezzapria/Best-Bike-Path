@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1762699475.80102 "main.tex" "main.pdf" "main" 1762699477.47953 0
+["pdflatex"] 1762699566.96762 "main.tex" "main.pdf" "main" 1762699568.56237 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -208,16 +208,16 @@
   "Files/2_overview.tex" 1507283818 940 cb88731273633d8c30d09bd77eceee35 ""
   "Files/3_requirements.tex" 1507281541 82 bd05dea960a5cb0ed29bbc7d6a2e40f5 ""
   "Files/4_alloy.tex" 1507281571 82 bd05dea960a5cb0ed29bbc7d6a2e40f5 ""
-  "Files/5_effort.tex" 1762699475.56688 417 482b037d5dfb57b92691d22fa92b8847 ""
+  "Files/5_effort.tex" 1762699565.06497 436 7a169dc988d8ed2d767ec9c5baf5a772 ""
   "Images/11.png" 1493209495 1157451 26b6357b7f1ab2cbb433ee3a4652b447 ""
   "Images/PolimiLogo.png" 1507278576 9009 7e2f788c721025ccfc9d873928f74371 ""
   "commandsFile.tex" 1762698696.08446 3448 504373ab4ed24e5847eb0d4a72ec7c5c ""
-  "main.aux" 1762699477.41125 3685 c72e94b3b262ad2c08cb7a8925d5ab9b "pdflatex"
-  "main.lof" 1762699477.41226 318 0fa98db76b5755ad0682fe0aca48c68f "pdflatex"
-  "main.lot" 1762699477.41229 227 c4073910bb6a2a53c09bcc33a7cfeb47 "pdflatex"
-  "main.out" 1762699477.412 2317 9f83ff378d59e226ca901b611159d144 "pdflatex"
+  "main.aux" 1762699568.49435 3723 bf1adc912eea785438a27aac0e291860 "pdflatex"
+  "main.lof" 1762699568.49547 318 0fa98db76b5755ad0682fe0aca48c68f "pdflatex"
+  "main.lot" 1762699568.49551 246 f617f9fd5d22a879197b6b08dca023c8 "pdflatex"
+  "main.out" 1762699568.49515 2317 9f83ff378d59e226ca901b611159d144 "pdflatex"
   "main.tex" 1762698366.19271 2984 5533329a29d6ebf27f853ad5d7fff982 ""
-  "main.toc" 1762699477.41223 1270 e910cfe718510f784c64fa441fad3a13 "pdflatex"
+  "main.toc" 1762699568.49543 1270 e910cfe718510f784c64fa441fad3a13 "pdflatex"
   "util/abbrev.tex" 1493209496 463 6eaaf442846fbee20367b2cd35d459f2 ""
   "util/highlight.tex" 1493209496 2200 bdafbaf852cc33096d9d2e1cc54b31fe ""
   (generated)
