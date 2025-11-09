@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  9 NOV 2025 15:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  9 NOV 2025 15:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -805,7 +805,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [7]
 Chapter 2.
 (./Files/2_overview.tex
-<Images/11.png, id=138, 3156.54282pt x 1885.79532pt>
+<Images/11.png, id=140, 3156.54282pt x 1885.79532pt>
 File: Images/11.png Graphic file (type png)
 <use Images/11.png>
 Package pdftex.def Info: Images/11.png  used on input line 5.
@@ -878,18 +878,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 9F83FF378D59E226CA901B611159D144;2317.
  ) 
 Here is how much of TeX's memory you used:
- 25364 strings out of 473190
- 471994 string characters out of 5715800
- 843186 words of memory out of 5000000
- 48070 multiletter control sequences out of 15000+600000
+ 25369 strings out of 473190
+ 472097 string characters out of 5715800
+ 843266 words of memory out of 5000000
+ 48074 multiletter control sequences out of 15000+600000
  598547 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,98p,470b,618s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (13 pages, 807082 bytes).
+Output written on main.pdf (13 pages, 807648 bytes).
 PDF statistics:
- 204 PDF objects out of 1000 (max. 8388607)
- 175 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
+ 206 PDF objects out of 1000 (max. 8388607)
+ 177 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
  159 words of extra memory for PDF output out of 10000 (max. 10000000)
 
