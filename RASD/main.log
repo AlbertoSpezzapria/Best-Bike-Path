@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 18:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  13 NOV 2025 11:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -624,34 +624,40 @@ File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (c:/texlive/2025/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathmorphing.code.tex))
 \highlight@previous=\dimen313
 \highlight@current=\dimen314
-) (./util/abbrev.tex))
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 4.
+) (./util/abbrev.tex)) (c:/texlive/2025/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip112
+\multirow@cntb=\count347
+\multirow@dima=\skip113
+\bigstrutjot=\dimen315
+)
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 5.
  (c:/texlive/2025/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 ) (c:/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count347
+\l__color_backend_stack_int=\count348
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -689,16 +695,16 @@ LaTeX Font Info:    ... okay on input line 4.
 
 (c:/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count348
-\scratchdimen=\dimen315
+\scratchcounter=\count349
+\scratchdimen=\dimen316
 \scratchbox=\box81
-\nofMPsegments=\count349
-\nofMParguments=\count350
+\nofMPsegments=\count350
+\nofMParguments=\count351
 \everyMPshowfont=\toks51
-\MPscratchCnt=\count351
-\MPscratchDim=\dimen316
-\MPnumerator=\count352
-\makeMPintoPDFobject=\count353
+\MPscratchCnt=\count352
+\MPscratchDim=\dimen317
+\MPnumerator=\count353
+\makeMPintoPDFobject=\count354
 \everyMPtoPDFconversion=\toks52
 ) (c:/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -709,29 +715,29 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 4.
+Package hyperref Info: Link coloring OFF on input line 5.
  (./main.out) (./main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-LaTeX Font Info:    Trying to load font information for U+wasy on input line 15.
+LaTeX Font Info:    Trying to load font information for U+wasy on input line 16.
  (c:/texlive/2025/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 16.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 16.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 File: Images/PolimiLogo.png Graphic file (type png)
 <use Images/PolimiLogo.png>
-Package pdftex.def Info: Images/PolimiLogo.png  used on input line 18.
+Package pdftex.def Info: Images/PolimiLogo.png  used on input line 19.
 (pdftex.def)             Requested size: 202.75699pt x 62.7342pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 19--20
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
  []
 
@@ -783,27 +789,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [7]
 Chapter 2.
-(./Files/2_overview.tex
-<Images/11.png, id=140, 3156.54282pt x 1885.79532pt>
-File: Images/11.png Graphic file (type png)
-<use Images/11.png>
-Package pdftex.def Info: Images/11.png  used on input line 5.
-(pdftex.def)             Requested size: 688.5567pt x 411.33694pt.
-File: Images/11.png Graphic file (type png)
-<use Images/11.png>
-Package pdftex.def Info: Images/11.png  used on input line 11.
-(pdftex.def)             Requested size: 455.24411pt x 271.95142pt.
+(./Files/2_overview.tex (./Files/2_overview/1_product-overview.tex [8
 
 
-LaTeX Warning: Citation `DAM' on page 8 undefined on input line 15.
-
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 15.
-(c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) [8
-
-
-{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
+]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -811,7 +800,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9 <./Images/11.png>]
+[9]) (./Files/2_overview/2_product-functions.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -819,19 +808,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10]
+[10]))
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[11]
 Chapter 3.
-(./Files/3_requirements.tex) [11
+(./Files/3_requirements.tex) [12
 
 
 ]
 Chapter 4.
-(./Files/4_alloy.tex) [12
+(./Files/4_alloy.tex) [13
 
 
 ]
 Chapter 5.
-(./Files/5_effort.tex) [13
+(./Files/5_effort.tex) [14
 
 
 ] (./main.aux)
@@ -839,26 +836,22 @@ Chapter 5.
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9F83FF378D59E226CA901B611159D144;2317.
+(rerunfilecheck)             Checksum: 00B900342CE5B3A73751227FD8C8AFF8;2807.
  ) 
 Here is how much of TeX's memory you used:
- 25321 strings out of 467538
- 468002 string characters out of 5423724
- 857575 words of memory out of 5000000
- 53682 multiletter control sequences out of 15000+600000
- 667431 words of font info for 90 fonts, out of 8000000 for 9000
+ 25382 strings out of 467538
+ 468891 string characters out of 5423724
+ 862664 words of memory out of 5000000
+ 53694 multiletter control sequences out of 15000+600000
+ 667112 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,100p,578b,625s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (13 pages, 808769 bytes).
+ 94i,20n,100p,873b,688s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (14 pages, 75309 bytes).
 PDF statistics:
- 206 PDF objects out of 1000 (max. 8388607)
- 177 compressed objects within 2 object streams
- 41 named destinations out of 1000 (max. 500000)
- 159 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 266 PDF objects out of 1000 (max. 8388607)
+ 239 compressed objects within 3 object streams
+ 85 named destinations out of 1000 (max. 500000)
+ 186 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,38 @@
+\subsection*{Sign-Up and Login}
+\subsubsection*{Sign-Up}
+The system lets the users register in order to manage and record data associated with each of them. When the user accesses the sign-up page for the first time, he’s offered the option to log-in with one of their existing accounts through an OAuth service. This way, his BBP account is linked to another account that he owns, making it easier to remember and access for him. 
+The system also gives the user the possibility of entering his email and a new password and to create an account directly inside BBP. In that case, BBP checks that the password is complex enough and that no other account is associated with the same email. If the checks pass, the system stores the information in the DB and grants the user access to the platform.
+\subsubsection*{Login}
+If the user already has a BBP account or has previously linked their BBP account to one of the other existing accounts that he has through OAuth, the system grants them access the page. If the user access the page through OAuth, a button redirects them to the external account provider’s website, which handles the login process and sends the user back only when he completes the login procedure. If, on the other hand, the user registered directly on BBP, the system first checks whether an account associated with the provided email, and then verifies that the password matches. If thats the case the user is redirected to the website’s homepage.
+\subsubsection*{Accessing BBP without accounts}
+The user can also access BBP without logging in. In this case, the functionalities that are available are more limited. The system lets the user browse between public paths, but all the recording features and the private paths needs the login to work
+
+\subsection*{Activity Recording}
+
+\subsection*{Entering route condition information}
+Each route, whether derived from an automatically recorded activity or manually created by the user, is characterized by a set of additional information describing its condition and rideability.
+In particular, this information concerns:
+\begin{itemize}
+    \item{The condition of the roads that make up the route;}
+    \item{The presence of obstacles, such as potholes, surface damage, or dangerous sections.}
+\end{itemize}
+Additional information is always managed through the same interface, but with different behavior depending on how the route was created:
+\begin{itemize}
+    \item{\textbf{Manual mode} During route creation, the user directly enters information about the condition of the roads and any obstacles.}
+    \item{\textbf{Automatic mode} The system acquires data via the device’s sensors (GPS, accelerometer, gyroscope); therefore, the user finds this information already filled in. Each piece of information must be confirmed.}
+\end{itemize}
+Regardless of the mode, the user can always modify or update the additional information before and after publication, thus contributing to improving the quality of shared data.
+
+\subsection*{Paths publication}
+Registered users can choose to publish a route, making it visible and accessible to other users within the platform.
+In particular, publication adds the route to \textit{BBP}’s public archive, making it available to all other users, including non-registered ones, through the route search and browsing functionality. Only published routes can be viewed by others and contribute to enhancing the quality of shared community data.
+Publication always concerns the complete route, including all additional information such as road conditions and the presence of any obstacles.
+
+\subsection*{Merging information from different users}
+When multiple users provide information regarding the same route or overlapping sections, the BBP system automatically merges the received data concerning road conditions and the presence of obstacles. The merging process takes into account two main factors:
+\begin{itemize}
+    \item{The freshness of the information, meaning how recently it was provided;}
+    \item {The number of confirmations received from different users for the same condition or status.}
+\end{itemize}
+In the case of conflicting reports, the system applies a weighted evaluation mechanism that prioritizes the most recent and most frequently confirmed information.
+
