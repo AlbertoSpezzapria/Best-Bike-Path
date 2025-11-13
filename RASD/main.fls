@@ -434,6 +434,9 @@ INPUT Files/2_overview/1_product-overview.tex
 INPUT ./Files/2_overview/2_product-functions.tex
 INPUT ./Files/2_overview/2_product-functions.tex
 INPUT Files/2_overview/2_product-functions.tex
+INPUT ./Files/2_overview/3_user-characteristics.tex
+INPUT ./Files/2_overview/3_user-characteristics.tex
+INPUT Files/2_overview/3_user-characteristics.tex
 INPUT ./Files/3_requirements.tex
 INPUT ./Files/3_requirements.tex
 INPUT ./Files/3_requirements.tex
