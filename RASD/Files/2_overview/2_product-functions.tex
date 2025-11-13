@@ -9,6 +9,25 @@ The user can also access BBP without logging in. In this case, the functionaliti
 
 \subsection*{Activity Recording}
 
+\subsection*{Manual Creation of a Path}
+In addition to the automatic creation of bike paths, registered users can also create paths manually by directly entering the required data.
+During this process, the platform asks the user to specify the name of the path, the streets that compose it, the condition of each segment, and the possible presence of obstacles or issues.
+Once the information has been confirmed, the system stores the data in its database and allows the user to decide whether to make the path publishable, meaning visible to the entire community.
+If the path is not made publishable, it remains visible only to the user who created it, within their personal profile.
+
+\subsection*{Path Search from Origin to Destination}
+Any user, including unregistered ones, can search for a bike path between two points using the search algorithm provided by the platform.
+The system queries its database of publishable paths and identifies those that connect the specified origin and destination points.
+The results are displayed on an interactive map and sorted in descending order based on a path score automatically computed by the platform.
+The user can select one of the displayed paths to view detailed information, such as the total distance, estimated travel time, and overall path conditions.
+\subsubsection*{Path Ranking}
+The score assigned to each path is determined by considering several factors:
+\begin{itemize}
+    \item Path condition, where better-maintained paths receive higher scores;
+    \item Freshness of information, favoring paths with more recent data;
+    \item Path effectiveness, meaning how efficiently the path connects the two selected points.
+\end{itemize}
+
 \subsection*{Entering route condition information}
 Each route, whether derived from an automatically recorded activity or manually created by the user, is characterized by a set of additional information describing its condition and rideability.
 In particular, this information concerns:

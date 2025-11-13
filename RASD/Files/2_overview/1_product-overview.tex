@@ -1,4 +1,46 @@
 \subsection{Scenarios}
+\subsubsection*{A user creates a path manually}
+\begin{enumerate}
+    \item The user logs into the platform using their credentials.
+    \item Once authenticated, the user accesses the “My Paths” section of their profile.
+    \item The user selects the “Add Path” option to start creating a new route.
+    \item The system opens a dedicated page for creating the path.
+    \item The user enters the required information, including:
+        \begin{itemize}
+            \item the name of the path,
+            \item the streets that compose the path,
+            \item the condition of each segment,
+            \item any obstacles or issues present along the route.
+        \end{itemize}
+    \item After completing the input, the user confirms the creation of the path.
+    \item The system saves the data and displays a confirmation message.
+    \item The system also offers the user the option to make the path public, so it can be shared with the community.
+    \item The newly created path is displayed in the “My Paths” section of the user’s profile.
+\end{enumerate}
+\subsubsection*{A user searches for a path}
+\begin{enumerate}
+    \item The user can choose to:
+        \begin{itemize}
+            \item log in with their account, or
+            \item use the platform without authentication.
+        \end{itemize}
+    \item From the home page, the user enters the starting point and the desired destination in the search bar.
+    \item The system receives the request and queries its database of published paths.
+    \item The system processes the available options and calculates a score for each path based on:
+        \begin{itemize}
+            \item the condition of the segments,
+            \item the freshness of the information,
+            \item the effectiveness of the route in connecting the selected points.
+        \end{itemize}
+    \item The system displays the results on the map, ordered in descending order of score.
+    \item The user reviews the results and can select a specific path to view more details.
+    \item The system displays detailed information for the selected path, such as:
+        \begin{itemize}
+            \item total distance,
+            \item estimated travel time,
+            \item overall condition of the route.
+        \end{itemize}
+\end{enumerate}
 \subsubsection*{User publishes a path}
 \begin{enumerate}
     \item The user accesses the BBP system and opens the “My Routes” section.
