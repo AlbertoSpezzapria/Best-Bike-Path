@@ -1,0 +1,15 @@
+\subsection{Assumptions}
+\subsection{Dependencies}
+    \begin{enumerate}[label=D\arabic*.]
+        \item \textbf{External weather service} The system relies on the availability and accuracy of GPS data from users' devices to record cycling activities and create paths.
+        \item \textbf{Mapping service} Offers geographic data and map layers used to visualize routes, match GPS tracks to road segments and retrieve details about paths, intersections, and terrains.
+        \item \textbf{Storage database} Stores all platform data, including user routes, additional information (road conditions, obstacles), user profiles and publication metadata. Ensures persistence, consistency, and efficient retrieval.
+        \item \textbf{Authentication services} Manages user identity verification, login processes and secure access to personal data and features.
+        \item \textbf{Icon service} Provides a library of graphical icons used across the interface for consistent and intuitive representation of road conditions, obstacles, route statuses, and other UI elements.
+    \end{enumerate}
+\subsection{Constraints}
+    \begin{enumerate}[label=C\arabic*.]
+        \item \textbf{Privacy regulations} The system must comply with relevant data protection laws and regulations (e.g., GDPR) to ensure user data privacy and security.
+        \item \textbf{Automatic recording accuracy limits} The automatic activity recording feature will operate within the technical accuracy limits of mobile device sensors (GPS, accelerometer, gyroscope). The system must account for possible measurement noise, positioning errors and sensor variability across devices.
+    \end{enumerate}
+
