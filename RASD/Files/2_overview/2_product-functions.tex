@@ -43,7 +43,7 @@ At the end of the activity, BBP generates a draft path containing:
 Since the automatically detected data may contain false positives, the user must review, confirm, or correct all generated information before it becomes publishable. After confirmation, the path and related annotations are stored and made available to the community.
 
 
-\subsection*{Meteorological Data Integration}
+\subsubsection*{Meteorological Data Integration}
 When available, BBP enriches recorded activities with meteorological information obtained from an external weather service. After an activity is completed, the system sends:
 \begin{itemize}
     \item the activity timestamps;
@@ -75,7 +75,7 @@ During this process, the platform asks the user to specify the name of the path,
 Once the information has been confirmed, the system stores the data in its database and allows the user to decide whether to make the path publishable, meaning visible to the entire community.
 If the path is not made publishable, it remains visible only to the user who created it, within their personal profile.
 
-\subsection*{Path Search from Origin to Destination}
+\subsection*{Path Search by Origin and Destination}
 Any user, including unregistered ones, can search for a bike path between two points using the search algorithm provided by the platform.
 The system queries its database of publishable paths and identifies those that connect the specified origin and destination points.
 The results are displayed on an interactive map and sorted in descending order based on a path score automatically computed by the platform.
