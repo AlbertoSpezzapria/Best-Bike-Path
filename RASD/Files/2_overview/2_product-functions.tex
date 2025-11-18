@@ -7,7 +7,67 @@ If the user already has a BBP account or has previously linked their BBP account
 \subsubsection*{Accessing BBP without accounts}
 The user can also access BBP without logging in. In this case, the functionalities that are available are more limited. The system lets the user browse between public paths, but all the recording features and the private paths needs the login to work
 
+
+
+
+
+
 \subsection*{Activity Recording}
+The system allows registered users to record their cycling activities. When the user starts the recording, BBP continuously acquires real-time data from the mobile device, including:
+\begin{itemize}
+    \item GPS coordinates used to compute distance, average speed, and elevation;
+    \item timestamps associated with all collected events;
+    \item accelerometer and gyroscope data to detect irregularities on the road surface;
+    \item potential stops inferred from speed variations.
+\end{itemize}
+
+During or after the trip, the system processes the collected data and generates a summary reporting distance, duration, average speed, and detected anomalies. If the user decides to save the activity, BBP stores it in the database and makes it available for personal statistics.
+
+\subsection*{Automatic Path Creation}
+
+When the user enables the automatic mode, BBP reconstructs the bike path followed during the activity. This includes:
+\begin{itemize}
+    \item continuous acquisition of GPS coordinates;
+    \item segmentation of the route based on street structure and direction changes;
+    \item detection of potholes, vibrations, or obstacles through accelerometer and gyroscope data;
+    \item estimation of the user's speed to determine whether they are biking.
+\end{itemize}
+
+At the end of the activity, BBP generates a draft path containing:
+\begin{itemize}
+    \item a map of the complete route;
+    \item a list of detected street segments;
+    \item automatically identified road conditions and anomalies.
+\end{itemize}
+
+Since the automatically detected data may contain false positives, the user must review, confirm, or correct all generated information before it becomes publishable. After confirmation, the path and related annotations are stored and made available to the community.
+
+
+\subsection*{Meteorological Data Integration}
+When available, BBP enriches recorded activities with meteorological information obtained from an external weather service. After an activity is completed, the system sends:
+\begin{itemize}
+    \item the activity timestamps;
+    \item the geographical coordinates of the route.
+\end{itemize}
+
+The external service returns weather conditions for the corresponding time and location, including:
+\begin{itemize}
+    \item temperature;
+    \item general weather conditions (e.g., sunny, rainy, cloudy);
+    \item wind speed and direction;
+    \item possible weather alerts.
+\end{itemize}
+
+BBP associates the retrieved meteorological data with the recorded activity before storing it. These details are shown in the activity summary and are available for statistical analysis.
+
+
+
+
+
+
+
+
+
 
 \subsection*{Manual Path Creation}
 In addition to the automatic creation of bike paths, registered users can also create paths manually by directly entering the required data.
