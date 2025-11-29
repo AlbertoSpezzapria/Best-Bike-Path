@@ -445,6 +445,9 @@ INPUT ./Files/3_requirements.tex
 INPUT ./Files/3_requirements.tex
 INPUT ./Files/3_requirements.tex
 INPUT Files/3_requirements.tex
+INPUT ./Files/3_requirements/2_functional_requirements.tex
+INPUT ./Files/3_requirements/2_functional_requirements.tex
+INPUT Files/3_requirements/2_functional_requirements.tex
 INPUT ./Files/4_alloy.tex
 INPUT ./Files/4_alloy.tex
 INPUT ./Files/4_alloy.tex
