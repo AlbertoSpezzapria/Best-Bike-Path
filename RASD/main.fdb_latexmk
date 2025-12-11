@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1765454744.62719 "main.tex" "main.pdf" "main" 1765454745.80789 0
+["pdflatex"] 1765454814.53548 "main.tex" "main.pdf" "main" 1765454815.62306 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -214,7 +214,7 @@
   "Files/3_requirements.tex" 1764769571.97464 134 e86b968e7e1c05115ae44a3d6fa92ecc ""
   "Files/3_requirements/2_functional_requirements.tex" 1765449356.57004 2809 bac595eb2f4766f2507d2792b6c78bb3 ""
   "Files/4_alloy.tex" 1763483392.28442 82 bd05dea960a5cb0ed29bbc7d6a2e40f5 ""
-  "Files/5_effort.tex" 1765454744.40828 1286 56f3091b2d581db7c55cf39ce43dd636 ""
+  "Files/5_effort.tex" 1765454813.07597 1222 87829fe10fcce1df6231578927dbc88d ""
   "Images/PolimiLogo.png" 1763483392.29038 9009 7e2f788c721025ccfc9d873928f74371 ""
   "Images/activity_recording_state_diagram.jpeg" 1765452831.08337 55686 4e8b5400adac02fafd11734843dc2ebc ""
   "Images/domain_class_diagram.jpeg" 1765452831.07553 67257 811f79991478c21388aac0b0ace3d6e9 ""
@@ -223,12 +223,12 @@
   "Images/path_research_state_diagram.jpeg" 1765452831.10424 67432 de36fa03156f838e2fee6ca881b72603 ""
   "Images/user_lifecycle_state_diagram.jpeg" 1765452831.10764 74431 e86f1e769dbb004e65ab771fabb92cec ""
   "commandsFile.tex" 1763483392.29138 3525 cb72696976c75b6fa7df71e7658cc068 ""
-  "main.aux" 1765454745.717 7481 65083ed1c918532029bab2c1fc87e0fc "pdflatex"
-  "main.lof" 1765454745.71879 769 52635e6d5e0b5afd3b675a6e714cb238 "pdflatex"
-  "main.lot" 1765454745.71888 413 66cc19d88985c27ef8bb1934fa3ec1b9 "pdflatex"
-  "main.out" 1765454745.71831 4985 223031513395f3ae4c8cec3947bd3ac3 "pdflatex"
+  "main.aux" 1765454815.5355 7347 ea8c1bc45a9fbd00010ff34fc9330ab3 "pdflatex"
+  "main.lof" 1765454815.53737 769 52635e6d5e0b5afd3b675a6e714cb238 "pdflatex"
+  "main.lot" 1765454815.53741 347 1251926e210f70241f113c1718282166 "pdflatex"
+  "main.out" 1765454815.53699 4985 223031513395f3ae4c8cec3947bd3ac3 "pdflatex"
   "main.tex" 1763483392.29522 2974 cdfe823f81976507a922a1bcfaaa00e2 ""
-  "main.toc" 1765454745.71868 2793 d37f9da4eb0e42159cc0ec02e3351fc2 "pdflatex"
+  "main.toc" 1765454815.53733 2793 d37f9da4eb0e42159cc0ec02e3351fc2 "pdflatex"
   "util/abbrev.tex" 1763483392.29606 463 6eaaf442846fbee20367b2cd35d459f2 ""
   "util/highlight.tex" 1763483392.29648 2200 bdafbaf852cc33096d9d2e1cc54b31fe ""
   (generated)
