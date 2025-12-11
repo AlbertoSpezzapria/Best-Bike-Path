@@ -1,15 +1,24 @@
 \subsection{Assumptions}
+\begin{enumerate}[label={A\arabic*.}]
+    \item \textbf{Path Optimality Definition}: A path is considered “better” than another if it minimizes the travel distance or if its start/end points are closer to the user's desired origin/destination.
+    \item \textbf{Validation Constraint}: While user confirmation can happen anytime for private activities, automatically detected data (sensors) must be validated by the user before being used for public updates.
+    \item \textbf{Recording Implies Path Data}: It is assumed that recording a sporting activity implicitly involves collecting path data (GPS/Status) for potential path creation.
+    \item \textbf{Contribution via Merging}: Once a path is public, its core geometry cannot be overwritten; updates happen through feedback/reports that are merged by the system.
+    \item \textbf{Manual Creator Competence}: It is assumed that when a user creates a path manually, they have physically traversed it and possess knowledge of its current status.
+    \item \textbf{Path Uniqueness}: The system assumes that no two identical public paths (same geometry) can exist in the database.
+    \item \textbf{Manual Duplicate Avoidance}: Automatic duplicate detection relies on GPS tracks. For manual creation, it is assumed the user checks the map for duplicates before creating a new path.
+\end{enumerate}
 \subsection{Dependencies}
     \begin{enumerate}[label=D\arabic*.]
-        \item \textbf{External weather service} The system relies on the availability and accuracy of GPS data from users' devices to record cycling activities and create paths.
-        \item \textbf{Mapping service} Offers geographic data and map layers used to visualize routes, match GPS tracks to road segments and retrieve details about paths, intersections, and terrains.
-        \item \textbf{Storage database} Stores all platform data, including user routes, additional information (road conditions, obstacles), user profiles and publication metadata. Ensures persistence, consistency, and efficient retrieval.
-        \item \textbf{Authentication services} Manages user identity verification, login processes and secure access to personal data and features.
-        \item \textbf{Icon service} Provides a library of graphical icons used across the interface for consistent and intuitive representation of road conditions, obstacles, route statuses, and other UI elements.
+        \item \textbf{External weather service}: The system relies on the availability and accuracy of GPS data from users' devices to record cycling activities and create paths.
+        \item \textbf{Mapping service}: Offers geographic data and map layers used to visualize routes, match GPS tracks to road segments and retrieve details about paths, intersections, and terrains.
+        \item \textbf{Storage database}: Stores all platform data, including user routes, additional information (road conditions, obstacles), user profiles and publication metadata. Ensures persistence, consistency, and efficient retrieval.
+        \item \textbf{Authentication services}: Manages user identity verification, login processes and secure access to personal data and features.
+        \item \textbf{Icon service}: Provides a library of graphical icons used across the interface for consistent and intuitive representation of road conditions, obstacles, route statuses, and other UI elements.
     \end{enumerate}
 \subsection{Constraints}
     \begin{enumerate}[label=C\arabic*.]
-        \item \textbf{Privacy regulations} The system must comply with relevant data protection laws and regulations (e.g., GDPR) to ensure user data privacy and security.
-        \item \textbf{Automatic recording accuracy limits} The automatic activity recording feature will operate within the technical accuracy limits of mobile device sensors (GPS, accelerometer, gyroscope). The system must account for possible measurement noise, positioning errors and sensor variability across devices.
+        \item \textbf{Privacy regulations}: The system must comply with relevant data protection laws and regulations (e.g., GDPR) to ensure user data privacy and security.
+        \item \textbf{Automatic recording Accuracy limits}: The automatic activity recording feature will operate within the technical accuracy limits of mobile device sensors (GPS, accelerometer, gyroscope). The system must account for possible measurement noise, positioning errors and sensor variability across devices.
     \end{enumerate}
 
