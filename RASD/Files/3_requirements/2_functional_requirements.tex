@@ -33,6 +33,185 @@
         \hline
         
         % Riga 1: Name
+        \textbf{Name} & \textbf{User Registration} \\ \hline
+        
+        % Riga 2: Actors
+        \textbf{Actors} & User, BBP App, Auth service \\ \hline
+        
+        % Riga 3: Entry Condition
+        \textbf{Entry Condition} & User open BBP application without being authenticated \\ \hline
+        
+        % Riga 4: Event Flow
+        \textbf{Event Flow} & 
+        (a) The system displays the welcome screen with options: “Log In”, “Sign Up”, “Continue as Guest” \newline
+        (b) The user selects “Sign Up” \newline 
+        (c) The system shows two options: Sign up with an external OAuth provider or create an account with email and password \newline \newline
+        Main Flow (Standard Email Registration) :\newline
+        (d1) The user chooses email registration\newline 
+        (e1) The user enter an email and a password\newline   
+        (f1) The system verifies that the password is complex enough and that no existing account is associated with the given email\newline 
+        (g1) The system stores the new user information in the DB\newline                                         
+        (h1) The system grants the user access to the platform as a registered user\newline \newline
+        Alternative Flow (OAuth Registration):\newline         
+        (d2) The user selects an external authentication provider \newline 
+        (e2) The Authentication Service validates the user’s identity \newline 
+        (f2) The system creates a new account linked to the OAuth identity \newline                                        
+        (g2) The system grants the user access to the platform as a registered user 
+        \\ \hline
+        
+        % Riga 5: Exit Condition
+        \textbf{Exit Condition} & The user accesses the system with a Registered Session \\ \hline
+        
+        % Riga 6: Exception
+        \textbf{Exception} & 
+        Password Too Simple: the system shows an error message and asks the user to enter a stronger password.\newline 
+        Email Already Used: the system alerts the user and suggests entering a different email or logging in with the existing account.\newline 
+        OAuth Authentication Failed: the system displays an error and returns to the authentication options. \\ \hline
+        
+    \end{tabularx}
+    
+    \caption{Use Case: [User Registration]}
+    \label{tab:usecase_id}
+\end{table}
+
+\subsubsection*{[UC4] Creation of a Manual Path}
+\begin{table}[H]
+    \centering
+    % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
+    \renewcommand{\arraystretch}{1.5}
+    
+    % La struttura è: | colonna sinistra fissa | colonna destra auto-adattante (X) |
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        
+        % Riga 1: Name
+        \textbf{Name} & \textbf{Creation of a Manual Path} \\ \hline
+        
+        % Riga 2: Actors
+        \textbf{Actors} & User, BBP App, BBP Server \\ \hline
+        
+        % Riga 3: Entry Condition
+        \textbf{Entry Condition} & The user is authenticated and navigates to the “My Paths” section \\ \hline
+        
+        % Riga 4: Event Flow
+        \textbf{Event Flow} & 
+        (a) The user selects “Create New Path” \newline
+        (b) The platform presents a form requesting  all the necessary information of the new path \newline
+        (c) The user enters the data and submit the form \newline
+        (d) The BBP server validates the submitted data \newline
+        (e) The system checks whether a similar path already exists in the public database \newline                 
+        (f) The platform create a new private path associated with the user \newline
+        (g) The BBP platform confirms creation and displays the new path in the “My Paths” section
+        \\ \hline
+        
+        % Riga 5: Exit Condition
+        \textbf{Exit Condition} & A new private path is successfully created and visible within the user’s “My Paths” section \\ \hline
+        
+        % Riga 6: Exception
+        \textbf{Exception} & Duplicate Public Path Found: the system informs the user that a very similar path already exists in the public database and suggests viewing the public version instead. The new path is not created \newline                                 
+        Invalid or Incomplete Data: the system displays an error and asks the user to correct the form. \\ \hline
+        
+    \end{tabularx}
+    
+    \caption{Use Case: [Creation of a Manual Path]}
+    \label{tab:usecase_id}
+\end{table}
+
+\subsubsection*{[UC5] Publication of a Path}
+\begin{table}[H]
+    \centering
+    % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
+    \renewcommand{\arraystretch}{1.5}
+    
+    % La struttura è: | colonna sinistra fissa | colonna destra auto-adattante (X) |
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        
+        % Riga 1: Name
+        \textbf{Name} & \textbf{Publication of a Path} \\ \hline
+        
+        % Riga 2: Actors
+        \textbf{Actors} & User, BBP App, BBP Server \\ \hline
+        
+        % Riga 3: Entry Condition
+        \textbf{Entry Condition} & The user is logged in and navigates to the “My Paths” section. The user has at least one private \\ \hline
+        
+        % Riga 4: Event Flow
+        \textbf{Event Flow} & 
+        (a) The user selecta a specific path to view its details \newline
+        (b) The system shows the path information and available actions, including “Publish Path”   \newline
+        (c) The user click on the “Publish Path”  \newline
+        (d) The Platform validates the request \newline
+        (e) The platform makes the path public and visible to all the users
+        \\ \hline
+        
+        % Riga 5: Exit Condition
+        \textbf{Exit Condition} & The path is stored in the system with status Public, and it becomes visible to all platform users \\ \hline
+        
+        % Riga 6: Exception
+        \textbf{Exception} & Path Already Public: the system informs the user that the selected path is already public \newline
+        Unauthorized User: the user attempts to publish a path they do not own and the system denies the action \\ \hline
+        
+    \end{tabularx}
+    
+    \caption{Use Case: [Publication of a Path]}
+    \label{tab:usecase_id}
+\end{table}
+
+\subsubsection*{[UC7] Search for a Path}
+\begin{table}[H]
+    \centering
+    % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
+    \renewcommand{\arraystretch}{1.5}
+    
+    % La struttura è: | colonna sinistra fissa | colonna destra auto-adattante (X) |
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        
+        % Riga 1: Name
+        \textbf{Name} & \textbf{Search for a Path} \\ \hline
+        
+        % Riga 2: Actors
+        \textbf{Actors} & User, BBP App, BBP Server \\ \hline
+        
+        % Riga 3: Entry Condition
+        \textbf{Entry Condition} & The user is in the “Search” section of the application (authentication not required) \\ \hline
+        
+        % Riga 4: Event Flow
+        \textbf{Event Flow} & 
+        (a) The user enter the starting and the destination point of the path, that he wants to search \newline
+        (b) The user may optionally apply filters \newline
+        (c) The system validates the user inputs \newline
+        (d) The platform queries the database for all public paths that satisfy the user’s search parameters and the applied filters \newline
+        (f) The system computes the path score for each candidate route based on: path condition, freshness of a data and effectiveness in connecting origin and destination\newline                                                              
+        (g) The system orders the results in descending order according to the score \newline       
+        (h) The platform displays the matching paths on an interactive map and provides a list view \newline
+        (i) The user may select a specific path to see its details
+        
+        % Riga 5: Exit Condition
+        \textbf{Exit Condition} & The BBP platform displays all the search results, sorted by path score, and shows them on the map \\ \hline
+        
+        % Riga 6: Exception
+        \textbf{Exception} & No Result Found: the system displays the message: “No public paths match your search criteria.”  \\ \hline
+        
+    \end{tabularx}
+    
+    \caption{Use Case: [Search for a Path]}
+    \label{tab:usecase_id}
+\end{table}
+\subsection{Sequence diagrams}
+
+\subsubsection*{[UC1] User Registration}
+\begin{table}[H]
+    \centering
+    % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
+    \renewcommand{\arraystretch}{1.5}
+    
+    % La struttura è: | colonna sinistra fissa | colonna destra auto-adattante (X) |
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        
+        % Riga 1: Name
         \textbf{Name} & \textbf{[Inserisci Nome Use Case]} \\ \hline
         
         % Riga 2: Actors

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  11 DEC 2025 09:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  11 DEC 2025 11:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -637,7 +637,8 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 ) (c:/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count348
-) (./main.aux)
+)
+No file main.aux.
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -658,7 +659,6 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -716,7 +716,6 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 5.
- (./main.out) (./main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
@@ -751,23 +750,26 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[2] (./main.toc)
+[2]
+No file main.toc.
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [3
+[3
 
-] (./main.lof)
+]
+No file main.lof.
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [4
+[4
 
-] (./main.lot)
+]
+No file main.lot.
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
- [5
+[5
 
 ]
 Chapter 1.
@@ -842,10 +844,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [14]
 Chapter 3.
-(./Files/3_requirements.tex (./Files/3_requirements/2_functional_requirements.tex [15
+(./Files/3_requirements.tex (./Files/3_requirements/2_functional_requirements.tex
+Underfull \hbox (badness 10000) in paragraph at lines 71--71
+
+ []
 
 
-]))
+Underfull \hbox (badness 10000) in paragraph at lines 71--71
+
+ []
+
+[15
+
+
+]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -854,13 +866,1239 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [16]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[17]
+./Files/3_requirements/2_functional_requirements.tex:197: Extra alignment tab has been changed to \cr.
+<template> ... width\arrayrulewidth }\endtemplate 
+                                                  
+l.197     \end{tabularx}
+                        
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+./Files/3_requirements/2_functional_requirements.tex:197: Extra alignment tab has been changed to \cr.
+<template> ... width\arrayrulewidth }\endtemplate 
+                                                  
+l.197     \end{tabularx}
+                        
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+
+Package tabularx Warning: X Columns too narrow (table too wide)
+(tabularx)                 on input line 197.
+
+
+Overfull \hbox (21.08937pt too wide) in paragraph at lines 197--197
+[]|\T1/ptm/b/n/10.95 Search
+ []
+
+
+Overfull \hbox (2.75926pt too wide) in paragraph at lines 197--197
+\T1/ptm/b/n/10.95 for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/b/n/10.95 a
+ []
+
+
+Overfull \hbox (10.84036pt too wide) in paragraph at lines 197--197
+\T1/ptm/b/n/10.95 Path| 
+ []
+
+
+Overfull \hbox (12.0229pt too wide) in paragraph at lines 197--197
+[]|\T1/ptm/m/n/10.95 User,
+ []
+
+
+Overfull \hbox (9.74524pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 BBP
+ []
+
+
+Overfull \hbox (10.64333pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 App,
+ []
+
+
+Overfull \hbox (9.74524pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 BBP
+ []
+
+
+Overfull \hbox (17.46501pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 Server| 
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+[]|\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 user
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 is
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 in
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (28.56804pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ^^PSearch^^Q
+ []
+
+
+Overfull \hbox (6.67918pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sec-
+ []
+
+
+Overfull \hbox (6.08797pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 of
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ap-
+ []
+
+
+Overfull \hbox (4.25928pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 pli-
+ []
+
+
+Overfull \hbox (2.41975pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ca-
+ []
+
+
+Overfull \hbox (6.08797pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tion
+ []
+
+
+Overfull \hbox (6.67932pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (au-
+ []
+
+
+Overfull \hbox (11.552pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 then-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ti-
+ []
+
+
+Overfull \hbox (2.41975pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ca-
+ []
+
+
+Overfull \hbox (6.08797pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tion
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 not
+ []
+
+
+Overfull \hbox (1.20433pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 re-
+ []
+
+
+Overfull \hbox (20.6733pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 quired)| 
+ []
+
+
+Overfull \hbox (1.20433pt too wide) in paragraph at lines 197--197
+[]|\T1/ptm/m/n/10.95 (a)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 user
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 en-
+ []
+
+
+Overfull \hbox (0.60202pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ter
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (11.55174pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 start-
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ing
+ []
+
+
+Overfull \hbox (4.86171pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 and
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 des-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ti-
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 na-
+ []
+
+
+Overfull \hbox (6.08797pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tion
+ []
+
+
+Overfull \hbox (11.56296pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 point
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 of
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (10.64319pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 path,
+ []
+
+
+Overfull \hbox (5.4747pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 that
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 he
+ []
+
+
+Overfull \hbox (14.48651pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 wants
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 to
+ []
+
+
+Overfull \hbox (17.0159pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 search 
+ []
+
+
+Overfull \hbox (1.8176pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (b)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 user
+ []
+
+
+Overfull \hbox (7.9057pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 may
+ []
+
+
+Overfull \hbox (3.64629pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 op-
+ []
+
+
+Overfull \hbox (9.73427pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tion-
+ []
+
+
+Overfull \hbox (5.4747pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ally
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ap-
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ply
+ []
+
+
+Overfull \hbox (1.82841pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 fil-
+ []
+
+
+Overfull \hbox (4.86145pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ters 
+ []
+
+
+Overfull \hbox (1.20433pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (c)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (6.69016pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sys-
+ []
+
+
+Overfull \hbox (5.4747pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tem
+ []
+
+
+Overfull \hbox (5.80325pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 val-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 i-
+ []
+
+
+Overfull \hbox (11.55186pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 dates
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 user
+ []
+
+
+Overfull \hbox (1.21529pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 in-
+ []
+
+
+Overfull \hbox (7.3034pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 puts 
+ []
+
+
+Overfull \hbox (1.8176pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (d)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (9.121pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 plat-
+ []
+
+
+Overfull \hbox (10.33658pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 form
+ []
+
+
+Overfull \hbox (20.67316pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 queries
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (26.7503pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 database
+ []
+
+
+Overfull \hbox (1.8176pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 all
+ []
+
+
+Overfull \hbox (9.12128pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 pub-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 lic
+ []
+
+
+Overfull \hbox (12.16513pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 paths
+ []
+
+
+Overfull \hbox (5.4747pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 that
+ []
+
+
+Overfull \hbox (4.86145pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sat-
+ []
+
+
+Overfull \hbox (5.47472pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 isfy
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (14.59601pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 user's
+ []
+
+
+Overfull \hbox (17.0159pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 search
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 pa-
+ []
+
+
+Overfull \hbox (9.72331pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ram-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 e-
+ []
+
+
+Overfull \hbox (4.86145pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ters
+ []
+
+
+Overfull \hbox (4.86171pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 and
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ap-
+ []
+
+
+Overfull \hbox (10.94969pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 plied
+ []
+
+
+Overfull \hbox (1.82841pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 fil-
+ []
+
+
+Overfull \hbox (4.86145pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ters 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (f)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (6.69016pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sys-
+ []
+
+
+Overfull \hbox (5.4747pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tem
+ []
+
+
+Overfull \hbox (11.552pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 com-
+ []
+
+
+Overfull \hbox (12.16513pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 putes
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (7.9057pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 path
+ []
+
+
+Overfull \hbox (12.15417pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 score
+ []
+
+
+Overfull \hbox (1.8176pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 for
+ []
+
+
+Overfull \hbox (9.11017pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 each
+ []
+
+
+Overfull \hbox (7.89474pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 can-
+ []
+
+
+Overfull \hbox (1.21529pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 di-
+ []
+
+
+Overfull \hbox (7.29243pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 date
+ []
+
+
+Overfull \hbox (11.552pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 route
+ []
+
+
+Overfull \hbox (13.98286pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 based
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 on:
+ []
+
+
+Overfull \hbox (7.9057pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 path
+ []
+
+
+Overfull \hbox (8.50801pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 con-
+ []
+
+
+Overfull \hbox (1.21529pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 di-
+ []
+
+
+Overfull \hbox (8.82545pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tion,
+ []
+
+
+Overfull \hbox (14.58505pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 fresh-
+ []
+
+
+Overfull \hbox (7.90558pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ness
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 a
+ []
+
+
+Overfull \hbox (7.29243pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 data
+ []
+
+
+Overfull \hbox (4.86171pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 and
+ []
+
+
+Overfull \hbox (1.20433pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ef-
+ []
+
+
+Overfull \hbox (6.06606pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 fec-
+ []
+
+
+Overfull \hbox (8.68309pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tive-
+ []
+
+
+Overfull \hbox (7.90558pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ness
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 in
+ []
+
+
+Overfull \hbox (8.50801pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 con-
+ []
+
+
+Overfull \hbox (10.93874pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 nect-
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ing
+ []
+
+
+Overfull \hbox (4.86159pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ori-
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 gin
+ []
+
+
+Overfull \hbox (4.86171pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 and
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 des-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ti-
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 na-
+ []
+
+
+Overfull \hbox (6.08797pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tion 
+ []
+
+
+Overfull \hbox (1.8176pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (g)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (6.69016pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sys-
+ []
+
+
+Overfull \hbox (5.4747pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tem
+ []
+
+
+Overfull \hbox (1.59865pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 or-
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ders
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (1.20433pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 re-
+ []
+
+
+Overfull \hbox (9.13184pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sults
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 in
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 de-
+ []
+
+
+Overfull \hbox (17.62917pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 scend-
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ing
+ []
+
+
+Overfull \hbox (1.59865pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 or-
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 der
+ []
+
+
+Overfull \hbox (2.41975pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ac-
+ []
+
+
+Overfull \hbox (12.15431pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 cord-
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 to
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (12.15417pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 score 
+ []
+
+
+Overfull \hbox (1.8176pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (h)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (9.121pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 plat-
+ []
+
+
+Overfull \hbox (10.33658pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 form
+ []
+
+
+Overfull \hbox (5.47472pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 dis-
+ []
+
+
+Overfull \hbox (12.16513pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 plays
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (19.45772pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 match-
+ []
+
+
+Overfull \hbox (3.04398pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ing
+ []
+
+
+Overfull \hbox (12.16513pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 paths
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 on
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 an
+ []
+
+
+Overfull \hbox (1.21529pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 in-
+ []
+
+
+Overfull \hbox (4.02937pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ter-
+ []
+
+
+Overfull \hbox (2.41975pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ac-
+ []
+
+
+Overfull \hbox (5.03679pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tive
+ []
+
+
+Overfull \hbox (7.9057pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 map
+ []
+
+
+Overfull \hbox (4.86171pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 and
+ []
+
+
+Overfull \hbox (7.29259pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 pro-
+ []
+
+
+Overfull \hbox (12.16513pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 vides
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 a
+ []
+
+
+Overfull \hbox (2.4414pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 list
+ []
+
+
+Overfull \hbox (10.0628pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 view 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 (i)
+ []
+
+
+Overfull \hbox (6.07715pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 The
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 user
+ []
+
+
+Overfull \hbox (7.9057pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 may
+ []
+
+
+Overfull \hbox (1.81746pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 se-
+ []
+
+
+Overfull \hbox (4.86143pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 lect
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 a
+ []
+
+
+Overfull \hbox (7.29245pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 spe-
+ []
+
+
+Overfull \hbox (7.90556pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 cific
+ []
+
+
+Overfull \hbox (7.9057pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 path
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 to
+ []
+
+
+Overfull \hbox (3.03288pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 see
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 its
+ []
+
+
+Overfull \hbox (3.03302pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 de-
+ []
+
+
+Overfull \hbox (7.30313pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tails 
+ []
+
+
+Overfull \hbox (8.51884pt too wide) in paragraph at lines 197--197
+[]\T1/ptm/b/n/10.95 Exit
+ []
+
+
+Overfull \hbox (12.16527pt too wide) in paragraph at lines 197--197
+\T1/ptm/b/n/10.95 Con-
+ []
+
+
+Overfull \hbox (1.82841pt too wide) in paragraph at lines 197--197
+\T1/ptm/b/n/10.95 di-
+ []
+
+
+Overfull \hbox (7.3034pt too wide) in paragraph at lines 197--197
+\T1/ptm/b/n/10.95 tion| 
+ []
+
+./Files/3_requirements/2_functional_requirements.tex:197: Extra alignment tab has been changed to \cr.
+<template> ... width\arrayrulewidth }\endtemplate 
+                                                  
+l.197     \end{tabularx}
+                        
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+
+Overfull \hbox (2.43085pt too wide) in paragraph at lines 197--197
+[]|\T1/ptm/m/n/10.95 No
+ []
+
+
+Overfull \hbox (4.86159pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 Re-
+ []
+
+
+Overfull \hbox (4.8724pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sult
+ []
+
+
+Overfull \hbox (19.91792pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 Found:
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (6.69016pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sys-
+ []
+
+
+Overfull \hbox (5.4747pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 tem
+ []
+
+
+Overfull \hbox (5.47472pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 dis-
+ []
+
+
+Overfull \hbox (12.16513pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 plays
+ []
+
+
+Overfull \hbox (2.43071pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 the
+ []
+
+
+Overfull \hbox (10.33644pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 mes-
+ []
+
+
+Overfull \hbox (11.55186pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 sage:
+ []
+
+
+Overfull \hbox (7.29257pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ^^PNo
+ []
+
+
+Overfull \hbox (9.12128pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 pub-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 lic
+ []
+
+
+Overfull \hbox (12.16513pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 paths
+ []
+
+
+Overfull \hbox (15.81142pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 match
+ []
+
+
+Overfull \hbox (9.12128pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 your
+ []
+
+
+Overfull \hbox (17.0159pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 search
+ []
+
+
+Overfull \hbox (4.24832pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 cri-
+ []
+
+
+Overfull \hbox (0.60202pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 te-
+ []
+
+
+Overfull \hbox (7.43478pt too wide) in paragraph at lines 197--197
+\T1/ptm/m/n/10.95 ria.^^Q| 
+ []
+
+
+Overfull \hbox (12.8015pt too wide) in alignment at lines 197--197
+ [] [] 
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[18]
+Overfull \vbox (2576.46727pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[19]))
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[20]
 Chapter 4.
-(./Files/4_alloy.tex) [17
+(./Files/4_alloy.tex) [21
 
 
 ]
 Chapter 5.
-(./Files/5_effort.tex) [18
+(./Files/5_effort.tex) [22
 
 
 ] (./main.aux)
@@ -868,22 +2106,32 @@ Chapter 5.
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
  ***********
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 3271BE8E19AE000572A9BA408A24C37E;4682.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  7D96E3FF0F3766C9F3CEAF87A4D14F26;4832.
  ) 
 Here is how much of TeX's memory you used:
- 25462 strings out of 467538
- 470570 string characters out of 5423724
- 862757 words of memory out of 5000000
- 53720 multiletter control sequences out of 15000+600000
+ 25432 strings out of 467538
+ 470077 string characters out of 5423724
+ 868315 words of memory out of 5000000
+ 53685 multiletter control sequences out of 15000+600000
  667112 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,100p,873b,688s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 87016 bytes).
+Output written on main.pdf (22 pages, 89259 bytes).
 PDF statistics:
- 380 PDF objects out of 1000 (max. 8388607)
- 348 compressed objects within 4 object streams
- 129 named destinations out of 1000 (max. 500000)
- 282 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 277 PDF objects out of 1000 (max. 8388607)
+ 242 compressed objects within 3 object streams
+ 146 named destinations out of 1000 (max. 500000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
