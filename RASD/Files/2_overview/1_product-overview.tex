@@ -1,4 +1,22 @@
 \subsection{Scenarios}
+\subsubsection*{A new user subscribes to the platform}
+\begin{enumerate}
+    \item An athlete lands on the website's landing page for the first time. After browsing the home screen and viewing the services offered by the app, they decide to register.
+    \item The user clicks the “Sign Up” button, which redirects them to the registration page.
+    \item At this point, the user must decide whether to register using their own credentials (email and password) or to use an OAuth authentication method, logging in with an account from another service.
+    \item After filling in the required fields, the user is taken to the second screen of the registration flow, where they are asked to provide additional information needed to calculate certain performance metrics, such as weight, height, age, etc.
+    \item Finally, the user is successfully registered and is redirected to the application's main screen.
+\end{enumerate}
+\subsubsection*{A user records an activity}
+
+\begin{enumerate}
+    \item When a user wants to record an activity, they must go to the “Record Trip” panel.
+    \item From there, in the “Automatic” section, they simply need to press the play button: the app will start recording GPS data and storing the route and detected potholes.
+    \item Once the route is completed, pressing the stop button will end the recording.
+    \item At this point, the user will be asked to verify whether the potholes detected by the application are actually present or are false positives, and to confirm the condition of the route.
+    \item Finally, a prompt will ask the user whether they want to publish the route or keep it private.
+\end{enumerate}
+
 \subsubsection*{A user creates a path manually}
 \begin{enumerate}
     \item The user logs into the platform using their credentials.
@@ -74,8 +92,83 @@
 
         \end{itemize}
     \item The system saves the changes and updates the database.
-
-
-
-
 \end{enumerate}
+
+\subsection{Domain Class Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Images/domain_class_diagram.jpeg}
+    \caption{Domain Class Diagram}
+    \label{fig:domain-class-diagram}
+\end{figure}
+
+
+\subsection{State Diagrams}
+\subsubsection*{Path Creation}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Images/path_creation.jpeg}
+    \caption{Path Creation State Diagram}
+    \label{fig:path-creation-state-diagram}
+\end{figure}
+
+\subsubsection*{Activity Recording}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/activity_recording_state_diagram.jpeg}
+    \caption{Activity Recording State Diagram}
+    \label{fig:activity-recording-state-diagram}
+\end{figure}
+
+\subsubsection*{Meteorological Data Retrieval}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/meteorological_data_state_diagram.jpeg}
+    \caption{Meteorological Data Retrieval State Diagram}
+    \label{fig:meteorological-data-retrieval-state-diagram}
+\end{figure}
+
+\subsubsection*{Path Research}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/path_research_state_diagram.jpeg}
+    \caption{Path Research State Diagram}
+    \label{fig:path-research-state-diagram}
+\end{figure}
+This state machine describes the logic flow of the ``Path Search'' functionality, accessible to both Guest and Registered users.
+
+The process begins in the \textbf{Map Visualization} state. When a user initiates a search, the system transitions to \textbf{Defining Search Criteria}, waiting for valid Origin and Destination inputs.
+
+Upon submission, the system enters the \textbf{Search Processing} state. This is a critical system-side phase where three operations occur sequentially:
+
+\begin{enumerate}
+    \item \textbf{Querying Paths:} The system retrieves all geometrically valid paths between the two points.
+    \item \textbf{Computing Scores:} The system calculates a specific score for each path, aggregating its maintenance status and its effectiveness in reaching the destination.
+    \item \textbf{Sorting Results:} Paths are ranked based on the computed score.
+\end{enumerate}
+
+If valid paths exist, the system transitions to \textbf{Results Visualization}. Here, the user can toggle between a ranked list and a \textbf{Detailed Path View} (displaying specific obstacles, weather, and stats).
+
+From the detailed view, a specific transition to \textbf{Recording (Navigation Mode)} is available, but guarded by the condition \texttt{[If Logged In]}, as only registered users can proceed to track an activity on the selected path.
+
+\subsubsection*{User Lifecycle}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Images/user_lifecycle_state_diagram.jpeg}
+    \caption{User Lifecycle State Diagram}
+    \label{fig:user-lifecycle-state-diagram}
+\end{figure}
+
+This state machine diagram describes the user lifecycle within the BBP system, distinguishing between two main macro-states: \textbf{Guest User}, unauthenticated, and \textbf{Registered User Session}, authenticated.
+
+The lifecycle begins in the \textbf{Guest User} state, where functionalities are restricted to read-only operations (represented by the \textbf{Guest Searching} state). In this phase, the user can browse the public path inventory but cannot contribute data. To access active functionalities, a transition through the \textbf{Authentication} state (Login or Registration) is required.
+
+Once authenticated, the user enters the composite \textbf{Registered User Session} state. Here, the \textbf{Idle} state acts as a central hub from which three main operational flows branch out:
+
+\begin{enumerate}
+    \item \textbf{Searching \& Planning:} The user searches for specific paths. From this state, the user can return to the Dashboard or transition directly to \textbf{Recording Activity}, following a selected path.
+    \item \textbf{Recording Activity:} This represents the active cycling phase. It can be triggered via the search flow or directly from the Dashboard, not referring to any existing path.
+    \item \textbf{Manual Path Creation:} The user enters an editor mode to manually trace routes on the map without physical recording.
+\end{enumerate}
+A critical transition occurs at the end of every recording session: the system moves to the \textbf{Post-Activity Processing} state. In this mandatory phase, the user validates sensor-detected data and the system executes the merging logic with the existing inventory before returning the user to the \textbf{Idle} state.
+The lifecycle concludes when the user performs a logout or permanently deletes their account.
