@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  11 DEC 2025 18:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  12 DEC 2025 18:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -764,23 +764,31 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[2] (./main.toc)
+[2] (./main.toc [3
+
+])
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [3
 
-] (./main.lof)
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[4] (./main.lof)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [4
+ [5
 
 ] (./main.lot)
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
- [5
+ [6
 
 ]
 Chapter 1.
@@ -789,7 +797,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--5
 
  []
 
-) (./Files/1_introduction/2_scope.tex [6
+) (./Files/1_introduction/2_scope.tex [7
 
 
 ]) (./Files/1_introduction/3_definitions-acronyms-abbreviations.tex
@@ -800,7 +808,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[7]) (./Files/1_introduction/4_revision-history.tex) (./Files/1_introduction/5_reference-documents.tex) (./Files/1_introduction/6_document-structure.tex))
+[8]) (./Files/1_introduction/4_revision-history.tex) (./Files/1_introduction/5_reference-documents.tex) (./Files/1_introduction/6_document-structure.tex))
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -808,9 +816,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[8]
+[9]
 Chapter 2.
-(./Files/2_overview.tex (./Files/2_overview/1_product-overview.tex [9
+(./Files/2_overview.tex (./Files/2_overview/1_product-overview.tex [10
 
 
 ]
@@ -821,8 +829,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10]
-<Images/domain_class_diagram.jpeg, id=313, 1163.34625pt x 1442.38875pt>
+[11]
+<Images/domain_class_diagram.jpeg, id=342, 1163.34625pt x 1442.38875pt>
 File: Images/domain_class_diagram.jpeg Graphic file (type jpg)
 <use Images/domain_class_diagram.jpeg>
 Package pdftex.def Info: Images/domain_class_diagram.jpeg  used on input line 100.
@@ -835,8 +843,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11]
-<Images/path_creation.jpeg, id=328, 1105.12875pt x 1067.99pt>
+[12]
+<Images/path_creation.jpeg, id=357, 1105.12875pt x 1067.99pt>
 File: Images/path_creation.jpeg Graphic file (type jpg)
 <use Images/path_creation.jpeg>
 Package pdftex.def Info: Images/path_creation.jpeg  used on input line 110.
@@ -849,8 +857,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[12 <./Images/domain_class_diagram.jpeg>]
-<Images/activity_recording_state_diagram.jpeg, id=333, 618.31pt x 1320.935pt>
+[13 <./Images/domain_class_diagram.jpeg>]
+<Images/activity_recording_state_diagram.jpeg, id=363, 618.31pt x 1320.935pt>
 File: Images/activity_recording_state_diagram.jpeg Graphic file (type jpg)
 <use Images/activity_recording_state_diagram.jpeg>
 Package pdftex.def Info: Images/activity_recording_state_diagram.jpeg  used on input line 118.
@@ -863,8 +871,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13 <./Images/path_creation.jpeg>]
-<Images/meteorological_data_state_diagram.jpeg, id=340, 511.9125pt x 898.35625pt>
+[14 <./Images/path_creation.jpeg>]
+<Images/meteorological_data_state_diagram.jpeg, id=369, 511.9125pt x 898.35625pt>
 File: Images/meteorological_data_state_diagram.jpeg Graphic file (type jpg)
 <use Images/meteorological_data_state_diagram.jpeg>
 Package pdftex.def Info: Images/meteorological_data_state_diagram.jpeg  used on input line 126.
@@ -877,8 +885,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14 <./Images/activity_recording_state_diagram.jpeg>]
-<Images/path_research_state_diagram.jpeg, id=346, 520.94624pt x 1544.77126pt>
+[15 <./Images/activity_recording_state_diagram.jpeg>]
+<Images/path_research_state_diagram.jpeg, id=375, 520.94624pt x 1544.77126pt>
 File: Images/path_research_state_diagram.jpeg Graphic file (type jpg)
 <use Images/path_research_state_diagram.jpeg>
 Package pdftex.def Info: Images/path_research_state_diagram.jpeg  used on input line 134.
@@ -891,7 +899,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[15 <./Images/meteorological_data_state_diagram.jpeg>]
+[16 <./Images/meteorological_data_state_diagram.jpeg>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -899,12 +907,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[16 <./Images/path_research_state_diagram.jpeg>]
+[17 <./Images/path_research_state_diagram.jpeg>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 152.
  (c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<Images/user_lifecycle_state_diagram.jpeg, id=357, 792.9625pt x 1321.93875pt>
+<Images/user_lifecycle_state_diagram.jpeg, id=386, 792.9625pt x 1321.93875pt>
 File: Images/user_lifecycle_state_diagram.jpeg Graphic file (type jpg)
 <use Images/user_lifecycle_state_diagram.jpeg>
 Package pdftex.def Info: Images/user_lifecycle_state_diagram.jpeg  used on input line 157.
@@ -917,15 +925,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[17{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc} <./Images/user_lifecycle_state_diagram.jpeg>]) (./Files/2_overview/2_product-functions.tex
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[18]
+[18{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc} <./Images/user_lifecycle_state_diagram.jpeg>]) (./Files/2_overview/2_product-functions.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -941,7 +941,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[20]) (./Files/2_overview/3_user-characteristics.tex) (./Files/2_overview/4_assumptions-dependencies-constraints.tex
+[20]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -949,7 +949,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[21]))
+[21]) (./Files/2_overview/3_user-characteristics.tex) (./Files/2_overview/4_assumptions-dependencies-constraints.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -957,7 +957,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[22]
+[22]))
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[23]
 Chapter 3.
 (./Files/3_requirements.tex (./Files/3_requirements/2_functional_requirements.tex
 Underfull \hbox (badness 10000) in paragraph at lines 71--71
@@ -969,18 +977,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 71--71
 
  []
 
-[23
+[24
 
 
 ]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[24]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -996,7 +996,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[26]))
+[26]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1004,14 +1004,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[27]
+[27]) (./Files/3_requirements/3_performance_requirements.tex) (./Files/3_requirements/4_design_constraints.tex
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[28]))
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[29]
 Chapter 4.
-(./Files/4_alloy.tex) [28
+(./Files/4_alloy.tex) [30
 
 
 ]
 Chapter 5.
-(./Files/5_effort.tex) [29
+(./Files/5_effort.tex) [31
 
 
 ] (./main.aux)
@@ -1024,21 +1040,21 @@ L3 programming layer <2025-10-24>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 223031513395F3AE4C8CEC3947BD3AC3;4985.
+(rerunfilecheck)             Checksum: 73F62E174BDB13D1D6AE78A4B714FB18;5809.
  ) 
 Here is how much of TeX's memory you used:
- 25645 strings out of 467538
- 474281 string characters out of 5423724
- 865266 words of memory out of 5000000
- 53820 multiletter control sequences out of 15000+600000
+ 25669 strings out of 467538
+ 475025 string characters out of 5423724
+ 865267 words of memory out of 5000000
+ 53831 multiletter control sequences out of 15000+600000
  667431 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,100p,873b,679s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (29 pages, 496216 bytes).
+Output written on main.pdf (31 pages, 501373 bytes).
 PDF statistics:
- 537 PDF objects out of 1000 (max. 8388607)
- 485 compressed objects within 5 object streams
- 206 named destinations out of 1000 (max. 500000)
- 328 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 573 PDF objects out of 1000 (max. 8388607)
+ 518 compressed objects within 6 object streams
+ 213 named destinations out of 1000 (max. 500000)
+ 368 words of extra memory for PDF output out of 10000 (max. 10000000)
 

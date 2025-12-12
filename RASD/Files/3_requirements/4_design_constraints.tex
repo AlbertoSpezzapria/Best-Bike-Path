@@ -1,0 +1,25 @@
+\subsection{Standards Compliance}
+\begin{itemize}
+    \item \textbf{GDPR Compliance (EU 2016/679):} Since the system collects and processes sensitive personal data (specifically geolocation history and user performance metrics), the architecture must be fully compliant with the General Data Protection Regulation (GDPR). This requires the implementation of explicit consent mechanisms, data anonymization where possible, and the "Right to be Forgotten".
+    \item \textbf{ISO/IEC 27001 (Information Security):} The system design must adhere to ISO/IEC 27001 principles for Information Security Management. This constrains the architecture to include mandatory security controls, such as end-to-end encryption (TLS/WSS) for data in transit and encryption for sensitive data at rest.
+    \item \textbf{Geospatial Standards (WGS84 \&\ GPX):} To guarantee global interoperability and compatibility with external mapping services, all geospatial coordinates must be stored using the WGS84 reference system. Additionally, data portability for bike paths must support the GPX (GPS Exchange Format) standard.
+    \item \textbf{Mobile UI/UX Guidelines:} The mobile application client must strictly follow the Human Interface Guidelines (for iOS) and Material Design principles (for Android). This ensures a user experience that is consistent with the native operating system environment.
+\end{itemize}
+\subsection{Hardware Limitations}
+\begin{itemize}
+    \item \textbf{Sensor Suite Requirements:} The availability of the "Automated Mode" is strictly bound by the hardware capabilities of the user's device. The application requires the mandatory presence of:
+    \begin{itemize}
+        \item A functional GNSS/GPS Receiver.
+        \item An Accelerometer.
+        \item A Gyroscope.
+    \end{itemize}
+    \item \textbf{Operating System Compatibility:} To ensure the reliability of sensor data collection (GPS, Accelerometer, Gyroscope) and compliance with modern security standards for background location tracking, the client application must support:
+    \begin{itemize}
+        \item Android: Version 10.0 (API Level 29) or higher (covering approx. 89\%\ of the active market).
+        \item iOS: Version 15.0 or higher (covering approx. 90\%\ of the active market).
+    \end{itemize}
+\end{itemize}
+\subsection{Any other Constraint}
+\begin{itemize}
+    \item \textbf{Safety \&\ Distraction-Free UI:} To comply with traffic safety regulations and ensure user well-being, the "Automated Mode" interface must be designed as interaction-free. The application shall not prompt for user input or require manual interaction while the device detects that the user is cycling.
+\end{itemize}
