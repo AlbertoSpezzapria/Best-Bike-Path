@@ -1,0 +1,57 @@
+\subsection{Reliability}
+\label{subsec:reliability}
+The system must ensure the integrity and preservation of data collected from mobile sensors in a dynamic and potentially unstable environment.
+
+\begin{itemize}
+    \item \textbf{Data Persistence:} The mobile application must implement local data caching to handle network instability. It should store activity data temporarily on the device and synchronize it with the central server once a stable connection is re-established, preventing data loss during rides in remote areas.
+    
+    \item \textbf{Operational Safety:} Reliability also extends to the safe usage of the application. The system must provide a non-distracting user experience to minimize cognitive load while cycling, ensuring the software aids rather than hinders the user's physical safety.
+    
+    \item \textbf{Backend Stability:} On the server side, the database should employ replication strategies to prevent data loss. The merging algorithm must reliably handle concurrent updates from multiple users, maintaining a consistent state of the path quality scores.
+\end{itemize}
+
+\subsection{Availability}
+\label{subsec:availability}
+The BBP platform should deliver a highly available and responsive service.
+
+\begin{itemize}
+    \item \textbf{Service Continuity:} Core functionalities, such as activity recording and path visualization, must incorporate redundancy and failover mechanisms. The architecture must handle failures of the external meteorological service, allowing the system to continue saving trips rather than rejecting the user's activity.
+    
+    \item \textbf{Responsiveness:} Availability implies immediate reaction times. Map rendering and navigation cues must be generated with minimal latency to ensure the user receives timely directions while moving at speed.
+    
+    \item \textbf{Uptime:} The design should aim to maximize uptime, performing maintenance updates during low-traffic periods to avoid disrupting users during peak cycling times.
+\end{itemize}
+
+\subsection{Security}
+\label{subsec:security}
+The system handles sensitive user data, such as location history and movement patterns, which requires strict protection measures.
+
+\begin{itemize}
+    \item \textbf{Privacy \& Anonymization:} Given the sensitivity of GPS tracking, the system should adopt measures to anonymize data when aggregating it for public path statistics, ensuring that individual routes cannot be reverse-engineered to identify specific users.
+    
+    \item \textbf{Data Protection:} Authentication must be robust. All stored data must be encrypted at rest and communication between the mobile app and the server must be secured via HTTPS/SSL to prevent interception.
+    
+    \item \textbf{Access Control:} The system must implement strict access control policies, ensuring that private paths in the ``My Paths'' section are accessible only to their owners until explicitly published.
+\end{itemize}
+
+\subsection{Maintainability}
+\label{subsec:maintainability}
+The components should be designed to be modular and easily scalable.
+
+\begin{itemize}
+    \item \textbf{Modularity:} The system should decouple the core logic from the interface layers. This allows developers to update or optimize specific algorithms without affecting the rest of the application.
+    
+    \item \textbf{Documentation \& Logging:} The code must be fully documented, including API definitions. The system should implement comprehensive logging, particularly for the data synchronization and merging processes, to facilitate rapid debugging and maintenance.
+\end{itemize}
+
+\subsection{Portability}
+\label{subsec:portability}
+The system must be compatible with a wide range of devices and environments, respecting their hardware constraints.
+
+\begin{itemize}
+    \item \textbf{Resource Efficiency:} True portability on mobile devices requires optimizing resource usage. The application must implement adaptive sensor sampling to minimize battery drain (e.g., reducing GPS polling when stationary) and data batching to reduce network bandwidth usage, ensuring the app is usable even on older devices or with limited data plans.
+    
+    \item \textbf{Cross-Platform Compatibility:} The mobile application must function consistently across major operating systems, abstracting hardware differences in sensors (accelerometers/gyroscopes).
+    
+    \item \textbf{Web Accessibility:} The web interface must be compatible with all major browsers (Chrome, Firefox, Safari) and responsive to various screen sizes.
+\end{itemize}

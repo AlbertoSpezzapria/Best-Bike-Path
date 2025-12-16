@@ -1,30 +1,85 @@
-\subsubsection*{Sign-Up and Login}
-\begin{enumerate}
-    \item The platform allows users to create an account by providing the required personal information.
-    \item The platform allows registered users to log in and access the system.
-    \item The platform allows registered users to recover the access credentials.
-    \item The platform allows guest users (non-registered users) to access only the path search functionality of the system.
-\end{enumerate}
-\subsubsection*{Path search from origin to destination}
-\begin{enumerate}
-    \item The platform allow users to search for cycling paths based on a starting point and an ending point.
-    \item The platform allow users to filter the search results based on the path parameters.
-\end{enumerate}
-\subsubsection*{Path Ranking}
-\begin{enumerate}
-    \item The platform is able to rank the available paths based on the path data, including the condition of each segment, the freshness of the information, and the effectiveness of the path in connecting the selected points.
-\end{enumerate}
-\subsubsection*{Entering path condition information}
-\begin{enumerate}
-    \item The platform is able to detect when a registered user follows a path that is already available to the public and associate the activity with that path.
-    \item The platform allow registered users to update the condition information of a path, even without performing an activity on that path.
-\end{enumerate}
+\newcounter{reqcounter}
+\newcommand{\req}{\stepcounter{reqcounter}\item \textbf{R\thereqcounter}\enspace}
+
+% --- Inizio Contenuto ---
+
+\subsubsection{Sign Up \& Login}
+The platform allows users to create an account, access the system, and recover credentials. Guest access is limited.
+
+\begin{itemize}
+    \req The platform allows users to create an account by providing the required personal information.
+    \req The platform allows registered users to log in and access the system.
+    \req The platform allows registered users to recover the access credentials.
+    \req The platform allows guest users (non-registered users) to access only the path search functionality of the system.
+\end{itemize}
+
+\subsubsection{Activity recording}
+The system enables users to track their cycling activities and collect sensor data.
+
+\begin{itemize}
+    \req The system shall allow registered users to start recording a new cycling activity.
+    \req The system shall allow users to select an existing path from the path public repository to follow during the activity (not mandatory).
+    \req The system shall collect raw data from the mobile device’s sensors (GPS, accelerometer, gyroscope) during the recording of an activity.
+    \req The system shall analyze the user’s speed derived from GPS data to verify if the user is effectively cycling.
+    \req The system shall analyze accelerometer and gyroscope data to detect potential obstacles or road surface anomalies.
+    \req The system shall calculate real-time statistics during the recording, including total distance covered and average speed.
+    \req The system shall allow the user to pause and resume the recording of an activity.
+\end{itemize}
+
+\subsubsection{Path creation}
+The system handles the creation of new paths through two modes: automatic detection from an activity or manual creation via map.
+
+\paragraph{Automatic Creation}
+\begin{itemize}
+    \req Upon stopping an activity, the system shall display the list of automatically detected obstacles.
+    \req The system shall require the user to validate the detected obstacles before proceeding.
+    \req After validation, the system shall analyze the recorded GPS trace to identify if it matches an existing path in the database.
+    
+    % Scenario: Match found
+    \req If the recorded trace matches an existing public path, the system shall automatically associate the activity with that path entity.
+    \req The system shall use the validated data to update the status and information of the existing public path.
+    \req The system shall add the identified path to the ``My paths'' section if not already present.
+    
+    % Scenario: No match found
+    \req If the recorded trace doesn't match any existing public path, the system shall allow users to generate a new path entity starting from the GPS trace of a recorded activity.
+    \req The system shall allow the user to associate a name to the recorded path and store it in the ``My paths'' section.
+\end{itemize}
+
+\paragraph{Manual Creation}
+\begin{itemize}
+    \req The system shall allow the user to create a new path manually by selecting a sequence of streets from a map.
+    \req The system shall require the user to manually input the status of the streets composing the path and mark the position and type of obstacles along it.
+    \req The system shall allow the user to assign a name to the manually created path and store it in the ``My Paths'' section.
+\end{itemize}
+
+\subsubsection{Path search from origin to destination}
+\begin{itemize}
+    \req The platform allows users to search for cycling paths based on a starting point and an ending point.
+    \req The platform allows users to filter the search results based on the path parameters.
+\end{itemize}
+
+\subsubsection{Path ranking}
+\begin{itemize}
+    \req The platform is able to rank the available paths based on the path data, including the condition of each segment, the freshness of the information, and the effectiveness of the path in connecting the selected points.
+\end{itemize}
+
+\subsubsection{Entering path condition information}
+\begin{itemize}
+    \req The platform is able to detect when a registered user follows a path that is already available to the public and associate the activity with that path.
+    \req The platform allows registered users to update the condition information of a path, even without performing an activity on that path.
+\end{itemize}
+
+\subsubsection{Path management and publication}
+\begin{itemize}
+    \req The system shall allow users to edit the information (name, street status, obstacles) of any path they have created.
+    \req The system shall allow users to publish a stored path, making it available to the community.
+\end{itemize}
 
 \subsection{Use case diagrams}
 \subsection{Use cases}
-\subsubsection*{[UC1] User Registration}
 \begin{table}[H]
     \centering
+    \raggedright \textbf{\large [UC1] User Registration} \\[0.2cm]
     % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
     \renewcommand{\arraystretch}{1.5}
     
@@ -71,12 +126,71 @@
     \end{tabularx}
     
     \caption{Use Case: [User Registration]}
-    \label{tab:usecase_id}
 \end{table}
 
-\subsubsection*{[UC4] Creation of a Manual Path}
 \begin{table}[H]
     \centering
+    \raggedright \textbf{\large [UC2] System Access} \\[0.2cm]
+
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \textbf{Name} & \textbf{System Access} \\ \hline
+        \textbf{Actors} & User, BBP Platform, Auth service \\ \hline
+        \textbf{Entry Condition} & User open BBP application without being authenticated \\ \hline
+        \textbf{Event Flow} & 
+        (a) The system displays the welcome screen with options: “Log In”, “Sign Up”, “Continue as Guest” \newline \newline
+        Main Flow (Login): \newline
+        (b1) The user select “Log In” \newline
+        (c1) The user enters email and password \newline
+        (d1) The system validated credentials against the db \newline
+        (e1) The system retrieves the user profile and redirects to the User Dashboard \newline \newline
+        Alternative flow (Guest): \newline
+        (b2) The user selects ``Continue as Guest'' \newline
+        (c2) The system enables ``Limited Mode'' (Search only, no Recording) \newline
+        (d2) The system redirects to the Search View.
+        \\ \hline
+        \textbf{Exit Condition} & The user accesses the system with a Registered Session or a Guest Session \\ \hline
+        \textbf{Exception} & Invalid Credentials: the system displays an error and asks to retry \\ \hline
+    \end{tabularx}
+    \caption{Use Case: [System Access]}
+    \label{tab:uc2_system_access}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \raggedright \textbf{\large [UC3] Activity Recording} \\[0.2cm]
+
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \textbf{Name} & \textbf{Activity recording} \\ \hline
+        \textbf{Actors} & Registered user, BBP Platform, Device sensors, External Weather Service \\ \hline
+        \textbf{Entry Condition} & User is logged in and GPS is enabled on the device \\ \hline
+        \textbf{Event Flow} & 
+        (a) The user presses “Start Recording” \newline
+        (b) The system starts collecting data from GPS, Accelerometer and Gyroscope \newline
+        (c) The system calculates real-time statistics and detects anomalies \newline
+        (d) The user presses “Stop activity” and the system pauses data collection \newline
+        (e) The user presses “Save activity” (or decides to resume) \newline
+        (f) The system presents the list of automatically detected obstacles for validation \newline
+        (g) The user confirms or modifies the detected obstacles \newline
+        (h) The system retrieves meteorological data for the recorded area/time from the External Service \newline
+        (i) The system checks for matching existing paths and saves the activity, merging data or creating a new path entry
+        \\ \hline
+        \textbf{Exit Condition} & The activity is saved in ``My Paths'' \\ \hline
+        \textbf{Exception} & 
+        GPS signal is lost: system pauses the recording and notifies the user \newline
+        Weather service is unavailable: data is saved without weather information \\ \hline
+    \end{tabularx}
+    \caption{Use Case: [Activity Recording]}
+    \label{tab:uc3_activity_recording}
+\end{table}
+
+\begin{table}[H]
+    \centering
+     \raggedright \textbf{\large [UC4] Creation of a Manual Path} \\[0.2cm]
+   
     % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
     \renewcommand{\arraystretch}{1.5}
     
@@ -117,9 +231,10 @@
     \label{tab:usecase_id}
 \end{table}
 
-\subsubsection*{[UC5] Publication of a Path}
 \begin{table}[H]
-    \centering
+    \centering    
+    \raggedright \textbf{\large [UC5] Publication of a Path} \\[0.2cm]
+
     % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
     \renewcommand{\arraystretch}{1.5}
     
@@ -158,9 +273,34 @@
     \label{tab:usecase_id}
 \end{table}
 
-\subsubsection*{[UC7] Search for a Path}
 \begin{table}[H]
     \centering
+    \raggedright \textbf{\large [UC6] Path Feedback reporting} \\[0.2cm]
+
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \textbf{Name} & \textbf{Path Feedback reporting} \\ \hline
+        \textbf{Actors} & Registered User, BBP Platform \\ \hline
+        \textbf{Entry Condition} & The user is viewing the details of a path, from ``My paths'' or from the public repository \\ \hline
+        \textbf{Event Flow} & 
+        (a) The user select “Report issue” or “Update Status” button on the path detail screen \newline
+        (b) The system displays a form overlaid on the path map \newline
+        (c) The user selects the type of report and pinpoints the location along the path \newline
+        (d) The user inserts the details and confirm \newline
+        (e) The system validates the location consistency and executes the internal merging algorithm \newline
+        (f) The system updates the db and confirms submission to the user
+        \\ \hline
+        \textbf{Exit Condition} & The user feedback is successfully merged into the system \\ \hline
+        \textbf{Exception} & Location Mismatch: The user attempts to place a feedback marker too far from the actual path geometry. The system rejects the input. \\ \hline
+    \end{tabularx}
+    \caption{Use Case: [Path Feedback reporting]}
+    \label{tab:uc6_feedback_reporting}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \raggedright \textbf{\large [UC7] Search for a Path} \\[0.2cm]
     % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
     \renewcommand{\arraystretch}{1.5}
     
@@ -201,43 +341,69 @@
     \label{tab:usecase_id}
 \end{table}
 
-\subsubsection*{[UC1] User Registration}
-\begin{table}[H]
-    \centering
-    % Aumenta la spaziatura verticale tra le righe per leggibilità (come nello screenshot)
-    \renewcommand{\arraystretch}{1.5}
-    
-    % La struttura è: | colonna sinistra fissa | colonna destra auto-adattante (X) |
-    \begin{tabularx}{\textwidth}{|l|X|}
-        \hline
-        
-        % Riga 1: Name
-        \textbf{Name} & \textbf{[Inserisci Nome Use Case]} \\ \hline
-        
-        % Riga 2: Actors
-        \textbf{Actors} & [Inserisci lista Attori] \\ \hline
-        
-        % Riga 3: Entry Condition
-        \textbf{Entry Condition} & [Inserisci Condizione di Ingresso] \\ \hline
-        
-        % Riga 4: Event Flow
-        \textbf{Event Flow} & 
-        (a) [Primo passo del flusso...] \newline
-        (b) [Secondo passo del flusso...] \newline
-        (c) [Terzo passo del flusso...] \newline
-        (d) [Quarto passo del flusso...]
-        \\ \hline
-        
-        % Riga 5: Exit Condition
-        \textbf{Exit Condition} & [Inserisci Condizione di Uscita] \\ \hline
-        
-        % Riga 6: Exception
-        \textbf{Exception} & [Inserisci eventuali Eccezioni] \\ \hline
-        
-    \end{tabularx}
-    
-    \caption{Use Case: [Nome Use Case]}
-    \label{tab:usecase_id}
-\end{table}
 \subsection{Sequence diagrams}
+% --- UC1: User Registration ---
+\subsubsection*{[UC1] User Registration Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/uc1_sd.jpeg}
+    \caption{[UC1] User Registration Sequence Diagram}
+    \label{fig:sd_uc1}
+\end{figure}
+
+% --- UC2: System Access ---
+\subsubsection*{[UC2] System Access Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/uc2_sd.jpeg}
+    \caption{[UC2] System Access Sequence Diagram}
+    \label{fig:sd_uc2}
+\end{figure}
+
+% --- UC3: Activity Recording ---
+\subsubsection*{[UC3] Activity Recording Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/uc3_sd.jpeg}
+    \caption{[UC3] Activity Recording Sequence Diagram}
+    \label{fig:sd_uc3}
+\end{figure}
+
+% --- UC4: Creation of a manual path ---
+\subsubsection*{[UC4] Creation of a manual path Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/uc4_sd.jpeg}
+    \caption{[UC4] Creation of a manual path Sequence Diagram}
+    \label{fig:sd_uc4}
+\end{figure}
+
+% --- UC5: Publication of a path ---
+\subsubsection*{[UC5] Publication of a path Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/uc5_sd.jpeg}
+    \caption{[UC5] Publication of a path Sequence Diagram}
+    \label{fig:sd_uc5}
+\end{figure}
+
+% --- UC6: Path Feedback reporting ---
+\subsubsection*{[UC6] Path Feedback reporting Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/uc6_sd.jpeg}
+    \caption{[UC6] Path Feedback reporting Sequence Diagram}
+    \label{fig:sd_uc6}
+\end{figure}
+
+% --- UC7: Search for a path ---
+\subsubsection*{[UC7] Search for a path Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/uc1_sd.jpeg}
+    \caption{[UC7] Search for a path Sequence Diagram}
+    \label{fig:sd_uc7}
+\end{figure}
+\subsection{Requirement Mapping}
+
 
