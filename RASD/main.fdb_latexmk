@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1765873849.36277 "/Users/alberto/Developement/se2_project/RASD/main.tex" "main.pdf" "main" 1765873850.46623 0
+["pdflatex"] 1765875068.08543 "/Users/alberto/Developement/se2_project/RASD/main.tex" "main.pdf" "main" 1765875069.21065 0
   "/Users/alberto/Developement/se2_project/RASD/main.tex" 1763024500.03808 2974 cdfe823f81976507a922a1bcfaaa00e2 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
@@ -221,7 +221,7 @@
   "Files/2_overview/4_assumptions-dependencies-constraints.tex" 1765873536.31925 3033 f32984465aebd06e4b9fcc72c62ba2a1 ""
   "Files/3_requirements.tex" 1765873836.16837 477 b4559af10cd626111570369cf7eb6b6d ""
   "Files/3_requirements/1_external_interface_requirements.tex" 1765872660.44393 5516 66086f82bde010bcdf7371cc82e3555f ""
-  "Files/3_requirements/2_functional_requirements.tex" 1765873536.31975 14998 7a1367c0c5f9f08501fe2062badbab8d ""
+  "Files/3_requirements/2_functional_requirements.tex" 1765875066.63364 18482 1137d419343e4f81c4e78b0be9c6e631 ""
   "Files/3_requirements/3_performance_requirements.tex" 1765873536.31978 0 d41d8cd98f00b204e9800998ecf8427e ""
   "Files/3_requirements/4_design_constraints.tex" 1765873536.31993 2678 373900db76fd7feaadb867203d1fefdc ""
   "Files/3_requirements/5_software_system_attribute.tex" 1765873848.05054 4528 b11bcf1d40adb2ff886f0944498a2745 ""
@@ -235,12 +235,12 @@
   "Images/path_research_state_diagram.jpeg" 1765873536.33341 67432 de36fa03156f838e2fee6ca881b72603 ""
   "Images/user_lifecycle_state_diagram.jpeg" 1765873536.33709 74431 e86f1e769dbb004e65ab771fabb92cec ""
   "commandsFile.tex" 1763021305.57046 3525 cb72696976c75b6fa7df71e7658cc068 ""
-  "main.aux" 1765873850.35671 13214 68e39339134d7f09f309be6c6a1bcdf3 "pdflatex"
-  "main.lof" 1765873850.35917 1187 b9f9aab554b594494262a692c56b05ae "pdflatex"
-  "main.lot" 1765873850.35921 796 f9170a6d3b7b52f4c74168b9af30f966 "pdflatex"
-  "main.out" 1765873850.3586 7400 69e127dcebbe13a50b3ab403e3fc4b9b "pdflatex"
+  "main.aux" 1765875069.09965 13806 02b2bcef40e5f936670f528ca26ce63b "pdflatex"
+  "main.lof" 1765875069.10234 1187 b9f9aab554b594494262a692c56b05ae "pdflatex"
+  "main.lot" 1765875069.10238 1023 0a4f4575d43de69f5d7f5e9f171eaa01 "pdflatex"
+  "main.out" 1765875069.10156 7400 69e127dcebbe13a50b3ab403e3fc4b9b "pdflatex"
   "main.tex" 1763024500.03808 2974 cdfe823f81976507a922a1bcfaaa00e2 ""
-  "main.toc" 1765873850.35912 4821 c496c888d1941335d35f05630b0527fb "pdflatex"
+  "main.toc" 1765875069.1021 4821 5a15b114312f88759bf9fc8ac7c0085a "pdflatex"
   "util/abbrev.tex" 1762699592.35203 463 6eaaf442846fbee20367b2cd35d459f2 ""
   "util/highlight.tex" 1762699592.35233 2200 bdafbaf852cc33096d9d2e1cc54b31fe ""
   (generated)
