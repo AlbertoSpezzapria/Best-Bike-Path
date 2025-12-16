@@ -404,6 +404,209 @@ The system handles the creation of new paths through two modes: automatic detect
     \caption{[UC7] Search for a path Sequence Diagram}
     \label{fig:sd_uc7}
 \end{figure}
+
 \subsection{Requirement Mapping}
+\label{subsec:req_mapping}
 
+The following tables map the project goals to the specific requirements, domain assumptions (A), and dependencies (D) necessary to achieve them.
 
+% ==============================================================================
+% GOAL 1
+% ==============================================================================
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    % Definizione colonne: X (auto, sinistra) e m{6cm} (fisso, sinistra)
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}m{6cm}|}
+        \hline
+        \multicolumn{2}{|c|}{\cellcolor{gray!20}\textbf{G1: Support cyclists in tracking their activities}} \\ \hline
+        \centering\textbf{Requirements} & \centering\textbf{Assumptions \& Dependencies} \tabularnewline \hline
+        
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{R1}: The platform allows users to create an account by providing the required personal information.
+            \item \textbf{R2}: The platform allows registered users to log in and access the system.
+            \item \textbf{R3}: The platform allows registered users to recover the access credentials.
+            \item \textbf{R4}: The platform allows guest users (non-registered users) to access only the path search functionality of the system.
+            \item \textbf{R5}: The system shall allow registered users to start recording a new cycling activity.
+            \item \textbf{R6}: The system shall allow users to select an existing path from the path public repository to follow during the activity (not mandatory).
+            \item \textbf{R7}: The system shall collect raw data from the mobile device’s sensors (GPS, accelerometer, gyroscope) during the recording of an activity.
+            \item \textbf{R8}: The system shall analyze the user’s speed derived from GPS data to verify if the user is effectively cycling.
+            \item \textbf{R9}: The system shall analyze accelerometer and gyroscope data to detect potential obstacles or road surface anomalies.
+            \item \textbf{R10}: The system shall calculate real-time statistics during the recording, including total distance covered and average speed.
+            \item \textbf{R11}: The system shall allow the user to pause and resume the recording of an activity.
+        \end{itemize}
+        \end{minipage}
+        &
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{A3}: \textbf{Recording Implies Path Data:} It is assumed that recording a sporting activity implicitly involves collecting path data (GPS/Status) for potential path creation.
+            \item \textbf{D1}: \textbf{External weather service:} The system relies on the availability and accuracy of GPS data from users’ devices to record cycling activities and create paths.
+            \item \textbf{D3}: \textbf{Storage database:} Stores all platform data, including user routes, additional information (road conditions, obstacles), user profiles and publication metadata. Ensures persistence, consistency, and efficient retrieval.
+        \end{itemize}
+        \end{minipage}
+        \\ \hline
+    \end{tabularx}
+    \caption{Requirement Mapping for G1}
+    \label{tab:mapping_g1}
+\end{table}
+
+% ==============================================================================
+% GOAL 2
+% ==============================================================================
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}m{6cm}|}
+        \hline
+        \multicolumn{2}{|c|}{\cellcolor{gray!20}\textbf{G2: Allow cyclists to contribute information about bike paths}} \\ \hline
+        \centering\textbf{Requirements} & \centering\textbf{Assumptions \& Dependencies} \tabularnewline \hline
+        
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{R12}: Upon stopping an activity, the system shall display the list of automatically detected obstacles.
+            \item \textbf{R13}: The system shall require the user to validate the detected obstacles before proceeding.
+            \item \textbf{R14}: After validation, the system shall analyze the recorded GPS trace to identify if it matches an existing path in the database.
+            \item \textbf{R15}: If the recorded trace matches an existing public path, the system shall automatically associate the activity with that path entity.
+            \item \textbf{R16}: The system shall use the validated data to update the status and information of the existing public path.
+            \item \textbf{R17}: The system shall add the identified path to the “My paths” section if not already present.
+            \item \textbf{R18}: If the recorded trace doesn't match any existing public path, the system shall allow users to generate a new path entity starting from the GPS trace of a recorded activity.
+            \item \textbf{R19}: The system shall allow the user to associate a name to the recorded path and store it in the “My paths” section.
+            \item \textbf{R20}: The system shall allow the user to create a new path manually by selecting a sequence of streets from a map.
+            \item \textbf{R21}: The system shall require the user to manually input the status of the streets composing the path and mark the position and type of obstacles along it.
+            \item \textbf{R22}: The system shall allow the user to assign a name to the manually created path and store it in the “My Paths” section.
+            \item \textbf{R26}: The platform is able to detect when a registered user follows a path that is already available to the public and associate the activity with that path.
+            \item \textbf{R27}: The platform allows registered users to update the condition information of a path, even without performing an activity on that path.
+        \end{itemize}
+        \end{minipage}
+        &
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{A2}: \textbf{Validation Constraint:} While user confirmation can happen anytime for private activities, automatically detected data (sensors) must be validated by the user before being used for public updates.
+            \item \textbf{A5}: \textbf{Manual Creator Competence:} It is assumed that when a user creates a path manually, they have physically traversed it and possess knowledge of its current status.
+            \item \textbf{D5}: \textbf{Icon service:} Provides a library of graphical icons used across the interface for consistent and intuitive representation of road conditions, obstacles, route statuses, and other UI elements.
+        \end{itemize}
+        \end{minipage}
+        \\ \hline
+    \end{tabularx}
+    \caption{Requirement Mapping for G2}
+    \label{tab:mapping_g2}
+\end{table}
+
+% ==============================================================================
+% GOAL 3
+% ==============================================================================
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}m{6cm}|}
+        \hline
+        \multicolumn{2}{|c|}{\cellcolor{gray!20}\textbf{G3: Enable the publication of recorded path information}} \\ \hline
+        \centering\textbf{Requirements} & \centering\textbf{Assumptions \& Dependencies} \tabularnewline \hline
+        
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{R28}: The system shall allow users to edit the information (name, street status, obstacles) of any path they have created.
+            \item \textbf{R29}: The system shall allow users to publish a stored path, making it available to the community.
+            \item \textbf{R12}: Upon stopping an activity, the system shall display the list of automatically detected obstacles.
+            \item \textbf{R13}: The system shall require the user to validate the detected obstacles before proceeding.
+            \item \textbf{R14}: After validation, the system shall analyze the recorded GPS trace to identify if it matches an existing path in the database.
+            \item \textbf{R15}: If the recorded trace matches an existing public path, the system shall automatically associate the activity with that path entity.
+            \item \textbf{R16}: The system shall use the validated data to update the status and information of the existing public path.
+            \item \textbf{R17}: The system shall add the identified path to the “My paths” section if not already present.
+            \item \textbf{R18}: If the recorded trace doesn't match any existing public path, the system shall allow users to generate a new path entity starting from the GPS trace of a recorded activity.
+            \item \textbf{R19}: The system shall allow the user to associate a name to the recorded path and store it in the “My paths” section.
+            \item \textbf{R20}: The system shall allow the user to create a new path manually by selecting a sequence of streets from a map.
+            \item \textbf{R21}: The system shall require the user to manually input the status of the streets composing the path and mark the position and type of obstacles along it.
+            \item \textbf{R22}: The system shall allow the user to assign a name to the manually created path and store it in the “My Paths” section.
+        \end{itemize}
+        \end{minipage}
+        &
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{A4}: \textbf{Contribution via Merging:} Once a path is public, its core geometry cannot be overwritten; updates happen through feedback/reports that are merged by the system.
+            \item \textbf{A6}: \textbf{Path Uniqueness:} The system assumes that no two identical public paths (same geometry) can exist in the database.
+            \item \textbf{A7}: \textbf{Manual Duplicate Avoidance:} Automatic duplicate detection relies on GPS tracks. For manual creation, it is assumed the user checks the map for duplicates before creating a new path.
+            \item \textbf{D4}: \textbf{Authentication services:} Manages user identity verification, login processes and secure access to personal data and features.
+        \end{itemize}
+        \end{minipage}
+        \\ \hline
+    \end{tabularx}
+    \caption{Requirement Mapping for G3}
+    \label{tab:mapping_g3}
+\end{table}
+
+% ==============================================================================
+% GOAL 4
+% ==============================================================================
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}m{6cm}|}
+        \hline
+        \multicolumn{2}{|c|}{\cellcolor{gray!20}\textbf{G4: Enable route search and visualization}} \\ \hline
+        \centering\textbf{Requirements} & \centering\textbf{Assumptions \& Dependencies} \tabularnewline \hline
+        
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{R23}: The platform allows users to search for cycling paths based on a starting point and an ending point.
+            \item \textbf{R24}: The platform allows users to filter the search results based on the path parameters.
+            \item \textbf{R25}: The platform is able to rank the available paths based on the path data, including the condition of each segment, the freshness of the information, and the effectiveness of the path in connecting the selected points.
+            \item \textbf{R1}: The platform allows users to create an account by providing the required personal information.
+            \item \textbf{R2}: The platform allows registered users to log in and access the system.
+            \item \textbf{R3}: The platform allows registered users to recover the access credentials.
+            \item \textbf{R4}: The platform allows guest users (non-registered users) to access only the path search functionality of the system.
+        \end{itemize}
+        \end{minipage}
+        &
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{A1}: \textbf{Path Optimality Definition:} A path is considered “better” than another if it minimizes the travel distance or if its start/end points are closer to the user’s desired origin/destination.
+            \item \textbf{D2}: \textbf{Mapping service:} Offers geographic data and map layers used to visualize routes, match GPS tracks to road segments and retrieve details about paths, intersections, and terrains.
+        \end{itemize}
+        \end{minipage}
+        \\ \hline
+    \end{tabularx}
+    \caption{Requirement Mapping for G4}
+    \label{tab:mapping_g4}
+\end{table}
+
+% ==============================================================================
+% GOAL 5
+% ==============================================================================
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}m{6cm}|}
+        \hline
+        \multicolumn{2}{|c|}{\cellcolor{gray!20}\textbf{G5: Maintain up-to-date and reliable path information}} \\ \hline
+        \centering\textbf{Requirements} & \centering\textbf{Assumptions \& Dependencies} \tabularnewline \hline
+        
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{R12}: Upon stopping an activity, the system shall display the list of automatically detected obstacles.
+            \item \textbf{R13}: The system shall require the user to validate the detected obstacles before proceeding.
+            \item \textbf{R14}: After validation, the system shall analyze the recorded GPS trace to identify if it matches an existing path in the database.
+            \item \textbf{R15}: If the recorded trace matches an existing public path, the system shall automatically associate the activity with that path entity.
+            \item \textbf{R16}: The system shall use the validated data to update the status and information of the existing public path.
+            \item \textbf{R17}: The system shall add the identified path to the “My paths” section if not already present.
+            \item \textbf{R18}: If the recorded trace doesn't match any existing public path, the system shall allow users to generate a new path entity starting from the GPS trace of a recorded activity.
+            \item \textbf{R19}: The system shall allow the user to associate a name to the recorded path and store it in the “My paths” section.
+            \item \textbf{R26}: The platform is able to detect when a registered user follows a path that is already available to the public and associate the activity with that path.
+            \item \textbf{R27}: The platform allows registered users to update the condition information of a path, even without performing an activity on that path.
+            \item \textbf{R25}: The platform is able to rank the available paths based on the path data, including the condition of each segment, the freshness of the information, and the effectiveness of the path in connecting the selected points.
+        \end{itemize}
+        \end{minipage}
+        &
+        \begin{minipage}[t]{\linewidth}
+        \begin{itemize}[leftmargin=*, nosep, label={}]
+            \item \textbf{A4}: \textbf{Contribution via Merging:} Once a path is public, its core geometry cannot be overwritten; updates happen through feedback/reports that are merged by the system.
+            \item \textbf{A2}: \textbf{Validation Constraint:} While user confirmation can happen anytime for private activities, automatically detected data (sensors) must be validated by the user before being used for public updates.
+            \item \textbf{D3}: \textbf{Storage database:} Stores all platform data, including user routes, additional information (road conditions, obstacles), user profiles and publication metadata. Ensures persistence, consistency, and efficient retrieval.
+        \end{itemize}
+        \end{minipage}
+        \\ \hline
+    \end{tabularx}
+    \caption{Requirement Mapping for G5}
+    \label{tab:mapping_g5}
+\end{table}
