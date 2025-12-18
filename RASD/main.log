@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  16 DEC 2025 11:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  18 DEC 2025 08:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/alberto/Developement/se2_project/RASD/main.tex
-(/Users/alberto/Developement/se2_project/RASD/main.tex
+**main.tex
+(./main.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
@@ -850,11 +850,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [11]
-<Images/domain_class_diagram.jpeg, id=421, 1163.34625pt x 1442.38875pt>
+<Images/domain_class_diagram.jpeg, id=421, 1290.8225pt x 871.255pt>
 File: Images/domain_class_diagram.jpeg Graphic file (type jpg)
 <use Images/domain_class_diagram.jpeg>
 Package pdftex.def Info: Images/domain_class_diagram.jpeg  used on input line 100.
-(pdftex.def)             Requested size: 409.71692pt x 507.99092pt.
+(pdftex.def)             Requested size: 409.71692pt x 276.53398pt.
 
 
 
@@ -1000,47 +1000,47 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [23]
 Chapter 3.
 (./Files/3_requirements.tex (./Files/3_requirements/1_external_interface_requirements.tex
-<example-image-a.pdf, id=527, 321.2pt x 240.9pt>
-File: example-image-a.pdf Graphic file (type pdf)
-<use example-image-a.pdf>
-Package pdftex.def Info: example-image-a.pdf  used on input line 13.
-(pdftex.def)             Requested size: 218.51521pt x 163.89069pt.
-<example-image-b.pdf, id=528, 321.2pt x 240.9pt>
-File: example-image-b.pdf Graphic file (type pdf)
-<use example-image-b.pdf>
-Package pdftex.def Info: example-image-b.pdf  used on input line 19.
-(pdftex.def)             Requested size: 218.51521pt x 163.89069pt.
-<example-image.pdf, id=529, 321.2pt x 240.9pt>
+<Images/landing_page_1.png, id=527, 1480.53125pt x 1054.94125pt>
+File: Images/landing_page_1.png Graphic file (type png)
+<use Images/landing_page_1.png>
+Package pdftex.def Info: Images/landing_page_1.png  used on input line 12.
+(pdftex.def)             Requested size: 218.51521pt x 155.69102pt.
+<Images/explore_paths.png, id=529, 1484.54625pt x 1062.97125pt>
+File: Images/explore_paths.png Graphic file (type png)
+<use Images/explore_paths.png>
+Package pdftex.def Info: Images/explore_paths.png  used on input line 17.
+(pdftex.def)             Requested size: 218.51521pt x 156.45439pt.
+<example-image.pdf, id=530, 321.2pt x 240.9pt>
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 33.
+Package pdftex.def Info: example-image.pdf  used on input line 31.
 (pdftex.def)             Requested size: 145.68144pt x 109.26413pt.
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 37.
+Package pdftex.def Info: example-image.pdf  used on input line 35.
 (pdftex.def)             Requested size: 145.68144pt x 109.26413pt.
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 41.
+Package pdftex.def Info: example-image.pdf  used on input line 39.
 (pdftex.def)             Requested size: 145.68144pt x 109.26413pt.
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 49.
+Package pdftex.def Info: example-image.pdf  used on input line 47.
 (pdftex.def)             Requested size: 145.68144pt x 109.26413pt.
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 53.
+Package pdftex.def Info: example-image.pdf  used on input line 51.
 (pdftex.def)             Requested size: 145.68144pt x 109.26413pt.
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 57.
+Package pdftex.def Info: example-image.pdf  used on input line 55.
 (pdftex.def)             Requested size: 145.68144pt x 109.26413pt.
 
 
 [24
 
 
- </usr/local/texlive/2025/texmf-dist/tex/latex/mwe/example-image-a.pdf> </usr/local/texlive/2025/texmf-dist/tex/latex/mwe/example-image-b.pdf>]
+ <./Images/landing_page_1.png> <./Images/explore_paths.png>]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1144,7 +1144,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [33]
-<Images/uc1_sd.jpeg, id=602, 1102.1175pt x 1418.29875pt>
+<Images/uc1_sd.jpeg, id=597, 1102.1175pt x 1418.29875pt>
 File: Images/uc1_sd.jpeg Graphic file (type jpg)
 <use Images/uc1_sd.jpeg>
 Package pdftex.def Info: Images/uc1_sd.jpeg  used on input line 349.
@@ -1159,7 +1159,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [34]
-<Images/uc2_sd.jpeg, id=608, 836.12375pt x 924.45375pt>
+<Images/uc2_sd.jpeg, id=603, 836.12375pt x 924.45375pt>
 File: Images/uc2_sd.jpeg Graphic file (type jpg)
 <use Images/uc2_sd.jpeg>
 Package pdftex.def Info: Images/uc2_sd.jpeg  used on input line 358.
@@ -1174,7 +1174,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [35 <./Images/uc1_sd.jpeg>]
-<Images/uc3_sd.jpeg, id=614, 1213.53375pt x 1464.47125pt>
+<Images/uc3_sd.jpeg, id=609, 1213.53375pt x 1464.47125pt>
 File: Images/uc3_sd.jpeg Graphic file (type jpg)
 <use Images/uc3_sd.jpeg>
 Package pdftex.def Info: Images/uc3_sd.jpeg  used on input line 367.
@@ -1189,7 +1189,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [36 <./Images/uc2_sd.jpeg>]
-<Images/uc4_sd.jpeg, id=620, 771.88374pt x 971.63pt>
+<Images/uc4_sd.jpeg, id=615, 771.88374pt x 971.63pt>
 File: Images/uc4_sd.jpeg Graphic file (type jpg)
 <use Images/uc4_sd.jpeg>
 Package pdftex.def Info: Images/uc4_sd.jpeg  used on input line 376.
@@ -1204,7 +1204,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [37 <./Images/uc3_sd.jpeg>]
-<Images/uc5_sd.jpeg, id=627, 1039.885pt x 928.46875pt>
+<Images/uc5_sd.jpeg, id=622, 1039.885pt x 928.46875pt>
 File: Images/uc5_sd.jpeg Graphic file (type jpg)
 <use Images/uc5_sd.jpeg>
 Package pdftex.def Info: Images/uc5_sd.jpeg  used on input line 385.
@@ -1219,7 +1219,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [38 <./Images/uc4_sd.jpeg>]
-<Images/uc6_sd.jpeg, id=633, 1232.605pt x 1107.13625pt>
+<Images/uc6_sd.jpeg, id=628, 1232.605pt x 1107.13625pt>
 File: Images/uc6_sd.jpeg Graphic file (type jpg)
 <use Images/uc6_sd.jpeg>
 Package pdftex.def Info: Images/uc6_sd.jpeg  used on input line 394.
@@ -1310,18 +1310,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 69E127DCEBBE13A50B3AB403E3FC4B9B;7400.
  ) 
 Here is how much of TeX's memory you used:
- 25887 strings out of 473190
- 483235 string characters out of 5715800
+ 25876 strings out of 473190
+ 482857 string characters out of 5715800
  856352 words of memory out of 5000000
- 48349 multiletter control sequences out of 15000+600000
+ 48339 multiletter control sequences out of 15000+600000
  598547 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,98p,801b,671s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,20n,98p,756b,671s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmss17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (46 pages, 993274 bytes).
+Output written on main.pdf (46 pages, 2179173 bytes).
 PDF statistics:
- 750 PDF objects out of 1000 (max. 8388607)
- 669 compressed objects within 7 object streams
+ 745 PDF objects out of 1000 (max. 8388607)
+ 662 compressed objects within 7 object streams
  250 named destinations out of 1000 (max. 500000)
  501 words of extra memory for PDF output out of 10000 (max. 10000000)
 
