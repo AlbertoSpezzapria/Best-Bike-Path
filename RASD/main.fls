@@ -533,6 +533,11 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/mwe/example-image.pdf
 INPUT ./Files/3_requirements/2_functional_requirements.tex
 INPUT ./Files/3_requirements/2_functional_requirements.tex
 INPUT Files/3_requirements/2_functional_requirements.tex
+INPUT ./Images/use_cases_diagram_utilities.png
+INPUT ./Images/use_cases_diagram_utilities.png
+INPUT ./Images/use_cases_diagram_utilities.png
+INPUT ./Images/use_cases_diagram_utilities.png
+INPUT ./Images/use_cases_diagram_utilities.png
 INPUT ./Images/uc1_sd.jpeg
 INPUT ./Images/uc1_sd.jpeg
 INPUT ./Images/uc1_sd.jpeg
