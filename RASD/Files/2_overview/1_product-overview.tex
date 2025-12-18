@@ -104,15 +104,17 @@
     \label{fig:domain-class-diagram}
 \end{figure}
 
+The diagram illustrates the system's static structure, centered around the \textbf{User} entity.
+\begin{itemize}
+    \item \textbf{User:} The primary actor of the system. Beyond authentication credentials, this entity stores physical attributes (\texttt{height}, \texttt{weight}) essential for calculating performance metrics. The User acts as the owner of recorded \textbf{Activities}, created \textbf{Paths}, and submitted \textbf{Feedback}.
+    \item \textbf{Path:} The core artifact, defined by metadata (e.g., \texttt{isPublic}) and a geometry composed of \textbf{Position} coordinates. It can be created manually or derived from an activity.
+    \item \textbf{Activity:} Represents a tracking session with temporal data (\texttt{start\_time}), \textbf{PerformanceMetrics}, and \textbf{Meteo} conditions. It is linked to the User and optionally to a Path (\texttt{used\_in}).
+    \item \textbf{Feedback:} Models user reports on path conditions. It references specific \textbf{Position} points to spatially locate obstacles (e.g., potholes) along the path's geometry.
+    \item \textbf{Position:} The shared geospatial unit ensuring consistency between paths, traces, and feedback locations.
+\end{itemize}
+
 
 \subsection{State Diagrams}
-\subsubsection*{Path Creation}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{Images/path_creation.jpeg}
-    \caption{Path Creation State Diagram}
-    \label{fig:path-creation-state-diagram}
-\end{figure}
 
 \subsubsection*{Activity Recording}
 \begin{figure}[H]
@@ -120,6 +122,26 @@
     \includegraphics[width=0.5\textwidth]{Images/activity_recording_state_diagram.jpeg}
     \caption{Activity Recording State Diagram}
     \label{fig:activity-recording-state-diagram}
+\end{figure}
+
+This state machine describes the complete lifecycle of a cycling activity recording session.
+
+The process begins in the \textbf{Idle} state. From here, the system can transition to the active phase in two distinct ways: \begin{itemize} \item \textbf{Manual Start:} The user explicitly initiates the session, moving directly to \textbf{Recording in Progress}. \item \textbf{Automatic Detection:} If "Automatic Mode" is active, the system enters the \textbf{Speed Monitoring} state. Upon detecting a speed greater than the predefined threshold, it automatically transitions to \textbf{Recording in Progress}. \end{itemize}
+
+The \textbf{Recording in Progress} state is a composite state where the system continuously loops between \textbf{GPS Acquisition} and \textbf{Sensor Reading} (collecting data from the accelerometer and gyroscope). Concurrently, if the service is available, the system performs a \textbf{Weather Retrieval} operation to enrich the activity data.
+
+The recording phase concludes when a "Manual Stop" occurs or the speed drops below the threshold, triggering a transition to the \textbf{Data Review} state. This is a mandatory validation phase where the user verifies the collected data and performs \textbf{False Positives Correction} (e.g., removing incorrectly detected potholes).
+
+Once the review is confirmed, the system logic branches based on the GPS trace analysis: \begin{enumerate} \item \textbf{Merging Data:} If the system detects that the activity matches an existing public path, it transitions to this state to integrate the new feedback (obstacles/conditions) with the existing path data. \item \textbf{Direct Saving:} If no matching public path is found, the system proceeds directly to \textbf{Activity Saved}. \end{enumerate}
+
+Both flows converge in the \textbf{Activity Saved} state. From here, the process either terminates or transitions to \textbf{Path Creation}, allowing the user to generate a new path entity from the recorded trace (a process detailed in a separate diagram).
+
+\subsubsection*{Path Creation}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Images/path_creation.jpeg}
+    \caption{Path Creation State Diagram}
+    \label{fig:path-creation-state-diagram}
 \end{figure}
 
 \subsubsection*{Meteorological Data Retrieval}
