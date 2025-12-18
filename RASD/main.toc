@@ -41,7 +41,7 @@
 \contentsline {subsubsection}{Path ranking}{27}{section*.44}%
 \contentsline {subsubsection}{Entering path condition information}{28}{section*.45}%
 \contentsline {subsubsection}{Path management and publication}{28}{section*.46}%
-\contentsline {subsection}{\numberline {3.2.1}Use case diagrams}{29}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.1}Use case diagrams}{28}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Use cases}{29}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Sequence diagrams}{35}{subsection.3.2.3}%
 \contentsline {subsection}{\numberline {3.2.4}Requirement Mapping}{42}{subsection.3.2.4}%
@@ -49,7 +49,7 @@
 \contentsline {section}{\numberline {3.4}Design Constraints}{42}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Standards Compliance}{42}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Hardware Limitations}{42}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Any other Constraint}{42}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.3}Any other Constraint}{43}{subsection.3.4.3}%
 \contentsline {section}{\numberline {3.5}Software System Attributes}{43}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Reliability}{43}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}Availability}{43}{subsection.3.5.2}%
