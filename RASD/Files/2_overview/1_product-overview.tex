@@ -13,8 +13,10 @@
     \item When a user wants to record an activity, they must go to the “Record Trip” panel.
     \item From there, in the “Automatic” section, they simply need to press the play button: the app will start recording GPS data and storing the route and detected potholes.
     \item Once the route is completed, pressing the stop button will end the recording.
-    \item At this point, the user will be asked to verify whether the potholes detected by the application are actually present or are false positives, and to confirm the condition of the route.
-    \item Finally, a prompt will ask the user whether they want to publish the route or keep it private.
+    \item At this point, the user will be asked to verify whether the obstacles detected by the application are actually present or are false positives, and to confirm the condition of the path.
+    \item The system automatically analyzes the recorded GPS trace to check if it matches an existing public path.
+    \item If a match is found, the activity is associated with that path, and the validated information is automatically merged with the existing data.
+    \item If no match is found, a prompt will ask the user whether they want to publish the new route or keep it private.
 \end{enumerate}
 
 \subsubsection*{A user creates a path manually}
@@ -26,9 +28,9 @@
     \item The user enters the required information, including:
         \begin{itemize}
             \item the name of the path,
-            \item the streets that compose the path,
-            \item the condition of each segment,
-            \item any obstacles or issues present along the route.
+            \item the positions that compose the path,
+            \item the condition of the path,
+            \item the presence of any obstacles or issues present along the route.
         \end{itemize}
     \item After completing the input, the user confirms the creation of the path.
     \item The system saves the data and displays a confirmation message.
@@ -61,7 +63,7 @@
 \end{enumerate}
 \subsubsection*{User publishes a path}
 \begin{enumerate}
-    \item The user accesses the BBP system and opens the “My Routes” section.
+    \item The user accesses the BBP system and opens the “My Paths section.
     \item The system displays the list of paths associated with the user, indicating for each one, among other properties, its status (private or public).
     \item The user selects a private route and, using the appropriate button, requests its publication.
     \item Upon receiving the publication request, the system asks the user to confirm additional information related to the route:
@@ -80,7 +82,7 @@
     \item The user selects a route and opens the section dedicated to additional information.
     \item The system displays the current information, including:
         \begin{itemize}
-            \item The condition of the roads that make up the route;
+            \item The condition of the route;
             \item The presence of obstacles or damaged sections;
             \item The origin of each piece of data (manually entered or automatically acquired).
         \end{itemize}
