@@ -143,6 +143,21 @@ Both flows converge in the \textbf{Activity Saved} state. From here, the process
     \caption{Path Creation State Diagram}
     \label{fig:path-creation-state-diagram}
 \end{figure}
+The diagram illustrates the creation, management, and evolution process of the Path object within the system. The lifecycle is divided into two macro-phases: instantiation (Manual or Automatic) and state management (Private or Public).
+\begin{itemize}
+    \item \textbf{Path Instantiation:}
+    \begin{itemize}
+        \item \textbf{Manual Creation:} The user enters the descriptive data of the path, which is initially managed in a draft state (Draft) within the Manual context. Upon saving, the path transitions to the user's personal list.
+        \item \textbf{Automatic Creation:} The system generates the path based on data collected during a cycling activity (Auto-Collected Data). Once the acquisition is complete, the path is saved and persisted in the private section.
+    \end{itemize}
+
+    \item \textbf{Management and Publication:}
+    \begin{itemize} 
+        \item \textbf{Private State:} Once saved (or by accessing "My Paths"), the path resides in the \textbf{Private} state. In this phase, the user has full control over the entity: they can modify the data (modified the data cycle), permanently delete the path (transition to Discarded), or proceed to publication.
+        \item \textbf{Published State:} Upon publication, the path becomes visible to the community. In this state, modifications are no longer direct but follow a collaborative process: users can report changes (reporting changes), which are processed by the system via the \textbf{Merge Data} function. This function validates and integrates the new information, triggering the actual update of the public data (update data).
+    \end{itemize}
+\end{itemize}
+
 
 \subsubsection*{Meteorological Data Retrieval}
 \begin{figure}[H]
