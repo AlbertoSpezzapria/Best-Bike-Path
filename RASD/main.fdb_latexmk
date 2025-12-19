@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1766134755.34852 "main.tex" "main.pdf" "main" 1766134758.72254 0
+["pdflatex"] 1766134792.39002 "main.tex" "main.pdf" "main" 1766134795.81246 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -207,7 +207,7 @@
   "Files/1_introduction/5_reference-documents.tex" 1763483392.28319 1 68b329da9893e34099c7d8ad5cb9c940 ""
   "Files/1_introduction/6_document-structure.tex" 1765882698.7804 1189 641689462dad767ada42657ce23f61d6 ""
   "Files/2_overview.tex" 1763483392.28336 354 2b4a3aec4da7754bc902ae38a5657d3a ""
-  "Files/2_overview/1_product-overview.tex" 1766056265.27468 11645 0cea3111ee1cc9a6aa0bd166f442bd70 ""
+  "Files/2_overview/1_product-overview.tex" 1766134792.07621 14880 28a50fec2443bebe86543f3d243f2688 ""
   "Files/2_overview/2_product-functions.tex" 1763485148.51436 8632 ba422ad70aa62cd456f5190ba32b175c ""
   "Files/2_overview/3_user-characteristics.tex" 1763483392.28408 1230 4c39c493e92758ac666d191b2a0d6381 ""
   "Files/2_overview/4_assumptions-dependencies-constraints.tex" 1765451712.86558 3033 f32984465aebd06e4b9fcc72c62ba2a1 ""
@@ -239,12 +239,12 @@
   "Images/use_cases_diagram_utilities.png" 1766056395.32973 178399 f6dc30dceb9ea8552f6e58f3f774aada ""
   "Images/user_lifecycle_state_diagram.jpeg" 1765452831.10764 74431 e86f1e769dbb004e65ab771fabb92cec ""
   "commandsFile.tex" 1763483392.29138 3525 cb72696976c75b6fa7df71e7658cc068 ""
-  "main.aux" 1766134758.61083 17824 b043695bf00471eb8ba829f43db00f5b "pdflatex"
-  "main.lof" 1766134758.61356 2231 ba787de0abf3dbdf3e05939dd19bec41 "pdflatex"
-  "main.lot" 1766134758.61383 1558 de8a284bfb65cdad09aef3b99df773df "pdflatex"
-  "main.out" 1766134758.6131 7400 69e127dcebbe13a50b3ab403e3fc4b9b "pdflatex"
+  "main.aux" 1766134795.70264 17824 f20606ca308bc5b5ec5a71e88a566e7b "pdflatex"
+  "main.lof" 1766134795.70518 2231 70695766044b815f09fdc2dfb1e8ebfc "pdflatex"
+  "main.lot" 1766134795.70523 1558 de8a284bfb65cdad09aef3b99df773df "pdflatex"
+  "main.out" 1766134795.70472 7400 69e127dcebbe13a50b3ab403e3fc4b9b "pdflatex"
   "main.tex" 1763483392.29522 2974 cdfe823f81976507a922a1bcfaaa00e2 ""
-  "main.toc" 1766134758.61344 4821 9bcd49fdd9f6e403634a8b15314325b3 "pdflatex"
+  "main.toc" 1766134795.70507 4821 9bcd49fdd9f6e403634a8b15314325b3 "pdflatex"
   "util/abbrev.tex" 1763483392.29606 463 6eaaf442846fbee20367b2cd35d459f2 ""
   "util/highlight.tex" 1763483392.29648 2200 bdafbaf852cc33096d9d2e1cc54b31fe ""
   (generated)
