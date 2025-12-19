@@ -128,7 +128,7 @@ fact PrivatePathPrivacy {
 
 
 
-\begin{lstlisting}[language=Alloy, caption={Complete Alloy Model for BestBikePaths}, label={lst:alloy_model}]
+\begin{lstlisting}[language=Alloy, caption={Full Lifecycle Scenario}, label={lst:alloy_model}]
 
 /* ==============================================================================
    5. PREDICATES (TEST SCENARIOS)
@@ -185,7 +185,7 @@ run FullLifecycleScenario for 5 but 5 Int
 \end{figure}
 
 
-\begin{lstlisting}[language=Alloy, caption={Complete Alloy Model for BestBikePaths}, label={lst:alloy_model}]
+\begin{lstlisting}[language=Alloy, caption={Confliting Feedback Merge Scenario}, label={lst:alloy_model}]
     /* SCENARIO 2: CONFLICTING FEEDBACK MERGE
     Verifies that the system supports divergent opinions.
     Generates a public path with at least two feedbacks reporting 
@@ -204,6 +204,10 @@ run FullLifecycleScenario for 5 but 5 Int
     run ConflictingFeedbackMerge for 4 but 5 Int
 \end{lstlisting}
 
+This scenario demonstrates the system's capability to handle and persist divergent opinions from the community regarding the same public path, a necessary condition for the merging logic.
+The generated instance depicts a single Path with Public status linked to multiple distinct Feedback entities. Specifically, the model enforces the existence of conflicting reports, where one user rates the condition as Optimal while another rates it as Bad. 
+This scenario formally validates the structural prerequisites for the Data Merging requirement. It proves that the domain model allows for the coexistence of contradictory data points without inconsistency. This accumulation of diverse feedback is the input required by the server-side aggregation algorithm to dynamically compute the path's overall score and \texttt{currentCondition}. 
+
 \begin{figure}[H] % [H] forza l'immagine esattamente in questo punto
     \centering
     \includegraphics[width=0.8\textwidth]{Images/conflict_feedback_merge_graph.jpeg} 
@@ -211,7 +215,7 @@ run FullLifecycleScenario for 5 but 5 Int
     \label{fig:alloy_instance_4}
 \end{figure}
 
-\begin{lstlisting}[language=Alloy, caption={Complete Alloy Model for BestBikePaths}, label={lst:alloy_model}]
+\begin{lstlisting}[language=Alloy, caption={Rejected Activity Filter Scenario}, label={lst:alloy_model}]
 /* SCENARIO 3: REJECTED ACTIVITY FILTER
    Demonstrates system robustness (Safety).
    Verifies the existence of an activity that is too slow (e.g., walking at speed 3)
@@ -226,6 +230,10 @@ pred RejectedActivityScenario {
 }
 run RejectedActivityScenario for 3 but 5 Int
 \end{lstlisting}
+
+This scenario serves as a negative test to verify the robustness of the system's filtering logic, ensuring that invalid activities do not pollute the path database.
+The predicate simulates an edge case where an Activity is recorded with an \texttt{avgSpeed} of 3 (representing a walking pace), which falls below the mandatory threshold defined in the domain facts (speed >4). The solver confirms that, in this state, no Path entity sharing the same trace and owner exists. 
+This successfully verifies the Safety and Data Integrity constraints. It demonstrates that the logical rules correctly prevent the promotion of non-cycling activities (e.g., walking or running) into public paths, thereby guaranteeing that the platform remains focused exclusively on biking data. 
 
 \begin{figure}[H] % [H] forza l'immagine esattamente in questo punto
     \centering

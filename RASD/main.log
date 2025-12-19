@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  19 DEC 2025 16:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  19 DEC 2025 16:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1546,12 +1546,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <Images/conflict_feedback_merge_graph.jpeg, id=922, 1606.0pt x 668.4975pt>
 File: Images/conflict_feedback_merge_graph.jpeg Graphic file (type jpg)
 <use Images/conflict_feedback_merge_graph.jpeg>
-Package pdftex.def Info: Images/conflict_feedback_merge_graph.jpeg  used on input line 209.
+Package pdftex.def Info: Images/conflict_feedback_merge_graph.jpeg  used on input line 213.
 (pdftex.def)             Requested size: 364.19667pt x 151.59889pt.
 <Images/rejected_activity_graph.jpeg, id=923, 1284.8pt x 356.33125pt>
 File: Images/rejected_activity_graph.jpeg Graphic file (type jpg)
 <use Images/rejected_activity_graph.jpeg>
-Package pdftex.def Info: Images/rejected_activity_graph.jpeg  used on input line 232.
+Package pdftex.def Info: Images/rejected_activity_graph.jpeg  used on input line 240.
 (pdftex.def)             Requested size: 364.19667pt x 101.0063pt.
 )
 
@@ -1562,11 +1562,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[57 <./Images/conflict_feedback_merge_graph.jpeg> <./Images/rejected_activity_graph.jpeg>]
+[57 <./Images/conflict_feedback_merge_graph.jpeg>]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[58 <./Images/rejected_activity_graph.jpeg>]
 Chapter 5.
 (./Files/5_effort.tex)
 
-[58
+[59
 
 
 ] (./main.aux)
@@ -1582,18 +1591,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 69E127DCEBBE13A50B3AB403E3FC4B9B;7400.
  ) 
 Here is how much of TeX's memory you used:
- 27907 strings out of 473190
- 511975 string characters out of 5715800
- 1365038 words of memory out of 5000000
+ 27908 strings out of 473190
+ 511982 string characters out of 5715800
+ 1365033 words of memory out of 5000000
  50129 multiletter control sequences out of 15000+600000
  601906 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,98p,901b,2078s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (58 pages, 2837048 bytes).
+Output written on main.pdf (59 pages, 2839981 bytes).
 PDF statistics:
- 1084 PDF objects out of 1200 (max. 8388607)
- 971 compressed objects within 10 object streams
- 475 named destinations out of 1000 (max. 500000)
+ 1088 PDF objects out of 1200 (max. 8388607)
+ 974 compressed objects within 10 object streams
+ 476 named destinations out of 1000 (max. 500000)
  541 words of extra memory for PDF output out of 10000 (max. 10000000)
 
