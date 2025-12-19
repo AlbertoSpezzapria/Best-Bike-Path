@@ -59,4 +59,5 @@
 \contentsline {chapter}{\numberline {4}{Formal Analysis Using Alloy}}{53}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Predicate: FullLifecycleScenario}{55}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Visual Analysis}{56}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Rejected Activity Filter Scenario}{59}{section.4.2}%
 \contentsline {chapter}{\numberline {5}Effort Spent}{60}{chapter.5}%
