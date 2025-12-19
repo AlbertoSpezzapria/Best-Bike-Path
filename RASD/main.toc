@@ -8,56 +8,59 @@
 \contentsline {subsection}{\numberline {1.2.1}World Phenomena}{8}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}Shared Phenomena}{8}{subsection.1.2.2}%
 \contentsline {section}{\numberline {1.3}Definitions, Acronyms, and Abbreviations}{9}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Acronyms}{9}{subsection.1.3.1}%
-\contentsline {section}{\numberline {1.4}Revision History}{9}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Reference Documents}{9}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Document Structure}{9}{section.1.6}%
-\contentsline {chapter}{\numberline {2}{Overall Description}}{10}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Product Overview}{10}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Scenarios}{10}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Domain Class Diagram}{13}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}State Diagrams}{14}{subsection.2.1.3}%
-\contentsline {section}{\numberline {2.2}Product Functions}{20}{section.2.2}%
-\contentsline {section}{\numberline {2.3}User Characteristics}{23}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Registered User}{23}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Unregistered User}{23}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}Assumptions, dependencies and constraints}{23}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Assumptions}{23}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Dependencies}{24}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Constraints}{24}{subsection.2.4.3}%
-\contentsline {chapter}{\numberline {3}{Specific Requirements}}{25}{chapter.3}%
-\contentsline {section}{\numberline {3.1}External Interface Requirements}{25}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}User Interfaces}{25}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Hardware Interfaces}{28}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Software Interfaces}{28}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Communication Interfaces}{28}{subsection.3.1.4}%
-\contentsline {section}{\numberline {3.2}Functional Requirements}{28}{section.3.2}%
-\contentsline {subsubsection}{Sign Up \& Login}{28}{section*.41}%
-\contentsline {subsubsection}{Activity recording}{29}{section*.42}%
-\contentsline {subsubsection}{Path creation}{29}{section*.43}%
-\contentsline {paragraph}{Automatic Creation}{29}{section*.44}%
-\contentsline {paragraph}{Manual Creation}{30}{section*.45}%
-\contentsline {subsubsection}{Path search from origin to destination}{30}{section*.46}%
-\contentsline {subsubsection}{Path ranking}{30}{section*.47}%
-\contentsline {subsubsection}{Entering path condition information}{30}{section*.48}%
-\contentsline {subsubsection}{Path management and publication}{30}{section*.49}%
-\contentsline {subsection}{\numberline {3.2.1}Use case diagrams}{31}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Use cases}{32}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Sequence diagrams}{38}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Requirement Mapping}{45}{subsection.3.2.4}%
-\contentsline {section}{\numberline {3.3}Performance Requirements}{49}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Design Constraints}{50}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Standards Compliance}{50}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Hardware Limitations}{50}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Any other Constraint}{50}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Software System Attributes}{50}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Reliability}{50}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Availability}{51}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Security}{51}{subsection.3.5.3}%
-\contentsline {subsection}{\numberline {3.5.4}Maintainability}{51}{subsection.3.5.4}%
-\contentsline {subsection}{\numberline {3.5.5}Portability}{52}{subsection.3.5.5}%
-\contentsline {chapter}{\numberline {4}{Formal Analysis Using Alloy}}{53}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Predicate: FullLifecycleScenario}{55}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Visual Analysis}{56}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Rejected Activity Filter Scenario}{59}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Effort Spent}{60}{chapter.5}%
+\contentsline {subsection}{\numberline {1.3.1}Definitions}{9}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Acronyms}{9}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Abbreviations}{10}{subsection.1.3.3}%
+\contentsline {section}{\numberline {1.4}Revision History}{10}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Reference Documents}{10}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Document Structure}{10}{section.1.6}%
+\contentsline {chapter}{\numberline {2}{Overall Description}}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Product Overview}{11}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Scenarios}{11}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Domain Class Diagram}{14}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}State Diagrams}{15}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Product Functions}{21}{section.2.2}%
+\contentsline {section}{\numberline {2.3}User Characteristics}{24}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Registered User}{24}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Unregistered User}{24}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Assumptions, dependencies and constraints}{24}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Assumptions}{24}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Dependencies}{25}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Constraints}{25}{subsection.2.4.3}%
+\contentsline {chapter}{\numberline {3}{Specific Requirements}}{26}{chapter.3}%
+\contentsline {section}{\numberline {3.1}External Interface Requirements}{26}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}User Interfaces}{26}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Hardware Interfaces}{29}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Software Interfaces}{29}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Communication Interfaces}{29}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}Functional Requirements}{29}{section.3.2}%
+\contentsline {subsubsection}{Sign Up \& Login}{29}{section*.41}%
+\contentsline {subsubsection}{Activity recording}{30}{section*.42}%
+\contentsline {subsubsection}{Path creation}{30}{section*.43}%
+\contentsline {paragraph}{Automatic Creation}{30}{section*.44}%
+\contentsline {paragraph}{Manual Creation}{31}{section*.45}%
+\contentsline {subsubsection}{Path search from origin to destination}{31}{section*.46}%
+\contentsline {subsubsection}{Path ranking}{31}{section*.47}%
+\contentsline {subsubsection}{Entering path condition information}{31}{section*.48}%
+\contentsline {subsubsection}{Path management and publication}{31}{section*.49}%
+\contentsline {subsection}{\numberline {3.2.1}Use case diagrams}{32}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Use cases}{33}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Sequence diagrams}{39}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Requirement Mapping}{46}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Performance Requirements}{50}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Design Constraints}{51}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Standards Compliance}{51}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Hardware Limitations}{51}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Any other Constraint}{51}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Software System Attributes}{51}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Reliability}{51}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Availability}{52}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Security}{52}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Maintainability}{52}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}Portability}{53}{subsection.3.5.5}%
+\contentsline {chapter}{\numberline {4}{Formal Analysis Using Alloy}}{54}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Predicate: FullLifecycleScenario}{56}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Visual Analysis}{57}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Conflicting Feedback Merge Scenario}{59}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Rejected Activity Filter Scenario}{60}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Effort Spent}{61}{chapter.5}%
