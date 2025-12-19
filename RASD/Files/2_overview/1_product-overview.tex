@@ -166,6 +166,11 @@ The diagram illustrates the creation, management, and evolution process of the P
     \caption{Meteorological Data Retrieval State Diagram}
     \label{fig:meteorological-data-retrieval-state-diagram}
 \end{figure}
+This diagram represents the enrichment of an activity with meteorological data.
+If the device is connected to the network, a request is sent to an external API.
+If the request is successful, the service retrieves data such as wind speed, temperature, and weather conditions, and formats them in a consistent way.
+The system then embeds this information into the activity and saves it to the database.
+If the request fails, the error is handled and the activity is saved without meteorological data.
 
 \subsubsection*{Path Research}
 \begin{figure}[H]
