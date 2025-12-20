@@ -59,7 +59,7 @@
 \contentsline {subsection}{\numberline {3.5.4}Maintainability}{52}{subsection.3.5.4}%
 \contentsline {subsection}{\numberline {3.5.5}Portability}{53}{subsection.3.5.5}%
 \contentsline {chapter}{\numberline {4}{Formal Analysis Using Alloy}}{54}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Predicate: FullLifecycleScenario}{56}{section.4.1}%
+\contentsline {section}{\numberline {4.1}Full Lifecycle Scenario}{56}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Visual Analysis}{57}{subsection.4.1.1}%
 \contentsline {section}{\numberline {4.2}Conflicting Feedback Merge Scenario}{59}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Rejected Activity Filter Scenario}{60}{section.4.3}%
