@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1766332578.30114 "/Users/alberto/Developement/se2_project/RASD/main.tex" "main.pdf" "main" 1766332580.57878 0
+["pdflatex"] 1766413705.60054 "/Users/alberto/Developement/se2_project/RASD/main.tex" "main.pdf" "main" 1766413708.98487 0
   "/Users/alberto/Developement/se2_project/RASD/main.tex" 1766157665.35623 4364 34e8838c0ea8f5548c2ebed2ea1901c3 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
@@ -231,7 +231,7 @@
   "Files/3_requirements/4_design_constraints.tex" 1765873536.31993 2678 373900db76fd7feaadb867203d1fefdc ""
   "Files/3_requirements/5_software_system_attribute.tex" 1765873848.05054 4528 b11bcf1d40adb2ff886f0944498a2745 ""
   "Files/4_alloy.tex" 1766248694.68058 14408 dc8cf79de5a930ab5dd71f77595842ca ""
-  "Files/5_effort.tex" 1766332577.9968 1561 a327c140bf9c0a4284c9047619ddf030 ""
+  "Files/5_effort.tex" 1766413705.36706 2013 59ea0fd07109c5e30440fec5ad15e1df ""
   "Images/PolimiLogo.png" 1762699592.34265 9009 7e2f788c721025ccfc9d873928f74371 ""
   "Images/activity_recording_state_diagram.jpeg" 1766056584.90529 55098 53c80619b47cacba14cdbc00184afe50 ""
   "Images/conflict_feedback_merge_graph.jpeg" 1766157860.48821 109844 9884fb659d604eb8b0ad82eadd1de68a ""
@@ -257,12 +257,12 @@
   "Images/use_cases_diagram_utilities.png" 1766056584.90783 178399 f6dc30dceb9ea8552f6e58f3f774aada ""
   "Images/user_lifecycle_state_diagram.jpeg" 1765873536.33709 74431 e86f1e769dbb004e65ab771fabb92cec ""
   "commandsFile.tex" 1763021305.57046 3525 cb72696976c75b6fa7df71e7658cc068 ""
-  "main.aux" 1766332580.47927 21091 cc25466c8ef3282ea271f98418a96924 "pdflatex"
-  "main.lof" 1766332580.48117 2848 d0ffae67c8aee70e57d61f1ae3a68eb0 "pdflatex"
-  "main.lot" 1766332580.4812 1558 35e9f0ce6c8f2c503cdd2352a7a02258 "pdflatex"
-  "main.out" 1766332580.48089 8625 d644c8770ef93ad0de42cf99c41810d8 "pdflatex"
+  "main.aux" 1766413708.83558 21091 0c342a3cb83169a2157741cb38601fa1 "pdflatex"
+  "main.lof" 1766413708.83846 2848 d0ffae67c8aee70e57d61f1ae3a68eb0 "pdflatex"
+  "main.lot" 1766413708.8385 1558 eb9c4c57c0ae5f98d92b742d7419b84d "pdflatex"
+  "main.out" 1766413708.83809 8625 d644c8770ef93ad0de42cf99c41810d8 "pdflatex"
   "main.tex" 1766157665.35623 4364 34e8838c0ea8f5548c2ebed2ea1901c3 ""
-  "main.toc" 1766332580.48112 5436 8612b43b5719c144866beef7b9e7efe2 "pdflatex"
+  "main.toc" 1766413708.83839 5436 8612b43b5719c144866beef7b9e7efe2 "pdflatex"
   "util/abbrev.tex" 1762699592.35203 463 6eaaf442846fbee20367b2cd35d459f2 ""
   "util/highlight.tex" 1762699592.35233 2200 bdafbaf852cc33096d9d2e1cc54b31fe ""
   (generated)
