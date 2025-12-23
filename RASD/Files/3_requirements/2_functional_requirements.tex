@@ -101,7 +101,7 @@ The system handles the creation of new paths through two modes: automatic detect
         \textbf{Actors} & User, BBP App, Auth service \\ \hline
         
         % Riga 3: Entry Condition
-        \textbf{Entry Condition} & User open BBP application without being authenticated \\ \hline
+        \textbf{Entry Condition} & User opens BBP application without being authenticated \\ \hline
         
         % Riga 4: Event Flow
         \textbf{Event Flow} & 
@@ -144,13 +144,13 @@ The system handles the creation of new paths through two modes: automatic detect
         \hline
         \textbf{Name} & \textbf{System Access} \\ \hline
         \textbf{Actors} & User, BBP Platform, Auth service \\ \hline
-        \textbf{Entry Condition} & User open BBP application without being authenticated \\ \hline
+        \textbf{Entry Condition} & User opens BBP application without being authenticated \\ \hline
         \textbf{Event Flow} & 
         (a) The system displays the welcome screen with options: “Log In”, “Sign Up”, “Continue as Guest” \newline \newline
         Main Flow (Login): \newline
-        (b1) The user select “Log In” \newline
+        (b1) The user selects “Log In” \newline
         (c1) The user enters email and password \newline
-        (d1) The system validated credentials against the db \newline
+        (d1) The system validates credentials against the db \newline
         (e1) The system retrieves the user profile and redirects to the User Dashboard \newline \newline
         Alternative flow (Guest): \newline
         (b2) The user selects ``Continue as Guest'' \newline
@@ -291,10 +291,10 @@ The system handles the creation of new paths through two modes: automatic detect
         \textbf{Actors} & Registered User, BBP Platform \\ \hline
         \textbf{Entry Condition} & The user is viewing the details of a path, from ``My paths'' or from the public repository \\ \hline
         \textbf{Event Flow} & 
-        (a) The user select “Report issue” or “Update Status” button on the path detail screen \newline
+        (a) The user selects “Report issue” or “Update Status” button on the path detail screen \newline
         (b) The system displays a form overlaid on the path map \newline
         (c) The user selects the type of report and pinpoints the location along the path \newline
-        (d) The user inserts the details and confirm \newline
+        (d) The user inserts the details and confirms \newline
         (e) The system validates the location consistency and executes the internal merging algorithm \newline
         (f) The system updates the db and confirms submission to the user
         \\ \hline
