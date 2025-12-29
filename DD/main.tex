@@ -1,0 +1,147 @@
+\documentclass[a4paper,11pt]{report}
+\input{commandsFile}
+\usepackage{multirow}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Definizione colori per il codice
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95, 0.95, 0.95}
+
+% Definizione del linguaggio Alloy per evidenziazione sintassi
+\lstdefinelanguage{Alloy}{
+    keywords={module, sig, enum, fact, pred, assert, run, check, for, but, Int, one, lone, set, seq, extends, in, disj, all, some, no, implies, else, let, sum},
+    keywordstyle=\color{blue}\bfseries,
+    ndkeywords={True, False, Optimal, Sufficient, Bad, Private, Public},
+    ndkeywordstyle=\color{codepurple}\bfseries,
+    identifierstyle=\color{black},
+    sensitive=true,
+    comment=[l]{--},
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\color{codegreen}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    morestring=[b]",
+}
+
+% Stile generale del blocco codice
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single
+}
+
+\begin{document}
+
+%TITLE PAGE
+
+\begin{titlepage}
+
+
+%LOGO
+
+{\begin{table}[t!]
+\centering
+\begin{tabu} to \textwidth { X[1.3,r,p] X[1.7,l,p] }
+\textcolor{Blue}
+{\textbf{\small{Best Bike Paths, Luca Suzani, Alberto Spezzapria, Alessio Pesavento}}} & \includegraphics[scale=0.5]{Images/PolimiLogo}
+\end{tabu}
+\end{table}}~\\ [7cm]
+
+%TITLE 
+
+\begin{flushleft}
+
+%Replace the text string with your title
+{\textcolor{Blue}{\textbf{\Huge{Design Document}}}} \\ [1cm]
+
+\end{flushleft}
+
+\end{titlepage}
+
+%Define deliverable specific info
+%Replace cell contents where needed
+\begin{table}[h!]
+\begin{tabu} to \textwidth { X[0.3,r,p] X[0.7,l,p] }
+\hline
+
+\textbf{Deliverable:} & DD\\
+\textbf{Title:} & Design Document \\
+\textbf{Authors:} & Luca Suzani, Alberto Spezzapria, Alessio Pesavento \\
+\textbf{Version:} & 1.0 \\ 
+\textbf{Date:} & 22-December-2025 \\
+\textbf{Download page:} & https://github.com/Alessio01103/PesaventoSpezzapriaSuzani.git \\
+\textbf{Copyright:} & Copyright © 2025, Luca Suzani, Alberto Spezzapria, Alessio Pesavento – All rights reserved \\
+\hline
+\end{tabu}
+\end{table}
+
+
+
+
+\setcounter{page}{2}
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\addcontentsline{toc}{section}{Table of Contents}
+\tableofcontents
+\newpage
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Introduction}}
+\label{sect:introduction}
+\input{Files/1_introduction}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Architectural Design}}
+\label{sect:architectural_design}
+\input{Files/2_architectural_design}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{User Interface Design}}
+\label{sect:user_interface_design}
+\input{Files/3_user_interface_design}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Requirements Traceability}}
+\label{sect:requirements_traceability}
+\input{Files/4_requirements_traceability}
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Implementation, Integration and Test Plan}}
+\label{sect:implementation_integration_testplan}
+\input{Files/5_implementation_integration_testplan}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{Effort Spent}
+\label{sect:effort}
+\input{Files/6_effort}
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+\end{document}

@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 PWD c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/RASD
 INPUT c:/texlive/2025/texmf.cnf
 INPUT c:/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/RASD/main.tex
+=======
+PWD /Users/alberto/Developement/se2_project/RASD
+INPUT /usr/local/texlive/2025/texmf.cnf
+INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT /Users/alberto/Developement/se2_project/RASD/main.tex
+>>>>>>> be8756173944d3460dd8daf6236cbd995a97c821
 OUTPUT main.log
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/report.cls
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/report.cls
