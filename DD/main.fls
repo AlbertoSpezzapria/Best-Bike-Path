@@ -473,6 +473,11 @@ INPUT ./Files/6_effort.tex
 INPUT ./Files/6_effort.tex
 INPUT ./Files/6_effort.tex
 INPUT Files/6_effort.tex
+INPUT ./Files/7_references.tex
+INPUT ./Files/7_references.tex
+INPUT ./Files/7_references.tex
+INPUT ./Files/7_references.tex
+INPUT Files/7_references.tex
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
