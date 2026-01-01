@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 JAN 2026 13:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 JAN 2026 13:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -131,84 +131,92 @@ File: upzd.fd 2001/06/04 font definitions for U/pzd.
 LaTeX Font Info:    Trying to load font information for U+psy on input line 64.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/upsy.fd
 File: upsy.fd 2001/06/04 font definitions for U/psy.
-)) (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/times.sty
+)) (/usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip99
+\enit@outerparindent=\dimen150
+\enit@toks=\toks22
+\enit@inbox=\box52
+\enit@count@id=\count276
+\enitdp@description=\count277
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/times.sty
 Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/tabu/tabu.sty
 Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
  (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/array.sty
 Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
-\col@sep=\dimen150
-\ar@mcellbox=\box52
-\extrarowheight=\dimen151
-\NC@list=\toks22
-\extratabsurround=\skip99
-\backup@length=\skip100
-\ar@cellbox=\box53
+\col@sep=\dimen151
+\ar@mcellbox=\box53
+\extrarowheight=\dimen152
+\NC@list=\toks23
+\extratabsurround=\skip100
+\backup@length=\skip101
+\ar@cellbox=\box54
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box54
-\sift@deathcycles=\count276
-\@vwid@loff=\dimen152
-\@vwid@roff=\dimen153
+\@vwid@box=\box55
+\sift@deathcycles=\count278
+\@vwid@loff=\dimen153
+\@vwid@roff=\dimen154
 )
-\c@taburow=\count277
-\tabu@nbcols=\count278
-\tabu@cnt=\count279
-\tabu@Xcol=\count280
-\tabu@alloc=\count281
-\tabu@nested=\count282
-\tabu@target=\dimen154
-\tabu@spreadtarget=\dimen155
-\tabu@naturalX=\dimen156
-\tabucolX=\dimen157
-\tabu@Xsum=\dimen158
-\extrarowdepth=\dimen159
-\abovetabulinesep=\dimen160
-\belowtabulinesep=\dimen161
-\tabustrutrule=\dimen162
-\tabu@thebody=\toks23
-\tabu@footnotes=\toks24
-\tabu@box=\box55
-\tabu@arstrutbox=\box56
-\tabu@hleads=\box57
-\tabu@vleads=\box58
-\tabu@cellskip=\skip101
+\c@taburow=\count279
+\tabu@nbcols=\count280
+\tabu@cnt=\count281
+\tabu@Xcol=\count282
+\tabu@alloc=\count283
+\tabu@nested=\count284
+\tabu@target=\dimen155
+\tabu@spreadtarget=\dimen156
+\tabu@naturalX=\dimen157
+\tabucolX=\dimen158
+\tabu@Xsum=\dimen159
+\extrarowdepth=\dimen160
+\abovetabulinesep=\dimen161
+\belowtabulinesep=\dimen162
+\tabustrutrule=\dimen163
+\tabu@thebody=\toks24
+\tabu@footnotes=\toks25
+\tabu@box=\box56
+\tabu@arstrutbox=\box57
+\tabu@hleads=\box58
+\tabu@vleads=\box59
+\tabu@cellskip=\skip102
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
 Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
-\TX@col@width=\dimen163
-\TX@old@table=\dimen164
-\TX@old@col=\dimen165
-\TX@target=\dimen166
-\TX@delta=\dimen167
-\TX@cols=\count283
-\TX@ftn=\toks25
+\TX@col@width=\dimen164
+\TX@old@table=\dimen165
+\TX@old@col=\dimen166
+\TX@target=\dimen167
+\TX@delta=\dimen168
+\TX@cols=\count285
+\TX@ftn=\toks26
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/ltablex/ltablex.sty
 Package: ltablex 2014/08/13 v1.1 Modified tabularx
  (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2024-10-27 v4.22 Multi-page Table package (DPC)
-\LTleft=\skip102
-\LTright=\skip103
-\LTpre=\skip104
-\LTpost=\skip105
-\LTchunksize=\count284
-\LTcapwidth=\dimen168
-\LT@head=\box59
-\LT@firsthead=\box60
-\LT@foot=\box61
-\LT@lastfoot=\box62
-\LT@gbox=\box63
-\LT@cols=\count285
-\LT@rows=\count286
-\c@LT@tables=\count287
-\c@LT@chunks=\count288
-\LT@p@ftn=\toks26
+\LTleft=\skip103
+\LTright=\skip104
+\LTpre=\skip105
+\LTpost=\skip106
+\LTchunksize=\count286
+\LTcapwidth=\dimen169
+\LT@head=\box60
+\LT@firsthead=\box61
+\LT@foot=\box62
+\LT@lastfoot=\box63
+\LT@gbox=\box64
+\LT@cols=\count287
+\LT@rows=\count288
+\c@LT@tables=\count289
+\c@LT@chunks=\count290
+\LT@p@ftn=\toks27
 )) (/usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count289
-\float@exts=\toks27
-\float@box=\box64
-\@float@everytoks=\toks28
-\@floatcapt=\box65
+\c@float@type=\count291
+\float@exts=\toks28
+\float@box=\box65
+\@float@everytoks=\toks29
+\@floatcapt=\box66
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
  (/usr/local/texlive/2025/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
@@ -231,32 +239,32 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
  (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
-\Gin@req@height=\dimen169
-\Gin@req@width=\dimen170
+\Gin@req@height=\dimen170
+\Gin@req@width=\dimen171
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 )
-\c@r@tfl@t=\count290
-\rotFPtop=\skip106
-\rotFPbot=\skip107
-\rot@float@box=\box66
-\rot@mess@toks=\toks29
+\c@r@tfl@t=\count292
+\rotFPtop=\skip107
+\rotFPbot=\skip108
+\rot@float@box=\box67
+\rot@mess@toks=\toks30
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2023/08/05 v3.6o Customizing captions (AR)
  (/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
-\caption@tempdima=\dimen171
-\captionmargin=\dimen172
-\caption@leftmargin=\dimen173
-\caption@rightmargin=\dimen174
-\caption@width=\dimen175
-\caption@indent=\dimen176
-\caption@parindent=\dimen177
-\caption@hangindent=\dimen178
+\caption@tempdima=\dimen172
+\captionmargin=\dimen173
+\caption@leftmargin=\dimen174
+\caption@rightmargin=\dimen175
+\caption@width=\dimen176
+\caption@indent=\dimen177
+\caption@parindent=\dimen178
+\caption@hangindent=\dimen179
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count291
-\c@continuedfloat=\count292
+\c@caption@flags=\count293
+\c@continuedfloat=\count294
 Package caption Info: float package is loaded.
 Package caption Info: longtable package is loaded.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/caption/ltcaption.sty
@@ -283,19 +291,11 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2024/07/06 v1.0i Color table columns (DPC)
-\everycr=\toks30
-\minrowclearance=\skip108
-\rownum=\count293
+\everycr=\toks31
+\minrowclearance=\skip109
+\rownum=\count295
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
-) (/usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
-Package: enumitem 2025/02/06 v3.11 Customized lists
-\labelindent=\skip109
-\enit@outerparindent=\dimen179
-\enit@toks=\toks31
-\enit@inbox=\box67
-\enit@count@id=\count294
-\enitdp@description=\count295
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/amsfonts.sty
@@ -788,21 +788,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[2] (./main.toc)
+[2] (./main.toc
+
+[3
+
+])
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
 
 
-[3
 
-] (./main.lof)
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[4] (./main.lof)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
 
 
-[4
+[5
 
 ] (./main.lot)
 \tf@lot=\write7
@@ -810,20 +819,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 
 
-[5
+[6
 
 ]
 Chapter 1.
 (./Files/1_introduction.tex)
 
-[6
+[7
 
 
 ]
 Chapter 2.
 (./Files/2_architectural_design.tex (./Files/2_architectural_design/1_overview.tex
 
-[7
+[8
 
 
 ]) (./Files/2_architectural_design/2_component-view.tex
@@ -839,7 +848,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[8{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]) (./Files/2_architectural_design/3_deployment-view.tex
+[9{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]) (./Files/2_architectural_design/3_deployment-view.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -848,7 +857,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9]) (./Files/2_architectural_design/4_runtime-view.tex) (./Files/2_architectural_design/5_component-interfaces.tex
+[10]) (./Files/2_architectural_design/4_runtime-view.tex) (./Files/2_architectural_design/5_component-interfaces.tex
 Overfull \hbox (14.82042pt too wide) in paragraph at lines 20--20
 []|\T1/lmtt/m/n/10.95 getCurrentPosition()| 
  []
@@ -897,7 +906,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10]
+[11]
 Underfull \hbox (badness 10000) in paragraph at lines 44--44
 []|\T1/lmtt/m/n/10.95 eventName:
  []
@@ -936,7 +945,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11]
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 69--69
 []|\T1/lmtt/m/n/10.95 POST
  []
@@ -1070,7 +1079,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[12]
+[13]
 Overfull \hbox (6.91238pt too wide) in paragraph at lines 117--117
 []|\T1/lmtt/m/n/10.95 rpc/search_best_paths| 
  []
@@ -1124,7 +1133,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13]) (./Files/2_architectural_design/7_other-design-decisions.tex
+[14]) (./Files/2_architectural_design/7_other-design-decisions.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1133,7 +1142,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14]
+[15]
 Overfull \hbox (3.94978pt too wide) in paragraph at lines 10--11
 \T1/ptm/m/n/10.95 Post-GIS pro-vides na-tive, highly op-ti-mized func-tions for geospa-tial con-fla-tion and Nearest-Neighbor
  []
@@ -1147,32 +1156,80 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[15]
+[16]
 Chapter 3.
 (./Files/3_user_interface_design.tex)
-
-[16
-
-
-]
-Chapter 4.
-(./Files/4_requirements_traceability.tex)
 
 [17
 
 
 ]
+Chapter 4.
+(./Files/4_requirements_traceability.tex
+Overfull \hbox (2.43637pt too wide) in paragraph at lines 10--29
+ [][] 
+ []
+
+
+Overfull \hbox (2.43637pt too wide) in paragraph at lines 37--58
+ [][] 
+ []
+
+
+
+[18
+
+
+]
+Overfull \hbox (2.43637pt too wide) in paragraph at lines 66--88
+ [][] 
+ []
+
+
+Overfull \hbox (2.43637pt too wide) in paragraph at lines 96--113
+ [][] 
+ []
+
+
+Overfull \hbox (2.43637pt too wide) in paragraph at lines 121--138
+ [][] 
+ []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[19]
+Overfull \hbox (2.43637pt too wide) in paragraph at lines 146--165
+ [][] 
+ []
+
+)
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[20]
 Chapter 5.
 (./Files/5_implementation_integration_testplan.tex)
 
-[18
+[21
 
 
 ]
 Chapter 6.
 (./Files/6_effort.tex)
 
-[19
+[22
 
 
 ] (./main.aux)
@@ -1181,21 +1238,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 63CA3062717B53DC37D00DAD9ABC546E;5647.
+(rerunfilecheck)             Checksum: 0E26EFEAAD5772262AA28C8078034273;6849.
  ) 
 Here is how much of TeX's memory you used:
- 26836 strings out of 473190
- 494799 string characters out of 5715800
- 871045 words of memory out of 5000000
- 49488 multiletter control sequences out of 15000+600000
+ 26864 strings out of 473190
+ 495290 string characters out of 5715800
+ 874045 words of memory out of 5000000
+ 49500 multiletter control sequences out of 15000+600000
  598547 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,98p,707b,669s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (19 pages, 131433 bytes).
+Output written on main.pdf (22 pages, 137985 bytes).
 PDF statistics:
- 320 PDF objects out of 1000 (max. 8388607)
- 284 compressed objects within 3 object streams
- 71 named destinations out of 1000 (max. 500000)
- 266 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 384 PDF objects out of 1000 (max. 8388607)
+ 344 compressed objects within 4 object streams
+ 87 named destinations out of 1000 (max. 500000)
+ 322 words of extra memory for PDF output out of 10000 (max. 10000000)
 

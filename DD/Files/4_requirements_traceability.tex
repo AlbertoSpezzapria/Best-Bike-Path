@@ -1,0 +1,166 @@
+\section{Requirements Traceability}
+
+The following tables map the functional requirements identified in the RASD to the architectural components defined in the Design Document. This mapping ensures that every requirement is addressed by specific modules within the system.
+
+% --- Table 1: User Account ---
+\subsection{User Account Management}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
+        \hline
+        \textbf{Requirements} & 
+        \begin{itemize}[nosep, leftmargin=*, label={}, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item \textbf{R1:} The platform allows users to create an account by providing the required personal information.
+            \item \textbf{R2:} The platform allows registered users to log in and access the system.
+            \item \textbf{R3:} The platform allows registered users to recover the access credentials.
+            \item \textbf{R4:} The platform allows guest users to access only the path search functionality.
+        \end{itemize} \\
+        \hline
+        \textbf{Components} & 
+        \begin{itemize}[nosep, leftmargin=*, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item Hybrid Client App (UI)
+            \item BaaS Client SDK
+            \item Auth Service (Identity Provider)
+            \item Spatial Database (Users Table)
+        \end{itemize} \\
+        \hline
+    \end{tabular}
+    \caption{Traceability for User Account Management}
+\end{table}
+
+% --- Table 2: Activity Recording ---
+\subsection{Activity Recording}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
+        \hline
+        \textbf{Requirements} & 
+        \begin{itemize}[nosep, leftmargin=*, label={}, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item \textbf{R5:} The system shall allow registered users to start recording a new cycling activity.
+            \item \textbf{R7:} The system shall collect raw data from sensors (GPS, accelerometer).
+            \item \textbf{R8:} The system shall analyze speed to verify cycling activity.
+            \item \textbf{R9:} The system shall analyze sensors to detect road anomalies.
+            \item \textbf{R10:} The system shall calculate real-time statistics.
+            \item \textbf{R11:} The system shall allow pausing and resuming.
+        \end{itemize} \\
+        \hline
+        \textbf{Components} & 
+        \begin{itemize}[nosep, leftmargin=*, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item Native Bridge (Capacitor)
+            \item Sensor Controller \& Filter
+            \item Local Persistence Manager
+            \item Map \& UI Controller
+        \end{itemize} \\
+        \hline
+    \end{tabular}
+    \caption{Traceability for Activity Recording}
+\end{table}
+
+% --- Table 3: Path Creation (Automatic) ---
+\subsection{Path Creation (Automatic)}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
+        \hline
+        \textbf{Requirements} & 
+        \begin{itemize}[nosep, leftmargin=*, label={}, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item \textbf{R12:} System displays detected obstacles upon stopping activity.
+            \item \textbf{R13:} System requires user validation of obstacles.
+            \item \textbf{R14:} System analyzes GPS trace to match existing paths.
+            \item \textbf{R15:} System associates activity with existing path if matched.
+            \item \textbf{R16:} System updates status/info of existing public path.
+            \item \textbf{R18:} System generates new path if no match is found.
+        \end{itemize} \\
+        \hline
+        \textbf{Components} & 
+        \begin{itemize}[nosep, leftmargin=*, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item Map \& UI Controller (Validation Interface)
+            \item BaaS Client SDK
+            \item Spatial Database
+            \item \texttt{func\_path\_merging} (Edge Function)
+            \item \texttt{func\_weather\_enricher} (Edge Function)
+        \end{itemize} \\
+        \hline
+    \end{tabular}
+    \caption{Traceability for Automatic Path Creation}
+\end{table}
+
+% --- Table 4: Path Creation (Manual) ---
+\subsection{Path Creation (Manual)}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
+        \hline
+        \textbf{Requirements} & 
+        \begin{itemize}[nosep, leftmargin=*, label={}, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item \textbf{R20:} User creates path manually by selecting streets on map.
+            \item \textbf{R21:} User manually inputs status and obstacles.
+            \item \textbf{R22:} User assigns name and stores in "My Paths".
+        \end{itemize} \\
+        \hline
+        \textbf{Components} & 
+        \begin{itemize}[nosep, leftmargin=*, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item Map \& UI Controller
+            \item BaaS Client SDK
+            \item Spatial Database
+        \end{itemize} \\
+        \hline
+    \end{tabular}
+    \caption{Traceability for Manual Path Creation}
+\end{table}
+
+% --- Table 5: Search and Ranking ---
+\subsection{Search and Ranking}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
+        \hline
+        \textbf{Requirements} & 
+        \begin{itemize}[nosep, leftmargin=*, label={}, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item \textbf{R23:} Users search paths by origin and destination.
+            \item \textbf{R24:} Users filter search results.
+            \item \textbf{R25:} Platform ranks paths based on condition, freshness, and effectiveness.
+        \end{itemize} \\
+        \hline
+        \textbf{Components} & 
+        \begin{itemize}[nosep, leftmargin=*, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item Map \& UI Controller
+            \item \texttt{func\_path\_search} (Edge Function / RPC)
+            \item Spatial Database (PostGIS Indexing)
+        \end{itemize} \\
+        \hline
+    \end{tabular}
+    \caption{Traceability for Search and Ranking}
+\end{table}
+
+% --- Table 6: Path Management ---
+\subsection{Path Management}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
+        \hline
+        \textbf{Requirements} & 
+        \begin{itemize}[nosep, leftmargin=*, label={}, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item \textbf{R26:} Platform detects when user follows a public path.
+            \item \textbf{R27:} Users update condition info without performing activity.
+            \item \textbf{R28:} Users edit info of created paths.
+            \item \textbf{R29:} Users publish stored paths to community.
+        \end{itemize} \\
+        \hline
+        \textbf{Components} & 
+        \begin{itemize}[nosep, leftmargin=*, before=\vspace{-0.6\baselineskip}, after=\strut]
+            \item Map \& UI Controller
+            \item BaaS Client SDK
+            \item Spatial Database
+            \item \texttt{func\_path\_merging} (For updates/consensus)
+        \end{itemize} \\
+        \hline
+    \end{tabular}
+    \caption{Traceability for Path Management}
+\end{table}

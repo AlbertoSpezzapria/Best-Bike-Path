@@ -45,6 +45,8 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/upsy.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/upsy.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/upsy.fd
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/times.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/times.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tabu/tabu.sty
@@ -105,8 +107,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/colortbl/colortbl.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/graphics/color.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/xspace.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/xspace.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/amssymb.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/amssymb.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/amsfonts.sty
