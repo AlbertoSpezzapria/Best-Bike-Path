@@ -3,6 +3,13 @@
 \contentsline {section}{List of Tables}{4}{chapter*.4}%
 \contentsline {chapter}{\numberline {1}{Introduction}}{6}{chapter.1}%
 \contentsline {chapter}{\numberline {2}{Architectural Design}}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Overview}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Component view}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Deployment view}{7}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Runtime view}{7}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Component interfaces}{7}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{7}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Other design decisions}{7}{section.2.7}%
 \contentsline {chapter}{\numberline {3}{User Interface Design}}{8}{chapter.3}%
 \contentsline {chapter}{\numberline {4}{Requirements Traceability}}{9}{chapter.4}%
 \contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{10}{chapter.5}%
