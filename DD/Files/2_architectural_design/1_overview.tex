@@ -1,0 +1,41 @@
+The \textbf{Best Bike Paths (BBP)} system is architected as a \textbf{Hybrid Mobile Application} supported by a \textbf{Serverless Backend-as-a-Service (BaaS)} infrastructure.
+
+This design strategy allows for a unified codebase (using web technologies like TypeScript/React) to be deployed across both Web and Mobile platforms. Crucially, by leveraging a native runtime bridge (e.g., Capacitor), the application overcomes the limitations of standard web apps. This bridge grants access to native device features, specifically background geolocation and high-frequency motion sensors, which are required for the road Quality Detection and reliability requirements defined in the RASD.
+
+Unlike traditional N-Tier architectures, BBP leverages a thick client model. The client applications contain a significant amount of application logic, communicating directly with the managed cloud database via secure APIs. Complex business logic requiring data aggregation or external integrations is offloaded to edge functions, which execute on-demand in the cloud.
+
+\subsection{High-Level Architecture Description}
+The system is composed of two main logical nodes:
+
+\begin{enumerate}
+    \item \textbf{Hybrid Client Tier:} This tier includes the unified application running on user devices.
+    \begin{itemize}
+        \item \textbf{Mobile Deployment (Android/iOS):} The application runs within a native container using Capacitor. It accesses hardware sensors via native plugins to perform precise activity tracking and road irregularity detection even when the device screen is off.
+        \item \textbf{Web Deployment:} The same codebase serves as a standard Progressiva Web App for path planning and profile management.
+        \item \textbf{Responsibilities:}
+        \begin{itemize}
+            \item Acquisition and pre-processing of raw sensor data (GPS, Accelerometer) via the Native Bridge.
+            \item Local data caching (Offline-First) to ensure reliability.
+            \item Direct communication with the BaaS provider for CRUD operations.
+        \end{itemize}
+    \end{itemize}
+
+    \item \textbf{Serverless Cloud Tier:} Hosted on a BaaS platform (e.g., Supabase), acting as the scalable backend. It provides:
+    \begin{itemize}
+        \item \textbf{Data Persistence:} A PostgreSQL database extended with PostGIS for spatial operations.
+        \item \textbf{Authentication:} A built-in identity provider handling OAuth2 and JWT generation.
+        \item \textbf{Edge Logic:} Stateless serverless functions that handle background tasks such as path merging, ranking updates, and weather data enrichment.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Security Model: Row Level Security (RLS)}
+Since clients communicate directly with the database, security is enforced at the database layer using Row Level Security (RLS) policies.
+Upon login, the Auth Service issues a JSON Web Token (JWT) to the client, which is included in every database query. The database engine evaluates RLS policies for each row to determine if the operation is permitted. This ensures that "direct access" does not imply "unrestricted access," maintaining strict data isolation and integrity.
+
+% INSERT DIAGRAM 2.1 HERE
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=\textwidth]{images/diagram_2_1_overview.png}
+% \caption{Architectural Overview}
+% \label{fig:arch_overview}
+% \end{figure}

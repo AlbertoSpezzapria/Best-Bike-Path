@@ -1,0 +1,74 @@
+This section details the software components within the Client and Cloud tiers, defining their specific responsibilities and interactions.
+
+\subsection{Hybrid Client Components}
+\begin{itemize}
+    \item \textbf{Native Bridge (Capacitor):} The architectural boundary between the web code and the native OS. It exposes a unified API to access hardware features. It ensures that the \textbf{Geolocation} and \textbf{Accelerometer} continue to operate reliably even when the application is in the background, bridging the gap between the web runtime and the device hardware.
+    
+    \item \textbf{Sensor Controller \& Filter:} Responsible for logic related to data acquisition.
+    \begin{itemize}
+        \item It interfaces with the \textbf{Native Bridge} to subscribe to GPS and Accelerometer streams.
+        \item It implements a \textbf{Kalman Filter} to smooth raw GPS coordinates.
+        \item It analyzes accelerometer data to detect vertical shocks (road surface irregularities like potholes) and buffers this data locally during activity recording.
+    \end{itemize}
+    
+    \item \textbf{Local Persistence Manager:} Implements the "Offline-First" capability. It uses an embedded database (e.g., SQLite via Capacitor plugin) to store activity traces and pending reports when the network is unavailable. It includes a \textbf{Sync Engine} that monitors network reachability and uploads buffered data to the cloud once connectivity is restored.
+    
+    \item \textbf{BaaS Client SDK:} The abstraction layer provided by the BaaS platform. It manages the persistent WebSocket connection for real-time updates, handles secure API calls to the database, and automatically refreshes authentication tokens.
+    
+    \item \textbf{Map \& UI Controller:} Manages the visualization of map tiles and path geometries. It handles user inputs (forms, search queries) and renders the visual feedback for the navigation system.
+\end{itemize}
+
+\subsection{Managed Cloud Components (BaaS)}
+\begin{itemize}
+    \item \textbf{Auth Service (Identity Provider):} Manages user lifecycles (sign-up, login, password recovery). It integrates with third-party OAuth providers (e.g., Google, Facebook) and issues secure JWTs containing user roles and IDs.
+    
+    \item \textbf{Spatial Database (PostgreSQL + PostGIS):} The central data repository. It is an active component that:
+    \begin{itemize}
+        \item Enforces \textbf{RLS Policies} to secure data access.
+        \item Executes complex \textbf{Spatial Queries} (e.g., \texttt{ST\_DWithin}, \texttt{ST\_Intersects}) natively, allowing clients to efficiently retrieve paths within a specific viewport.
+        \item Triggers database events (Webhooks) to activate Edge Functions upon data changes.
+    \end{itemize}
+    
+    \item \textbf{Object Storage:} A specialized file storage system for large binary assets, such as user profile pictures or images attached to path reports.
+\end{itemize}
+
+\subsection{Edge Functions}
+These are stateless functions triggered by database events or scheduled cron jobs:
+\begin{itemize}
+    \item \texttt{func\_path\_merging}
+    \begin{itemize}
+        \item \textbf{Trigger:} Database event (INSERT on \texttt{Activities} or \texttt{Feedbacks} table).
+        \item \textbf{Responsibility:} It implements the \textbf{Data Consolidation \& Consensus Logic}. When new data (an activity trace or a manual report) is associated with a path, this function aggregates it with existing reports to determine the path's \texttt{CurrentCondition}. It applies a \textbf{Majority Voting Algorithm} weighted by data freshness (e.g., resolving a conflict where 3 recent reports say "Good" and 1 says "Bad" by marking the segment as "Good") to ensure the status reflects the actual road situation.
+    \end{itemize}
+
+    \item \texttt{func\_path\_search}
+    \begin{itemize}
+        \item \textbf{Trigger:} Direct Client Request.
+        \item \textbf{Responsibility:} It implements the \textbf{Search \& Ranking Algorithm} defined in the RASD. When a user queries for a route (specifying Origin and Destination), this function:
+        \begin{itemize}
+            \item Performs a spatial query to find candidate paths connecting the points.
+            \item Dynamically calculates a \textbf{Suitability Score} for each candidate. This score combines the \textbf{Geospatial match} (how well it fits the requested Start/End points) with the \textbf{Path Quality} (derived from the consolidated feedback and applying a time-decay factor to older data).
+            \item Returns the list of paths ordered by this score.
+        \end{itemize}
+    \end{itemize}
+
+    \item \texttt{func\_maintenance\_job}
+    \begin{itemize}
+        \item \textbf{Trigger:} Scheduled Cron Job (e.g., Nightly).
+        \item \textbf{Responsibility:} Periodically applies the \textbf{Time-Decay Function} to the database. It archives or lowers the weight of very old reports/feedbacks to ensure that the \texttt{func\_path\_search} always prioritizes fresh information without needing to process the entire history during every query.
+    \end{itemize}
+
+    \item \texttt{func\_weather\_enricher}
+    \begin{itemize}
+        \item \textbf{Trigger:} Database event (INSERT on \texttt{Activities}).
+        \item \textbf{Responsibility:} It securely calls external Meteorological APIs (using backend-only API keys) to fetch weather conditions for the specific time and location of the activity, enriching the path metadata.
+    \end{itemize}
+\end{itemize}
+
+% INSERT DIAGRAM 2.2 HERE
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=\textwidth]{images/diagram_2_2_components.png}
+% \caption{Component View}
+% \label{fig:component_view}
+% \end{figure}

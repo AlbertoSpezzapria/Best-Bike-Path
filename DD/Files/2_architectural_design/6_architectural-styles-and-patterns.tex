@@ -1,0 +1,43 @@
+\subsection{Architectural Styles}
+
+\begin{itemize}
+    \item \textbf{Serverless / Backend-as-a-Service (BaaS)}
+    \begin{itemize}
+        \item \textbf{Description:} The system does not rely on a traditional, self-managed monolithic application server. Instead, backend responsibilities, including database management, authentication, and file storage, are delegated to a managed cloud provider (Supabase). Application logic is executed via stateless containers (Edge Functions) that spin up only when triggered.
+        \item \textbf{Rationale:} This style was chosen to maximize scalability and minimize operational overhead. Since the "Best Bike Paths" system must handle potential spikes in usage without manual provisioning, a serverless infrastructure ensures automatic scaling. Furthermore, it allows the development team to focus entirely on the complex domain logic (merging and ranking) rather than server maintenance and patching.
+    \end{itemize}
+
+    \item \textbf{Event-Driven Architecture}
+    \begin{itemize}
+        \item \textbf{Description:} The interaction between data ingestion and data processing is decoupled. When a client uploads a new activity, the system does not process it synchronously. Instead, the database emits an event (webhook), which asynchronously triggers the specific Edge Function responsible for the merging algorithm.
+        \item \textbf{Rationale:} The Path Merging process involves complex geospatial calculations (intersections, buffering) that are computationally expensive. Processing them synchronously would block the client UI and lead to connection timeouts. An event-driven approach ensures the user interface remains responsive (Latency Hiding) while heavy tasks are processed in the background.
+    \end{itemize}
+
+    \item \textbf{Thick Client}
+    \begin{itemize}
+        \item \textbf{Description:} A significant portion of the application logic resides on the client device rather than the server. The Hybrid Client is responsible for sensor data acquisition, noise filtering (Kalman Filter), data validation, and local buffering.
+        \item \textbf{Rationale:} This style is strictly required to satisfy the reliability constraints defined in the RASD. Cyclists often traverse areas with no network coverage; the client must be able to function autonomously, recording and validating data locally, and syncing only when connectivity is restored.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Design Patterns}
+
+\begin{itemize}
+    \item \textbf{Bridge Pattern (via Capacitor)}
+    \begin{itemize}
+        \item \textbf{Description:} The application utilizes a native bridge to decouple the high-level application logic (written in TypeScript/React) from the low-level platform implementation (Android/iOS). The web code calls a uniform JavaScript API, and the Bridge translates these calls into native OS commands.
+        \item \textbf{Rationale:} This pattern enables cross-platform accessibility while satisfying the need for hardware-specific features. Specifically, Capacitor native plugins allows the web-based application to access the accelerometer and background geolocation services, which are otherwise inaccessible or limited in a standard browser environment.
+    \end{itemize}
+
+    \item \textbf{Observer Pattern}
+    \begin{itemize}
+        \item \textbf{Description:} The client application subscribes to real-time changes on specific database tables (e.g., \texttt{Feedbacks}) using Secure WebSockets (WSS). When the data changes on the server, the new state is automatically pushed to all listening clients.
+        \item \textbf{Rationale:} This is essential for the safety-critical feature of reporting road hazards. If a user reports a danger, other nearby cyclists must be notified immediately to update their map view, without needing to manually refresh the application.
+    \end{itemize}
+
+    \item \textbf{Row Level Security (RLS)}
+    \begin{itemize}
+        \item \textbf{Description:} Access control logic is implemented directly within the database engine rather than in the application code. Each database query is evaluated against a set of SQL policies that check the user's authentication token against the data being accessed.
+        \item \textbf{Rationale:} Since the architecture allows clients to communicate directly with the database (skipping the middleware layer), RLS is the only mechanism to guarantee dData isolation. It mathematically ensures that a user can never read or modify another user's private data, regardless of any potential bug in the client code.
+    \end{itemize}
+\end{itemize}

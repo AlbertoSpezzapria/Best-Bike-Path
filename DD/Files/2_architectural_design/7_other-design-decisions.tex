@@ -1,0 +1,23 @@
+\subsection{Adoption of Hybrid Mobile Architecture}
+\begin{itemize}
+    \item \textbf{Description:} The development strategy involves building a single web-based codebase wrapped in a native container (Capacitor), rather than developing two separate native applications (Kotlin for Android, Swift for iOS) or a pure Progressive Web App (PWA).
+    \item \textbf{Rationale:} A pure PWA was discarded because it cannot reliably access high-frequency motion sensors in the background, which is critical for the "Road Quality Detection" requirement. Native development was discarded due to the high effort required for a small team. The Hybrid approach offers the necessary hardware access with a unified codebase, significantly reducing development and testing time.
+\end{itemize}
+
+\subsection{Usage of PostgreSQL with PostGIS}
+\begin{itemize}
+    \item \textbf{Description:} The system utilizes a Relational Database Management System (RDBMS) extended with the PostGIS spatial engine to store and query all geospatial data (Points, Linestrings, Polygons).
+    \item \textbf{Rationale:} Generic databases are insufficient for the mathematical complexity of this project. PostGIS provides native, highly optimized functions for geospatial conflation and Nearest-Neighbor searches. Implementing these geometric algorithms from scratch in code would be error-prone and inefficient.
+\end{itemize}
+
+\subsection{Centralized Logic for Merging and Ranking}
+\begin{itemize}
+    \item \textbf{Description:} The core algorithms that determine the shape of public paths (Merging) and their value (Ranking) are executed exclusively on the Cloud Tier via Edge Functions, never on the client.
+    \item \textbf{Rationale:} This decision ensures a \textbf{Single Source of Truth}. The merging algorithm requires a complete view of all existing paths in an area to make a decision, which a single client does not possess. Furthermore, calculating the Ranking on the server prevents malicious users from tampering with the client code to artificially inflate the score of their preferred paths.
+\end{itemize}
+
+\subsection{Direct-to-Database Communication Pattern}
+\begin{itemize}
+    \item \textbf{Description:} The architecture bypasses the traditional "API Gateway / Controller" layer for standard operations. Clients perform CRUD (Create, Read, Update, Delete) operations directly against the database's REST API.
+    \item \textbf{Rationale:} The majority of user interactions (e.g., loading a profile, saving a track) are standard data operations that do not require complex business logic. Implementing a dedicated middle-layer for these simple tasks would introduce unnecessary latency and code maintenance ("Boilerplate"). Security is delegated to RLS (as described in 2.6.2), making the middle layer redundant for these tasks.
+\end{itemize}

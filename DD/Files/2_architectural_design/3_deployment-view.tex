@@ -1,0 +1,39 @@
+The deployment architecture of \textbf{Best Bike Paths} follows a distributed, client-server model relying on a \textbf{Serverless Infrastructure}. This approach minimizes operational overhead, as the backend resources (Database, Auth, Compute) are provisioned and scaled automatically by the Cloud Provider.
+
+The system is deployed across three primary types of nodes:
+
+\begin{enumerate}
+    \item \textbf{Mobile User Device (Android/iOS):}
+    \begin{itemize}
+        \item \textbf{Hardware:} Personal Smartphone.
+        \item \textbf{Execution Environment:} Native OS hosting the \textbf{Capacitor Runtime} (WebView).
+        \item \textbf{Artifacts:} The \textit{Hybrid Mobile Application} package (\texttt{.apk} / \texttt{.ipa}). This artifact contains the compiled Javascript/React bundle and the native plugins required to access hardware sensors (GPS, Accelerometer). It includes an embedded SQLite database for local persistence.
+    \end{itemize}
+
+    \item \textbf{Web User Station (Desktop/Laptop):}
+    \begin{itemize}
+        \item \textbf{Hardware:} Personal Computer.
+        \item \textbf{Execution Environment:} Modern Web Browser (Chrome, Firefox, Safari).
+        \item \textbf{Artifacts:} The \textit{Progressive Web Application (PWA)} assets (HTML, CSS, JS bundles) cached by the Service Worker.
+    \end{itemize}
+
+    \item \textbf{Managed Cloud Platform (BaaS Provider):}
+    \begin{itemize}
+        \item \textbf{Hardware:} Distributed Virtualized Clusters (managed by Supabase/AWS).
+        \item \textbf{Execution Environment:} Containerized Database Engine and V8 Isolate runtime for Edge Functions.
+        \item \textbf{Artifacts:}
+        \begin{itemize}
+            \item \textit{PostgreSQL Instance:} Stores data and RLS policies.
+            \item \textit{Auth Service Instance:} Handles identity management.
+            \item \textit{Edge Functions:} Deployed serverless scripts (\texttt{path\_merging}, \texttt{score\_calc}) executed on demand.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Network Communication}
+Communication between the Client Nodes and the Cloud Platform occurs exclusively over secure standard protocols:
+
+\begin{itemize}
+    \item \textbf{HTTPS (TLS 1.3):} For all REST API calls (Database CRUD, RPC functions).
+    \item \textbf{WSS (Secure WebSockets):} For real-time event subscriptions (e.g., live feedback updates).
+\end{itemize}

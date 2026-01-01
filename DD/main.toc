@@ -4,13 +4,34 @@
 \contentsline {chapter}{\numberline {1}{Introduction}}{6}{chapter.1}%
 \contentsline {chapter}{\numberline {2}{Architectural Design}}{7}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Overview}{7}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Component view}{7}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Deployment view}{7}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Runtime view}{7}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Component interfaces}{7}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{7}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Other design decisions}{7}{section.2.7}%
-\contentsline {chapter}{\numberline {3}{User Interface Design}}{8}{chapter.3}%
-\contentsline {chapter}{\numberline {4}{Requirements Traceability}}{9}{chapter.4}%
-\contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{10}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Effort Spent}{11}{chapter.6}%
+\contentsline {subsection}{\numberline {2.1.1}High-Level Architecture Description}{7}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Security Model: Row Level Security (RLS)}{8}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Component view}{8}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Hybrid Client Components}{8}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Managed Cloud Components (BaaS)}{8}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Edge Functions}{9}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Deployment view}{9}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Network Communication}{10}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.4}Runtime view}{10}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Component interfaces}{10}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Hardware Abstraction Interfaces}{10}{subsection.2.5.1}%
+\contentsline {paragraph}{Interface: IGeolocationProvider}{11}{section*.6}%
+\contentsline {paragraph}{Interface: IMotionSensor}{11}{section*.8}%
+\contentsline {subsection}{\numberline {2.5.2}Cloud Network Interfaces (BaaS API)}{11}{subsection.2.5.2}%
+\contentsline {paragraph}{Interface: IAuthService}{12}{section*.10}%
+\contentsline {paragraph}{Interface: ISpatialDataStore}{12}{section*.12}%
+\contentsline {paragraph}{Interface: ISearchEngine (RPC)}{13}{section*.14}%
+\contentsline {subsection}{\numberline {2.5.3}External Interfaces}{13}{subsection.2.5.3}%
+\contentsline {paragraph}{Interface: IWeatherProvider}{13}{section*.16}%
+\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{13}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Architectural Styles}{13}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Design Patterns}{14}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Other design decisions}{15}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Adoption of Hybrid Mobile Architecture}{15}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Usage of PostgreSQL with PostGIS}{15}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}Centralized Logic for Merging and Ranking}{15}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}Direct-to-Database Communication Pattern}{15}{subsection.2.7.4}%
+\contentsline {chapter}{\numberline {3}{User Interface Design}}{16}{chapter.3}%
+\contentsline {chapter}{\numberline {4}{Requirements Traceability}}{17}{chapter.4}%
+\contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{18}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Effort Spent}{19}{chapter.6}%

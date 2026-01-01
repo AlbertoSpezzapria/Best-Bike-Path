@@ -1,7 +1,13 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces IGeolocationProvider Interface}}{11}{table.caption.7}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces IMotionSensor Interface}}{11}{table.caption.9}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces IAuthService Interface}}{12}{table.caption.11}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces ISpatialDataStore Interface}}{12}{table.caption.13}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces ISearchEngine Interface}}{13}{table.caption.15}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces IWeatherProvider Interface}}{13}{table.caption.17}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Hours of work spent by each author redacting the DD document}}{11}{table.caption.6}%
+\contentsline {table}{\numberline {6.1}{\ignorespaces Hours of work spent by each author redacting the DD document}}{19}{table.caption.18}%
