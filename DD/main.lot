@@ -1,20 +1,19 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces IGeolocationProvider Interface}}{12}{table.caption.7}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces IMotionSensor Interface}}{12}{table.caption.9}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces IAuthService Interface}}{13}{table.caption.11}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces ISpatialDataStore Interface}}{13}{table.caption.13}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces ISearchEngine Interface}}{14}{table.caption.15}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces IWeatherProvider Interface}}{14}{table.caption.17}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces IGeolocationProvider Interface}}{15}{table.caption.7}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces IMotionSensor Interface}}{15}{table.caption.9}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces IAuthService Interface}}{16}{table.caption.11}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces ISpatialDataStore Interface}}{16}{table.caption.13}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces ISearchEngine Interface}}{17}{table.caption.15}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces IWeatherProvider Interface}}{17}{table.caption.17}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Traceability for User Account Management}}{18}{table.caption.18}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Traceability for Activity Recording}}{19}{table.caption.19}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Traceability for Automatic Path Creation}}{19}{table.caption.20}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Traceability for Manual Path Creation}}{19}{table.caption.21}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Traceability for Search and Ranking}}{20}{table.caption.22}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Traceability for Path Management}}{20}{table.caption.23}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Traceability for User Account Management}}{21}{table.caption.18}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Traceability for Activity Recording}}{22}{table.caption.19}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Traceability for Automatic Path Creation}}{22}{table.caption.20}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Traceability for Manual Path Creation}}{22}{table.caption.21}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Traceability for Search and Ranking}}{23}{table.caption.22}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Traceability for Path Management}}{23}{table.caption.23}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Hours of work spent by each author redacting the DD document}}{22}{table.caption.24}%
-\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces Hours of work spent by each author redacting the DD document}}{25}{table.caption.24}%

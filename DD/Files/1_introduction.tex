@@ -1,0 +1,119 @@
+\section{Purpose}
+The purpose of this document is to provide a comprehensive architectural design for the \textbf{Best Bike Paths (BBP)} system. It serves as the primary bridge between the requirements analysis phase, detailed in the \textit{Requirements Analysis and Specification Document (RASD)}, and the implementation phase.
+
+This document is intended for developers, project managers and testers involved in the project. Its specific goals are to:
+\begin{itemize}
+    \item Define the \textbf{High-Level Architecture}, identifying the subsystems and their distribution.
+    \item Detail the \textbf{Low-Level Components}, specifying their responsibilities, internal logic, and interfaces.
+    \item Justify the \textbf{Design Decisions} and architectural styles adopted.
+    \item Map the functional requirements to specific software modules to ensure full \textbf{Traceability}.
+\end{itemize}
+
+By following this design, it will be possible to implement a scalable, reliable and consistent system that fulfills the user needs regarding cycling safety and path discovery.
+
+\section{Scope}
+The \textbf{Best Bike Paths (BBP)} system is a crowdsourcing platform designed to collect, store, search and rank cycling itineraries based on user-generated content and sensor telemetry. The application aims to solve the fragmentation of cycling data by merging individual user tracks into reliable, high-quality public paths.
+
+The scope of the software design covers two main areas:
+
+\begin{enumerate}
+    \item \textbf{The Hybrid Client Application:}
+    A unified application for Android, iOS, and Web. It is responsible for:
+    \begin{itemize}
+        \item \textbf{Telemetry Acquisition:}Interfacing with device hardware (GPS, Accelerometer) via a Native Bridge to track routes and detect road irregularities (e.g., potholes) even in background mode.
+        \item \textbf{Offline Resilience:} Ensuring data integrity and functionality in areas with poor network coverage through local buffering and synchronization mechanisms.
+    \end{itemize}
+
+    \item \textbf{The Serverless Cloud Infrastructure:}
+    A managed backend environment responsible for:
+    \begin{itemize}
+        \item \textbf{Data Consolidation (Merging):} Executing geospatial algorithms to merge conflicting data from multiple users into a "Single Source of Truth" for each path.
+        \item \textbf{Dynamic Ranking:} Calculating a suitability score for paths based on safety, road condition, and user feedback freshness.
+        \item \textbf{Security:} Enforcing data isolation and access control via Row Level Security (RLS).
+    \end{itemize}
+\end{enumerate}
+
+The system interacts with external services, specifically third-party \textbf{Weather APIs}, to enrich path metadata. The design excludes the implementation of the physical cycling infrastructure itself, focusing solely on the digital platform to map and evaluate it.
+
+\section{Definitions, Acronyms, and Abbreviations}
+
+\subsection{Definitions}
+\begin{itemize}
+    \item \textbf{Backend-as-a-Service (BaaS)}: A cloud computing model adopted in this architecture where backend responsibilities (database, authentication, hosting) are outsourced to a managed provider (Supabase), allowing development to focus on frontend logic.
+    \item \textbf{Edge Function}: A piece of serverless application logic (e.g., the path merging algorithm) that runs on the cloud provider's infrastructure, triggered by specific database events or HTTP requests.
+    \item \textbf{Hybrid Application}: The chosen architectural approach where the mobile app is built using web technologies (React/TypeScript) but executes within a native container to access device hardware.
+    \item \textbf{Native Bridge}: The software mechanism (provided by Capacitor) that allows the web-based client code to communicate with the native operating system and access sensors like the Accelerometer and GPS in the background.
+    \item \textbf{PostGIS}: An open-source software extender for the PostgreSQL database, used in this project to store, index, and query complex geospatial data (geometries) efficiently.
+    \item \textbf{Row Level Security (RLS)}: A security mechanism implemented directly in the database engine that restricts access to specific data rows based on the user's authentication token, eliminating the need for application-level security filters.
+    \item \textbf{Thick Client}: An architectural style where the client application (running on the user's device) handles the bulk of data processing, validation, and temporary storage, contrasting with a Thin Client that relies heavily on the server.
+\end{itemize}
+
+\subsection{Acronyms}
+\begin{itemize}
+    \item \textbf{API}: Application Programming Interface.
+    \item \textbf{BaaS}: Backend-as-a-Service.
+    \item \textbf{CRUD}: Create, Read, Update, Delete.
+    \item \textbf{JWT}: JSON Web Token (used for stateless authentication).
+    \item \textbf{PWA}: Progressive Web Application.
+    \item \textbf{RLS}: Row Level Security.
+    \item \textbf{RPC}: Remote Procedure Call (used to invoke Edge Functions).
+    \item \textbf{SDK}: Software Development Kit.
+    \item \textbf{SPA}: Single Page Application.
+    \item \textbf{SQL}: Structured Query Language.
+    \item \textbf{WSS}: WebSocket Secure (used for real-time updates).
+\end{itemize}
+
+\subsection{Abbreviations}
+\begin{itemize}
+    \item \textbf{DB}: DataBase.
+    \item \textbf{UI}: User Interface.
+    \item \textbf{VM}: Virtual Machine.
+\end{itemize}
+
+
+\section{Revision History}
+Version 1.0: 07/01/2025
+
+\section{Reference Documents}
+\begin{itemize}
+    \item \textbf{[1] RDO}: Assignment RDD AY 2025-2026 - Software Engineering 2 Project Assignment, Politecnico di Milano.
+
+    \item \textbf{[2] RASD}: Requirement Analysis and Specification Document for ``Best Bike Paths'', Version 1.0.
+        
+    \item \textbf{[3] Capacitor Documentation}: Official documentation for the Capacitor native runtime. \\
+    Available at: \url{https://capacitorjs.com/docs/}
+    
+    \item \textbf{[4] TypeScript Language}: Documentation for the TypeScript programming language. \\
+    Available at: \url{https://www.typescriptlang.org/}
+    
+    \item \textbf{[5] Supabase}: Documentation for the open-source Firebase alternative (Backend-as-a-Service). \\
+    Available at: \url{https://supabase.com/}
+    
+    \item \textbf{[6] PostGIS}: Spatial and Geographic objects for PostgreSQL. \\
+    Available at: \url{https://postgis.net/}
+    
+    \item \textbf{[7] Deno}: Documentation for the Deno runtime (used by Supabase Edge Functions). \\
+    Available at: \url{https://deno.com/}
+    
+    \item \textbf{[8] Zod}: TypeScript-first schema declaration and validation library. \\
+    Available at: \url{https://zod.dev/}
+\end{itemize}
+\section{Document Structure}
+The following list provides a brief overview of the contents of each chapter in this document:
+
+\begin{itemize}
+    \item \textbf{Chapter 1 Introduction:} Provides an overview of the document's purpose and scope, along with definitions of terms and acronyms used throughout the text. It establishes the context for the architectural decisions.
+    
+    \item \textbf{Chapter 2 Architectural Design:} Constitutes the core of this document. It describes the high-level architecture (Hybrid Client + Serverless Cloud), details the internal software components, their interfaces, and the deployment infrastructure. It also justifies the selected architectural styles and design patterns.
+    
+    \item \textbf{Chapter 3 User Interface Design:} Presents the visual design of the application through mockups and navigation flow diagrams, illustrating how users interact with the system to perform key tasks.
+    
+    \item \textbf{Chapter 4 Requirements Traceability:} Provides a mapping between the functional requirements defined in the RASD and the architectural components described in Chapter 2, ensuring that every requirement is addressed by the software design.
+    
+    \item \textbf{Chapter 5 Implementation, Integration, and Test Plan:} Outlines the strategy for developing the system components, the order of integration, and the testing procedures required to verify the system's correctness and reliability.
+    
+    \item \textbf{Chapter 6 Effort Spent:} Reports the time spent by each member of the group to contribute to the realization of this document.
+\end{itemize}
+
+\section{Use of Generative AI Tools}
+
