@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  5 JAN 2026 21:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  5 JAN 2026 22:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -850,7 +850,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}])
+[9{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
+Overfull \hbox (5.64731pt too wide) in paragraph at lines 132--133
+[]\T1/ptm/b/n/10.95 For lin-guis-tic re-vi-sion: \T1/ptm/m/n/10.95 We in-put para-graphs or en-tire sec-tions writ-ten by us in Ital-ian/English,
+ []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -859,11 +864,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10]
+[10])
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[11]
 Chapter 2.
 (./Files/2_architectural_design.tex (./Files/2_architectural_design/1_overview.tex
 
-[11
+[12
 
 
 ]) (./Files/2_architectural_design/2_component-view.tex
@@ -875,7 +889,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[12]) (./Files/2_architectural_design/3_deployment-view.tex
+[13]) (./Files/2_architectural_design/3_deployment-view.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -884,7 +898,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13]) (./Files/2_architectural_design/4_runtime-view.tex) (./Files/2_architectural_design/5_component-interfaces.tex
+[14]) (./Files/2_architectural_design/4_runtime-view.tex) (./Files/2_architectural_design/5_component-interfaces.tex
 Overfull \hbox (14.82042pt too wide) in paragraph at lines 20--20
 []|\T1/lmtt/m/n/10.95 getCurrentPosition()| 
  []
@@ -933,7 +947,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14]
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 44--44
 []|\T1/lmtt/m/n/10.95 eventName:
  []
@@ -972,7 +986,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[15]
+[16]
 Underfull \hbox (badness 10000) in paragraph at lines 69--69
 []|\T1/lmtt/m/n/10.95 POST
  []
@@ -1106,7 +1120,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[16]
+[17]
 Overfull \hbox (6.91238pt too wide) in paragraph at lines 117--117
 []|\T1/lmtt/m/n/10.95 rpc/search_best_paths| 
  []
@@ -1160,7 +1174,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[17]) (./Files/2_architectural_design/7_other-design-decisions.tex
+[18]) (./Files/2_architectural_design/7_other-design-decisions.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1169,7 +1183,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[18]
+[19]
 Overfull \hbox (3.94978pt too wide) in paragraph at lines 10--11
 \T1/ptm/m/n/10.95 Post-GIS pro-vides na-tive, highly op-ti-mized func-tions for geospa-tial con-fla-tion and Nearest-Neighbor
  []
@@ -1183,11 +1197,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[19]
+[20]
 Chapter 3.
 (./Files/3_user_interface_design.tex)
 
-[20
+[21
 
 
 ]
@@ -1204,7 +1218,7 @@ Overfull \hbox (2.43637pt too wide) in paragraph at lines 37--58
 
 
 
-[21
+[22
 
 
 ]
@@ -1231,7 +1245,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[22]
+[23]
 Overfull \hbox (2.43637pt too wide) in paragraph at lines 146--165
  [][] 
  []
@@ -1245,18 +1259,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[23]
+[24]
 Chapter 5.
 (./Files/5_implementation_integration_testplan.tex)
 
-[24
+[25
 
 
 ]
 Chapter 6.
 (./Files/6_effort.tex)
 
-[25
+[26
 
 
 ] (./main.aux)
@@ -1268,18 +1282,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 2CA426B4BFC901D8B27FE4D3E14138D1;8265.
  ) 
 Here is how much of TeX's memory you used:
- 26889 strings out of 473190
- 495593 string characters out of 5715800
- 873046 words of memory out of 5000000
- 49510 multiletter control sequences out of 15000+600000
+ 26896 strings out of 473190
+ 495680 string characters out of 5715800
+ 874046 words of memory out of 5000000
+ 49512 multiletter control sequences out of 15000+600000
  598547 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,98p,707b,670s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,20n,98p,707b,738s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (25 pages, 149698 bytes).
+Output written on main.pdf (26 pages, 156300 bytes).
 PDF statistics:
- 458 PDF objects out of 1000 (max. 8388607)
- 414 compressed objects within 5 object streams
- 102 named destinations out of 1000 (max. 500000)
+ 467 PDF objects out of 1000 (max. 8388607)
+ 422 compressed objects within 5 object streams
+ 107 named destinations out of 1000 (max. 500000)
  402 words of extra memory for PDF output out of 10000 (max. 10000000)
 
