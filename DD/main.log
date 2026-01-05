@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 JAN 2026 13:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  5 JAN 2026 22:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/alberto/Developement/se2_project/DD/main.tex
-(/Users/alberto/Developement/se2_project/DD/main.tex
+**main.tex
+(./main.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
@@ -1158,12 +1158,58 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [16]
 Chapter 3.
-(./Files/3_user_interface_design.tex)
+(./Files/3_user_interface_design.tex
+<Images/dashboard.png, id=352, 1183.42125pt x 822.07124pt>
+File: Images/dashboard.png Graphic file (type png)
+<use Images/dashboard.png>
+Package pdftex.def Info: Images/dashboard.png  used on input line 6.
+(pdftex.def)             Requested size: 364.19667pt x 252.98297pt.
+<Images/registra_viaggio.png, id=354, 1180.41pt x 823.075pt>
+File: Images/registra_viaggio.png Graphic file (type png)
+<use Images/registra_viaggio.png>
+Package pdftex.def Info: Images/registra_viaggio.png  used on input line 15.
+(pdftex.def)             Requested size: 364.19667pt x 253.94493pt.
+
 
 [17
 
 
-]
+ <./Images/dashboard.png>]
+<Images/esplora_percorsi.png, id=360, 1181.41376pt x 820.06375pt>
+File: Images/esplora_percorsi.png Graphic file (type png)
+<use Images/esplora_percorsi.png>
+Package pdftex.def Info: Images/esplora_percorsi.png  used on input line 23.
+(pdftex.def)             Requested size: 364.19667pt x 252.80315pt.
+<Images/miei_percorsi.png, id=361, 1184.425pt x 821.0675pt>
+File: Images/miei_percorsi.png Graphic file (type png)
+<use Images/miei_percorsi.png>
+Package pdftex.def Info: Images/miei_percorsi.png  used on input line 31.
+(pdftex.def)             Requested size: 364.19667pt x 252.4611pt.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[18 <./Images/registra_viaggio.png> <./Images/esplora_percorsi.png>]
+<Images/impostazioni.png, id=368, 1183.42125pt x 820.06375pt>
+File: Images/impostazioni.png Graphic file (type png)
+<use Images/impostazioni.png>
+Package pdftex.def Info: Images/impostazioni.png  used on input line 44.
+(pdftex.def)             Requested size: 364.19667pt x 252.36519pt.
+)
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[19 <./Images/miei_percorsi.png> <./Images/impostazioni.png>]
 Chapter 4.
 (./Files/4_requirements_traceability.tex
 Overfull \hbox (2.43637pt too wide) in paragraph at lines 10--29
@@ -1177,7 +1223,7 @@ Overfull \hbox (2.43637pt too wide) in paragraph at lines 37--58
 
 
 
-[18
+[20
 
 
 ]
@@ -1204,7 +1250,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[19]
+[21]
 Overfull \hbox (2.43637pt too wide) in paragraph at lines 146--165
  [][] 
  []
@@ -1218,25 +1264,48 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[20]
+[22]
 Chapter 5.
-(./Files/5_implementation_integration_testplan.tex)
+(./Files/5_implementation_integration_testplan.tex
 
-[21
+[23
 
 
 ]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[24]
+Overfull \hbox (12.28317pt too wide) in paragraph at lines 67--68
+[]\T1/ptm/b/n/10.95 Network Chaos: \T1/ptm/m/n/10.95 Sim-u-la-tion of ad-verse net-work con-di-tions (sig-nal loss, switch-ing be-tween 4G/WiFi)
+ []
+
+)
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[25]
 Chapter 6.
 (./Files/6_effort.tex)
 
-[22
+[26
 
 
 ]
 Chapter 7.
 (./Files/7_references.tex)
 
-[23
+[27
 
 
 ] (./main.aux)
@@ -1245,21 +1314,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: DB79675756C009293AA4DAF1706BCAE6;6943.
+(rerunfilecheck)             Checksum: CA1A889ABD27572F86E54ABDEBCDC966;7772.
  ) 
 Here is how much of TeX's memory you used:
- 26876 strings out of 473190
- 495544 string characters out of 5715800
- 874079 words of memory out of 5000000
- 49507 multiletter control sequences out of 15000+600000
+ 26945 strings out of 473190
+ 497042 string characters out of 5715800
+ 874577 words of memory out of 5000000
+ 49557 multiletter control sequences out of 15000+600000
  598547 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,98p,707b,669s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (23 pages, 138354 bytes).
+ 94i,20n,98p,674b,669s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (27 pages, 1295975 bytes).
 PDF statistics:
- 393 PDF objects out of 1000 (max. 8388607)
- 352 compressed objects within 4 object streams
- 89 named destinations out of 1000 (max. 500000)
- 330 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 473 PDF objects out of 1000 (max. 8388607)
+ 415 compressed objects within 5 object streams
+ 109 named destinations out of 1000 (max. 500000)
+ 395 words of extra memory for PDF output out of 10000 (max. 10000000)
 
