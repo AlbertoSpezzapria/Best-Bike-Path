@@ -63,6 +63,13 @@ These are stateless functions triggered by database events or scheduled cron job
         \item \textbf{Trigger:} Database event (INSERT on \texttt{Activities}).
         \item \textbf{Responsibility:} It securely calls external Meteorological APIs (using backend-only API keys) to fetch weather conditions for the specific time and location of the activity, enriching the path metadata.
     \end{itemize}
+
+    \item \texttt{func\_path\_deduplication}
+    \begin{itemize}
+        \item \textbf{Trigger:} Direct Client Request (RPC via check\_path\_duplicate)
+        \item \textbf{Responsibility:} It implements the \textbf{Geometric Integrity Control Logic.} 
+        Before a new manual path is saved to the database, this function receives the geometry drawn by the user and executes a high-performance spatial query to verify the existence of already present public paths that are geometrically identical or extremely similar. It returns the validation result to the client, preventing the creation of redundant duplicates and ensuring path uniqueness within the system.
+    \end{itemize}
 \end{itemize}
 
 % INSERT DIAGRAM 2.2 HERE
