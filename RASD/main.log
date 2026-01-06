@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  6 JAN 2026 16:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  6 JAN 2026 17:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1653,7 +1653,7 @@ Chapter 5.
 
 
 ]
-Overfull \vbox (19.49348pt too high) has occurred while \output is active []
+Overfull \vbox (33.09348pt too high) has occurred while \output is active []
 
 
 
@@ -1684,7 +1684,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  94i,20n,100p,973b,2130s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (64 pages, 2749103 bytes).
+Output written on main.pdf (64 pages, 2749169 bytes).
 PDF statistics:
  1188 PDF objects out of 1200 (max. 8388607)
  1061 compressed objects within 11 object streams
