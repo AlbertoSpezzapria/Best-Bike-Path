@@ -1,65 +1,65 @@
 \contentsline {section}{Table of Contents}{3}{table.caption.2}%
-\contentsline {section}{List of Figures}{6}{chapter*.3}%
-\contentsline {section}{List of Tables}{6}{chapter*.4}%
-\contentsline {chapter}{\numberline {1}{Introduction}}{8}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Purpose}{8}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Scope}{8}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Definitions, Acronyms, and Abbreviations}{9}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Definitions}{9}{subsection.1.3.1}%
-\contentsline {subsection}{\numberline {1.3.2}Acronyms}{9}{subsection.1.3.2}%
-\contentsline {subsection}{\numberline {1.3.3}Abbreviations}{10}{subsection.1.3.3}%
-\contentsline {section}{\numberline {1.4}Revision History}{10}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Reference Documents}{10}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Document Structure}{10}{section.1.6}%
-\contentsline {section}{\numberline {1.7}Use of Generative AI Tools}{11}{section.1.7}%
-\contentsline {chapter}{\numberline {2}{Architectural Design}}{13}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Overview}{13}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}High-Level Architecture Description}{13}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Security Model: Row Level Security (RLS)}{14}{subsection.2.1.2}%
-\contentsline {section}{\numberline {2.2}Component view}{14}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Hybrid Client Components}{14}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Managed Cloud Components (BaaS)}{14}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Edge Functions}{15}{subsection.2.2.3}%
-\contentsline {section}{\numberline {2.3}Deployment view}{15}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Network Communication}{16}{subsection.2.3.1}%
-\contentsline {section}{\numberline {2.4}Runtime view}{16}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Component interfaces}{16}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Hardware Abstraction Interfaces}{16}{subsection.2.5.1}%
-\contentsline {paragraph}{Interface: IGeolocationProvider}{17}{section*.6}%
-\contentsline {paragraph}{Interface: IMotionSensor}{17}{section*.8}%
-\contentsline {subsection}{\numberline {2.5.2}Cloud Network Interfaces (BaaS API)}{17}{subsection.2.5.2}%
-\contentsline {paragraph}{Interface: IAuthService}{18}{section*.10}%
-\contentsline {paragraph}{Interface: ISpatialDataStore}{18}{section*.12}%
-\contentsline {paragraph}{Interface: ISearchEngine (RPC)}{19}{section*.14}%
-\contentsline {subsection}{\numberline {2.5.3}External Interfaces}{19}{subsection.2.5.3}%
-\contentsline {paragraph}{Interface: IWeatherProvider}{19}{section*.16}%
-\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{19}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Architectural Styles}{19}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}Design Patterns}{20}{subsection.2.6.2}%
-\contentsline {section}{\numberline {2.7}Other design decisions}{21}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}Adoption of Hybrid Mobile Architecture}{21}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}Usage of PostgreSQL with PostGIS}{21}{subsection.2.7.2}%
-\contentsline {subsection}{\numberline {2.7.3}Centralized Logic for Merging and Ranking}{21}{subsection.2.7.3}%
-\contentsline {subsection}{\numberline {2.7.4}Direct-to-Database Communication Pattern}{21}{subsection.2.7.4}%
-\contentsline {chapter}{\numberline {3}{User Interface Design}}{22}{chapter.3}%
-\contentsline {chapter}{\numberline {4}{Requirements Traceability}}{25}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Requirements Traceability}{25}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}User Account Management}{25}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Activity Recording}{26}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Path Creation (Automatic)}{26}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Path Creation (Manual)}{26}{subsection.4.1.4}%
-\contentsline {subsection}{\numberline {4.1.5}Search and Ranking}{27}{subsection.4.1.5}%
-\contentsline {subsection}{\numberline {4.1.6}Path Management}{27}{subsection.4.1.6}%
-\contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{28}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Implementation, Integration \& Testing}{28}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Overview}{28}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Implementation Plan}{28}{subsection.5.1.2}%
-\contentsline {subsubsection}{Phase 1: Data Integrity \& Security Layer}{28}{section*.29}%
-\contentsline {subsubsection}{Phase 2: Distributed Business Logic (Edge Layer)}{29}{section*.30}%
-\contentsline {subsubsection}{Phase 3: Hybrid Client \& Sensor Fusion}{29}{section*.31}%
-\contentsline {subsubsection}{Phase 4: Asynchronous Consistency}{29}{section*.32}%
-\contentsline {subsection}{\numberline {5.1.3}Component Integration}{30}{subsection.5.1.3}%
-\contentsline {subsection}{\numberline {5.1.4}Testing Strategy}{30}{subsection.5.1.4}%
-\contentsline {subsubsection}{Logic \& Algo Testing (Unit)}{30}{section*.33}%
-\contentsline {subsubsection}{Native \& Hardware Testing (System)}{30}{section*.34}%
-\contentsline {chapter}{\numberline {6}Effort Spent}{31}{chapter.6}%
+\contentsline {section}{List of Figures}{5}{chapter*.3}%
+\contentsline {section}{List of Tables}{5}{chapter*.4}%
+\contentsline {chapter}{\numberline {1}{Introduction}}{7}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Purpose}{7}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Scope}{7}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Definitions, Acronyms, and Abbreviations}{8}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Definitions}{8}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Acronyms}{8}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Abbreviations}{9}{subsection.1.3.3}%
+\contentsline {section}{\numberline {1.4}Revision History}{9}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Reference Documents}{9}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Document Structure}{9}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Use of Generative AI Tools}{10}{section.1.7}%
+\contentsline {chapter}{\numberline {2}{Architectural Design}}{12}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Overview}{12}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}High-Level Architecture Description}{12}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Security Model: Row Level Security (RLS)}{13}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Component view}{13}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Hybrid Client Components}{13}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Managed Cloud Components (BaaS)}{13}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Edge Functions}{14}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Deployment view}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Network Communication}{15}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.4}Runtime view}{15}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Component interfaces}{15}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Hardware Abstraction Interfaces}{15}{subsection.2.5.1}%
+\contentsline {paragraph}{Interface: IGeolocationProvider}{16}{section*.6}%
+\contentsline {paragraph}{Interface: IMotionSensor}{16}{section*.8}%
+\contentsline {subsection}{\numberline {2.5.2}Cloud Network Interfaces (BaaS API)}{16}{subsection.2.5.2}%
+\contentsline {paragraph}{Interface: IAuthService}{17}{section*.10}%
+\contentsline {paragraph}{Interface: ISpatialDataStore}{17}{section*.12}%
+\contentsline {paragraph}{Interface: ISearchEngine (RPC)}{18}{section*.14}%
+\contentsline {subsection}{\numberline {2.5.3}External Interfaces}{18}{subsection.2.5.3}%
+\contentsline {paragraph}{Interface: IWeatherProvider}{18}{section*.16}%
+\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{18}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Architectural Styles}{18}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Design Patterns}{19}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Other design decisions}{20}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Adoption of Hybrid Mobile Architecture}{20}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Usage of PostgreSQL with PostGIS}{20}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}Centralized Logic for Merging and Ranking}{20}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}Direct-to-Database Communication Pattern}{20}{subsection.2.7.4}%
+\contentsline {chapter}{\numberline {3}{User Interface Design}}{21}{chapter.3}%
+\contentsline {chapter}{\numberline {4}{Requirements Traceability}}{24}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Requirements Traceability}{24}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}User Account Management}{24}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Activity Recording}{25}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Path Creation (Automatic)}{25}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Path Creation (Manual)}{25}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}Search and Ranking}{26}{subsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.1.6}Path Management}{26}{subsection.4.1.6}%
+\contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{27}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Implementation, Integration \& Testing}{27}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Overview}{27}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Implementation Plan}{27}{subsection.5.1.2}%
+\contentsline {subsubsection}{Phase 1: Data Integrity \& Security Layer}{27}{section*.29}%
+\contentsline {subsubsection}{Phase 2: Distributed Business Logic (Edge Layer)}{28}{section*.30}%
+\contentsline {subsubsection}{Phase 3: Hybrid Client \& Sensor Fusion}{28}{section*.31}%
+\contentsline {subsubsection}{Phase 4: Asynchronous Consistency}{28}{section*.32}%
+\contentsline {subsection}{\numberline {5.1.3}Component Integration}{29}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Testing Strategy}{29}{subsection.5.1.4}%
+\contentsline {subsubsection}{Logic \& Algo Testing (Unit)}{29}{section*.33}%
+\contentsline {subsubsection}{Native \& Hardware Testing (System)}{29}{section*.34}%
+\contentsline {chapter}{\numberline {6}Effort Spent}{30}{chapter.6}%
