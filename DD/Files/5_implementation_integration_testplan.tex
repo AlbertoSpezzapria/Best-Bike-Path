@@ -1,0 +1,68 @@
+\section{Implementation, Integration \& Testing}
+
+\subsection{Overview}
+The implementation strategy for the Best Bike Paths (BBP) system is driven by the need to combine the flexibility of web development with the performance of native hardware. The chosen architecture—Hybrid Mobile (Capacitor) supported by a Serverless Backend (Supabase + Deno)—addresses two critical requirements:
+
+\begin{itemize}
+    \item \textbf{Maximizing Data Consistency:} The pervasive use of TypeScript, from the database (via generated definitions) to the mobile client, ensures a ``Type-Safe'' ecosystem, drastically reducing integration bugs.
+    \item \textbf{Optimizing Resource Usage:} By delegating spatial computational complexity to PostGIS and business logic to the Edge, the mobile client remains lightweight, preserving the user device's battery life.
+\end{itemize}
+
+\subsection{Implementation Plan}
+The development process follows a ``Data-Centric Bottom-Up'' approach. Instead of starting with the user interface, implementation begins with a rigorous definition of the data model and security rules, progressively building the upper layers. This ensures that every component, once integrated, rests on a stable foundation.
+
+\subsubsection{Phase 1: Data Integrity \& Security Layer}
+The primary goal is to establish a reliable ``Single Source of Truth.'' This involves not just creating tables, but defining the data contract that will govern the entire system.
+
+\begin{itemize}
+    \item \textbf{Geospatial Persistence Engine:} The adoption of PostgreSQL with PostGIS is not merely for storage, but to serve as the primary calculation engine. Path trajectories are modeled as \texttt{GEOGRAPHY} types to ensure precise geodetic calculations (independent of map distortion), which are essential for the proximity queries required by functional requirements.
+    \item \textbf{Automated Contract Generation:} To prevent misalignment between backend and frontend, a pipeline is implemented to automatically reflect the database schema into static TypeScript interfaces. This mechanism enforces that any change to the data structure (e.g., adding a ``slope'' field) is immediately propagated to the code, causing preemptive compilation errors rather than runtime failures.
+    \item \textbf{Authorization at Storage Level:} Security is implemented directly on the data via Row Level Security (RLS). This ``Defense in Depth'' approach ensures that access rules (e.g., ``only the author sees private paths'') are applied universally, regardless of whether the request originates from the API, the admin dashboard, or a future client.
+\end{itemize}
+
+\subsubsection{Phase 2: Distributed Business Logic (Edge Layer)}
+Application logic is developed as an intermediate layer of serverless functions (Deno), acting as intelligent glue between the client and the database.
+
+\begin{itemize}
+    \item \textbf{Compute Offloading Strategy:} Heavy operations are strategically distributed. The Database handles spatial complexity (intersections, distance calculations) via optimized RPCs. The Edge Function handles algorithmic logic (e.g., path ranking based on dynamic weights) and orchestration. This separation prevents complex calculations from blocking the main database thread or draining the smartphone's CPU.
+    \item \textbf{Validation Gatekeeping:} Before any data reaches the database, it is intercepted by a validation layer (based on Zod). This component ensures the structural and semantic sanity of incoming data (e.g., verifying that a GPX track does not have impossible time jumps), protecting system integrity from malformed input or attacks.
+\end{itemize}
+
+\subsubsection{Phase 3: Hybrid Client \& Sensor Fusion}
+Mobile client development focuses on hardware abstraction and offline resilience, using Capacitor as a bridge to native functionalities.
+
+\begin{itemize}
+    \item \textbf{Native Bridge Abstraction:} Capacitor is used to access critical sensors (GPS, Accelerometer), bypassing browser limitations. The goal is to ensure background execution: the system must continue recording high-frequency data even when the device is locked, a feature not reliably available in standard Web Apps.
+    \item \textbf{Local-First Architecture:} Given the mobile nature of the application (usage in areas with poor coverage), the client is designed to operate autonomously. A persistent local buffer (via SQLite) is implemented to act as temporary storage.
+    \item \textbf{Synchronization Logic:} An intelligent synchronization manager monitors network status. Instead of attempting immediate and fallible uploads, the system accumulates data locally and transmits it in batches to the ingestion Edge Function only when the connection is stable, implementing ``retry'' logic to ensure no activity is lost.
+\end{itemize}
+
+\subsubsection{Phase 4: Asynchronous Consistency}
+The final phase handles processes that do not require real-time interaction, decoupling the user experience from heavy workloads.
+
+\begin{itemize}
+    \item \textbf{Event-Driven Updates:} To keep path statistics updated without slowing down feedback submission, an event-driven model is adopted. Inserting a new feedback asynchronously triggers (via Database Webhooks) the recalculation of the path's score. This ensures the user interface remains ``snappy'' while the system processes data in the background.
+\end{itemize}
+
+\subsection{Component Integration}
+Integration in BBP is not a final phase, but a continuous process guaranteed by the architecture itself.
+
+\begin{itemize}
+    \item \textbf{Static Contract Verification:} Integration between modules (Mobile Client $\leftrightarrow$ Edge Function $\leftrightarrow$ Database) is verified statically at compile time. Sharing TypeScript types acts as a formal contract: if the database schema changes, the client will not compile until it is updated to handle the change. This eliminates entire classes of integration bugs.
+    \item \textbf{Environment Parity:} To mitigate deployment risks, the local development environment faithfully replicates the production infrastructure (including containers for Edge Functions and PostGIS). This allows developers to test full flows (from simulated sensor to storage) on their own machines before even reaching the staging environment.
+\end{itemize}
+
+\subsection{Testing Strategy}
+The testing strategy is designed to mitigate risks specific to an application based on geolocation and physical sensors.
+
+\subsubsection{Logic \& Algo Testing (Unit)}
+The focus is on algorithmic correctness. Since ranking and data fusion logic is isolated in pure TypeScript/Deno functions, it can be tested exhaustively with fast unit tests by mocking external dependencies. This ensures the mathematics behind score calculation is correct before involving the database.
+
+\subsubsection{Native \& Hardware Testing (System)}
+Traditional tests are insufficient to validate hardware interaction.
+
+\begin{itemize}
+    \item \textbf{Energy Profiling:} Instrumental monitoring of energy consumption is performed (via native Android/iOS profilers) to ensure background sensor sampling respects battery constraints (Requirement 3.3).
+    \item \textbf{Background Lifecycle Verification:} Field tests are crucial to verify that the operating system does not ``kill'' the recording process when memory is under pressure or the screen is off for long periods.
+    \item \textbf{Network Chaos:} Simulation of adverse network conditions (signal loss, switching between 4G/WiFi) to validate the robustness of the offline synchronization mechanism and prevent data loss.
+\end{itemize}
