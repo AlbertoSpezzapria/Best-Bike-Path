@@ -22,93 +22,6 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {2}{Architectural Design}}{12}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-<<<<<<< HEAD
-\newlabel{sect:architectural_design}{{2}{8}{Architectural Design}{chapter.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Overview}{8}{section.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}High-Level Architecture Description}{8}{subsection.2.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Security Model: Row Level Security (RLS)}{9}{subsection.2.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Component view}{9}{section.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Hybrid Client Components}{9}{subsection.2.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Managed Cloud Components (BaaS)}{9}{subsection.2.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Edge Functions}{10}{subsection.2.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Deployment view}{11}{section.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Network Communication}{11}{subsection.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Runtime view}{12}{section.2.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces [UC1] User Registration Sequence Diagram}}{12}{figure.caption.7}\protected@file@percent }
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:sd_uc1}{{2.1}{12}{[UC1] User Registration Sequence Diagram}{figure.caption.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces [UC2] System Access Sequence Diagram}}{13}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:sd_uc2}{{2.2}{13}{[UC2] System Access Sequence Diagram}{figure.caption.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces [UC3] Activity Recording Sequence Diagram}}{14}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:sd_uc3}{{2.3}{14}{[UC3] Activity Recording Sequence Diagram}{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces [UC4] Creation of a manual path Sequence Diagram}}{15}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:sd_uc4}{{2.4}{15}{[UC4] Creation of a manual path Sequence Diagram}{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces [UC5] Publication of a path Sequence Diagram}}{16}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:sd_uc5}{{2.5}{16}{[UC5] Publication of a path Sequence Diagram}{figure.caption.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces [UC6] Path Feedback reporting Sequence Diagram}}{17}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:sd_uc6}{{2.6}{17}{[UC6] Path Feedback reporting Sequence Diagram}{figure.caption.17}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces [UC7] Search for a path Sequence Diagram}}{18}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:sd_uc7}{{2.7}{18}{[UC7] Search for a path Sequence Diagram}{figure.caption.19}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.5}Component interfaces}{18}{section.2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Hardware Abstraction Interfaces}{18}{subsection.2.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IGeolocationProvider}{18}{section*.20}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces IGeolocationProvider Interface}}{19}{table.caption.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IMotionSensor}{19}{section*.22}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces IMotionSensor Interface}}{19}{table.caption.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Cloud Network Interfaces (BaaS API)}{19}{subsection.2.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IAuthService}{19}{section*.24}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces IAuthService Interface}}{20}{table.caption.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: ISpatialDataStore}{20}{section*.26}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.4}{\ignorespaces ISpatialDataStore Interface}}{20}{table.caption.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: ISearchEngine (RPC)}{20}{section*.28}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.5}{\ignorespaces ISearchEngine Interface}}{21}{table.caption.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.3}External Interfaces}{21}{subsection.2.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IWeatherProvider}{21}{section*.30}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.6}{\ignorespaces IWeatherProvider Interface}}{21}{table.caption.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{21}{section.2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.1}Architectural Styles}{21}{subsection.2.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.2}Design Patterns}{22}{subsection.2.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.7}Other design decisions}{23}{section.2.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.1}Adoption of Hybrid Mobile Architecture}{23}{subsection.2.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}Usage of PostgreSQL with PostGIS}{23}{subsection.2.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.3}Centralized Logic for Merging and Ranking}{23}{subsection.2.7.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.4}Direct-to-Database Communication Pattern}{23}{subsection.2.7.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}{User Interface Design}}{24}{chapter.3}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:user_interface_design}{{3}{24}{User Interface Design}{chapter.3}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}{Requirements Traceability}}{25}{chapter.4}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:requirements_traceability}{{4}{25}{Requirements Traceability}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Requirements Traceability}{25}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}User Account Management}{25}{subsection.4.1.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Traceability for User Account Management}}{25}{table.caption.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Activity Recording}{26}{subsection.4.1.2}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Traceability for Activity Recording}}{26}{table.caption.33}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Path Creation (Automatic)}{26}{subsection.4.1.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Traceability for Automatic Path Creation}}{26}{table.caption.34}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Path Creation (Manual)}{26}{subsection.4.1.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Traceability for Manual Path Creation}}{26}{table.caption.35}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.5}Search and Ranking}{27}{subsection.4.1.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Traceability for Search and Ranking}}{27}{table.caption.36}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.6}Path Management}{27}{subsection.4.1.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Traceability for Path Management}}{27}{table.caption.37}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{28}{chapter.5}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:implementation_integration_testplan}{{5}{28}{Implementation, Integration and Test Plan}{chapter.5}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Effort Spent}{29}{chapter.6}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:effort}{{6}{29}{Effort Spent}{chapter.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6.1}{\ignorespaces Hours of work spent by each author redacting the DD document}}{29}{table.caption.38}\protected@file@percent }
-\newlabel{tab:effort}{{6.1}{29}{Hours of work spent by each author redacting the DD document}{table.caption.38}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}References}{30}{chapter.7}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:references}{{7}{30}{References}{chapter.7}{}}
-=======
 \newlabel{sect:architectural_design}{{2}{12}{Architectural Design}{chapter.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Overview}{12}{section.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}High-Level Architecture Description}{12}{subsection.2.1.1}\protected@file@percent }
@@ -117,85 +30,98 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Hybrid Client Components}{13}{subsection.2.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Managed Cloud Components (BaaS)}{13}{subsection.2.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Edge Functions}{14}{subsection.2.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Deployment view}{14}{section.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Deployment view}{15}{section.2.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Network Communication}{15}{subsection.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Runtime view}{15}{section.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.5}Component interfaces}{15}{section.2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Hardware Abstraction Interfaces}{15}{subsection.2.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IGeolocationProvider}{16}{section*.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces IGeolocationProvider Interface}}{16}{table.caption.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IMotionSensor}{16}{section*.8}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces IMotionSensor Interface}}{16}{table.caption.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Cloud Network Interfaces (BaaS API)}{16}{subsection.2.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IAuthService}{17}{section*.10}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces IAuthService Interface}}{17}{table.caption.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: ISpatialDataStore}{17}{section*.12}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.4}{\ignorespaces ISpatialDataStore Interface}}{17}{table.caption.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: ISearchEngine (RPC)}{18}{section*.14}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.5}{\ignorespaces ISearchEngine Interface}}{18}{table.caption.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.3}External Interfaces}{18}{subsection.2.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interface: IWeatherProvider}{18}{section*.16}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2.6}{\ignorespaces IWeatherProvider Interface}}{18}{table.caption.17}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{18}{section.2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.1}Architectural Styles}{18}{subsection.2.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.2}Design Patterns}{19}{subsection.2.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.7}Other design decisions}{20}{section.2.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.1}Adoption of Hybrid Mobile Architecture}{20}{subsection.2.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}Usage of PostgreSQL with PostGIS}{20}{subsection.2.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.3}Centralized Logic for Merging and Ranking}{20}{subsection.2.7.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.4}Direct-to-Database Communication Pattern}{20}{subsection.2.7.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}{User Interface Design}}{21}{chapter.3}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:user_interface_design}{{3}{21}{User Interface Design}{chapter.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Main dashboard summarizing service status, recent notifications, and quick actions.}}{21}{figure.caption.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Runtime view}{16}{section.2.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces [UC1] User Registration Sequence Diagram}}{16}{figure.caption.7}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:dashboard}{{3.1}{21}{Main dashboard summarizing service status, recent notifications, and quick actions}{figure.caption.18}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Trip recording interface with live metrics and waypoint controls.}}{22}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:registra-viaggio}{{3.2}{22}{Trip recording interface with live metrics and waypoint controls}{figure.caption.19}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Explore curated and suggested routes with filters and key stats.}}{22}{figure.caption.20}\protected@file@percent }
-\newlabel{fig:esplora-percorsi}{{3.3}{22}{Explore curated and suggested routes with filters and key stats}{figure.caption.20}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces List of saved routes with quick access to details and navigation.}}{23}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:miei-percorsi}{{3.4}{23}{List of saved routes with quick access to details and navigation}{figure.caption.21}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Settings grouped by account, privacy, and notifications.}}{23}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:impostazioni}{{3.5}{23}{Settings grouped by account, privacy, and notifications}{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}{Requirements Traceability}}{24}{chapter.4}\protected@file@percent }
+\newlabel{fig:sd_uc1}{{2.1}{16}{[UC1] User Registration Sequence Diagram}{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces [UC2] System Access Sequence Diagram}}{17}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:sd_uc2}{{2.2}{17}{[UC2] System Access Sequence Diagram}{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces [UC3] Activity Recording Sequence Diagram}}{18}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:sd_uc3}{{2.3}{18}{[UC3] Activity Recording Sequence Diagram}{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces [UC4] Creation of a manual path Sequence Diagram}}{19}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:sd_uc4}{{2.4}{19}{[UC4] Creation of a manual path Sequence Diagram}{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces [UC5] Publication of a path Sequence Diagram}}{20}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:sd_uc5}{{2.5}{20}{[UC5] Publication of a path Sequence Diagram}{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces [UC6] Path Feedback reporting Sequence Diagram}}{21}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:sd_uc6}{{2.6}{21}{[UC6] Path Feedback reporting Sequence Diagram}{figure.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces [UC7] Search for a path Sequence Diagram}}{22}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:sd_uc7}{{2.7}{22}{[UC7] Search for a path Sequence Diagram}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Component interfaces}{22}{section.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Hardware Abstraction Interfaces}{22}{subsection.2.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interface: IGeolocationProvider}{22}{section*.20}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces IGeolocationProvider Interface}}{23}{table.caption.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interface: IMotionSensor}{23}{section*.22}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces IMotionSensor Interface}}{23}{table.caption.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Cloud Network Interfaces (BaaS API)}{23}{subsection.2.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interface: IAuthService}{23}{section*.24}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces IAuthService Interface}}{24}{table.caption.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interface: ISpatialDataStore}{24}{section*.26}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2.4}{\ignorespaces ISpatialDataStore Interface}}{24}{table.caption.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interface: ISearchEngine (RPC)}{24}{section*.28}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2.5}{\ignorespaces ISearchEngine Interface}}{25}{table.caption.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.3}External Interfaces}{25}{subsection.2.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interface: IWeatherProvider}{25}{section*.30}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2.6}{\ignorespaces IWeatherProvider Interface}}{25}{table.caption.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.6}Selected architectural styles and patterns}{25}{section.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.1}Architectural Styles}{25}{subsection.2.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.2}Design Patterns}{26}{subsection.2.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.7}Other design decisions}{27}{section.2.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.1}Adoption of Hybrid Mobile Architecture}{27}{subsection.2.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}Usage of PostgreSQL with PostGIS}{27}{subsection.2.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.3}Centralized Logic for Merging and Ranking}{27}{subsection.2.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.4}Direct-to-Database Communication Pattern}{27}{subsection.2.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}{User Interface Design}}{28}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:requirements_traceability}{{4}{24}{Requirements Traceability}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Requirements Traceability}{24}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}User Account Management}{24}{subsection.4.1.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Traceability for User Account Management}}{24}{table.caption.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Activity Recording}{25}{subsection.4.1.2}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Traceability for Activity Recording}}{25}{table.caption.24}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Path Creation (Automatic)}{25}{subsection.4.1.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Traceability for Automatic Path Creation}}{25}{table.caption.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Path Creation (Manual)}{25}{subsection.4.1.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Traceability for Manual Path Creation}}{25}{table.caption.26}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.5}Search and Ranking}{26}{subsection.4.1.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Traceability for Search and Ranking}}{26}{table.caption.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.6}Path Management}{26}{subsection.4.1.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Traceability for Path Management}}{26}{table.caption.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{27}{chapter.5}\protected@file@percent }
+\newlabel{sect:user_interface_design}{{3}{28}{User Interface Design}{chapter.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Main dashboard summarizing service status, recent notifications, and quick actions.}}{28}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:dashboard}{{3.1}{28}{Main dashboard summarizing service status, recent notifications, and quick actions}{figure.caption.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Trip recording interface with live metrics and waypoint controls.}}{29}{figure.caption.33}\protected@file@percent }
+\newlabel{fig:registra-viaggio}{{3.2}{29}{Trip recording interface with live metrics and waypoint controls}{figure.caption.33}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Explore curated and suggested routes with filters and key stats.}}{29}{figure.caption.34}\protected@file@percent }
+\newlabel{fig:esplora-percorsi}{{3.3}{29}{Explore curated and suggested routes with filters and key stats}{figure.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces List of saved routes with quick access to details and navigation.}}{30}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:miei-percorsi}{{3.4}{30}{List of saved routes with quick access to details and navigation}{figure.caption.35}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Settings grouped by account, privacy, and notifications.}}{30}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:impostazioni}{{3.5}{30}{Settings grouped by account, privacy, and notifications}{figure.caption.36}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}{Requirements Traceability}}{31}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:implementation_integration_testplan}{{5}{27}{Implementation, Integration and Test Plan}{chapter.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Implementation, Integration \& Testing}{27}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Overview}{27}{subsection.5.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Implementation Plan}{27}{subsection.5.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Phase 1: Data Integrity \& Security Layer}{27}{section*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Phase 2: Distributed Business Logic (Edge Layer)}{28}{section*.30}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Phase 3: Hybrid Client \& Sensor Fusion}{28}{section*.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Phase 4: Asynchronous Consistency}{28}{section*.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Component Integration}{29}{subsection.5.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Testing Strategy}{29}{subsection.5.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Logic \& Algo Testing (Unit)}{29}{section*.33}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Native \& Hardware Testing (System)}{29}{section*.34}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Effort Spent}{30}{chapter.6}\protected@file@percent }
+\newlabel{sect:requirements_traceability}{{4}{31}{Requirements Traceability}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Requirements Traceability}{31}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}User Account Management}{31}{subsection.4.1.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Traceability for User Account Management}}{31}{table.caption.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Activity Recording}{32}{subsection.4.1.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Traceability for Activity Recording}}{32}{table.caption.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Path Creation (Automatic)}{32}{subsection.4.1.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Traceability for Automatic Path Creation}}{32}{table.caption.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Path Creation (Manual)}{32}{subsection.4.1.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Traceability for Manual Path Creation}}{32}{table.caption.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.5}Search and Ranking}{33}{subsection.4.1.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Traceability for Search and Ranking}}{33}{table.caption.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.6}Path Management}{33}{subsection.4.1.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Traceability for Path Management}}{33}{table.caption.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}{Implementation, Integration and Test Plan}}{34}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{sect:effort}{{6}{30}{Effort Spent}{chapter.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6.1}{\ignorespaces Hours of work spent by each author redacting the DD document}}{30}{table.caption.35}\protected@file@percent }
-\newlabel{tab:effort}{{6.1}{30}{Hours of work spent by each author redacting the DD document}{table.caption.35}{}}
->>>>>>> 6c8ae49625df8b23ca64ea8876040f1be926a827
-\gdef \@abspage@last{30}
+\newlabel{sect:implementation_integration_testplan}{{5}{34}{Implementation, Integration and Test Plan}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Implementation, Integration \& Testing}{34}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Overview}{34}{subsection.5.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Implementation Plan}{34}{subsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Phase 1: Data Integrity \& Security Layer}{34}{section*.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Phase 2: Distributed Business Logic (Edge Layer)}{35}{section*.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Phase 3: Hybrid Client \& Sensor Fusion}{35}{section*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Phase 4: Asynchronous Consistency}{35}{section*.46}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Component Integration}{36}{subsection.5.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Testing Strategy}{36}{subsection.5.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Logic \& Algo Testing (Unit)}{36}{section*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Native \& Hardware Testing (System)}{36}{section*.48}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Effort Spent}{37}{chapter.6}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{sect:effort}{{6}{37}{Effort Spent}{chapter.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6.1}{\ignorespaces Hours of work spent by each author redacting the DD document}}{37}{table.caption.49}\protected@file@percent }
+\newlabel{tab:effort}{{6.1}{37}{Hours of work spent by each author redacting the DD document}{table.caption.49}{}}
+\gdef \@abspage@last{37}

@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 PWD c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/DD
 INPUT c:/texlive/2025/texmf.cnf
 INPUT c:/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/DD/main.tex
-=======
-PWD /Users/alepesa/Library/Mobile Documents/com~apple~CloudDocs/Università/2025-2026/Software Engineering 2/PesaventoSpezzapriaSuzani/DD
-INPUT /usr/local/texlive/2025/texmf.cnf
-INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
-INPUT /usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT main.tex
->>>>>>> 6c8ae49625df8b23ca64ea8876040f1be926a827
 OUTPUT main.log
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/report.cls
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/report.cls
@@ -411,59 +403,29 @@ INPUT ./Files/1_introduction.tex
 INPUT ./Files/1_introduction.tex
 INPUT ./Files/1_introduction.tex
 INPUT Files/1_introduction.tex
-<<<<<<< HEAD
-INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-=======
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
->>>>>>> 6c8ae49625df8b23ca64ea8876040f1be926a827
-INPUT ./Files/2_architectural_design.tex
-INPUT ./Files/2_architectural_design.tex
-INPUT ./Files/2_architectural_design.tex
-INPUT ./Files/2_architectural_design.tex
-INPUT Files/2_architectural_design.tex
-<<<<<<< HEAD
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
-INPUT ./Files/2_architectural_design/1_overview.tex
-INPUT ./Files/2_architectural_design/1_overview.tex
-INPUT Files/2_architectural_design/1_overview.tex
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8t.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT ./Files/2_architectural_design/2_component-view.tex
-INPUT ./Files/2_architectural_design/2_component-view.tex
-INPUT Files/2_architectural_design/2_component-view.tex
 INPUT c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
-INPUT ./Files/2_architectural_design/3_deployment-view.tex
-INPUT ./Files/2_architectural_design/3_deployment-view.tex
-INPUT Files/2_architectural_design/3_deployment-view.tex
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8t.tfm
-=======
+INPUT ./Files/2_architectural_design.tex
+INPUT ./Files/2_architectural_design.tex
+INPUT ./Files/2_architectural_design.tex
+INPUT ./Files/2_architectural_design.tex
+INPUT Files/2_architectural_design.tex
 INPUT ./Files/2_architectural_design/1_overview.tex
 INPUT ./Files/2_architectural_design/1_overview.tex
 INPUT Files/2_architectural_design/1_overview.tex
@@ -473,7 +435,6 @@ INPUT Files/2_architectural_design/2_component-view.tex
 INPUT ./Files/2_architectural_design/3_deployment-view.tex
 INPUT ./Files/2_architectural_design/3_deployment-view.tex
 INPUT Files/2_architectural_design/3_deployment-view.tex
->>>>>>> 6c8ae49625df8b23ca64ea8876040f1be926a827
 INPUT ./Files/2_architectural_design/4_runtime-view.tex
 INPUT ./Files/2_architectural_design/4_runtime-view.tex
 INPUT Files/2_architectural_design/4_runtime-view.tex
@@ -482,8 +443,6 @@ INPUT ./Images/uc1_sd.jpeg
 INPUT ./Images/uc1_sd.jpeg
 INPUT ./Images/uc1_sd.jpeg
 INPUT ./Images/uc1_sd.jpeg
-INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmri8t.vf
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT ./Images/uc2_sd.jpeg
 INPUT ./Images/uc2_sd.jpeg
 INPUT ./Images/uc2_sd.jpeg
@@ -571,17 +530,9 @@ INPUT Files/6_effort.tex
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
-<<<<<<< HEAD
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
-=======
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
->>>>>>> 6c8ae49625df8b23ca64ea8876040f1be926a827

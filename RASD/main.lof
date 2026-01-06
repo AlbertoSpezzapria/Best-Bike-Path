@@ -1,29 +1,29 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Domain Class Diagram}}{15}{figure.caption.12}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Activity Recording State Diagram}}{16}{figure.caption.14}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Path Creation State Diagram}}{17}{figure.caption.16}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Meteorological Data Retrieval State Diagram}}{19}{figure.caption.18}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Path Research State Diagram}}{20}{figure.caption.20}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces User Lifecycle State Diagram}}{21}{figure.caption.22}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Domain Class Diagram}}{16}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Activity Recording State Diagram}}{17}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Path Creation State Diagram}}{18}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Meteorological Data Retrieval State Diagram}}{20}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Path Research State Diagram}}{21}{figure.caption.21}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces User Lifecycle State Diagram}}{22}{figure.caption.23}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Public path search}}{27}{figure.caption.36}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Dashboard}}{28}{figure.caption.37}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Profile page}}{28}{figure.caption.38}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Activity recording interface}}{29}{figure.caption.39}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces User's personal paths}}{29}{figure.caption.40}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Utilities}}{33}{figure.caption.50}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces [UC1] User Registration Sequence Diagram}}{40}{figure.caption.59}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces [UC2] System Access Sequence Diagram}}{41}{figure.caption.61}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces [UC3] Activity Recording Sequence Diagram}}{42}{figure.caption.63}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces [UC4] Creation of a manual path Sequence Diagram}}{43}{figure.caption.65}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces [UC5] Publication of a path Sequence Diagram}}{44}{figure.caption.67}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces [UC6] Path Feedback reporting Sequence Diagram}}{45}{figure.caption.69}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces [UC7] Search for a path Sequence Diagram}}{46}{figure.caption.71}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Public path search}}{28}{figure.caption.37}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Dashboard}}{29}{figure.caption.38}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Profile page}}{29}{figure.caption.39}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Activity recording interface}}{30}{figure.caption.40}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces User's personal paths}}{30}{figure.caption.41}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Utilities}}{34}{figure.caption.51}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces [UC1] User Registration Sequence Diagram}}{41}{figure.caption.60}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces [UC2] System Access Sequence Diagram}}{42}{figure.caption.62}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces [UC3] Activity Recording Sequence Diagram}}{43}{figure.caption.64}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces [UC4] Creation of a manual path Sequence Diagram}}{44}{figure.caption.66}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces [UC5] Publication of a path Sequence Diagram}}{45}{figure.caption.68}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces [UC6] Path Feedback reporting Sequence Diagram}}{46}{figure.caption.70}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces [UC7] Search for a path Sequence Diagram}}{47}{figure.caption.72}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Full Lifecycle Scenario Graph}}{59}{figure.caption.78}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Full Lifecycle Scenario Graph, Projection User0.}}{59}{figure.caption.80}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Alloy instance: Full Lifecycle Scenario Projection User1.}}{60}{figure.caption.82}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Conflicting Feedback Merge Scenario Graph}}{61}{figure.caption.83}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Rejected Activity Scenario Graph}}{61}{figure.caption.84}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Full Lifecycle Scenario Graph}}{60}{figure.caption.79}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Full Lifecycle Scenario Graph, Projection User0.}}{60}{figure.caption.81}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Alloy instance: Full Lifecycle Scenario Projection User1.}}{61}{figure.caption.83}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Conflicting Feedback Merge Scenario Graph}}{62}{figure.caption.84}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Rejected Activity Scenario Graph}}{62}{figure.caption.85}%
 \addvspace {10\p@ }
