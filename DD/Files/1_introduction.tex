@@ -40,20 +40,28 @@ The system interacts with external services, specifically third-party \textbf{We
 \subsection{Definitions}
 \begin{itemize}
     \item \textbf{Backend-as-a-Service (BaaS)}: A cloud computing model adopted in this architecture where backend responsibilities (database, authentication, hosting) are outsourced to a managed provider (Supabase), allowing development to focus on frontend logic.
+    \item \textbf{Cron Job}: A time-based job scheduler in Unix-like computer operating systems, used in this project to trigger periodic maintenance tasks (e.g., the decay of old feedbacks) on the server.
     \item \textbf{Edge Function}: A piece of serverless application logic (e.g., the path merging algorithm) that runs on the cloud provider's infrastructure, triggered by specific database events or HTTP requests.
     \item \textbf{Hybrid Application}: The chosen architectural approach where the mobile app is built using web technologies (React/TypeScript) but executes within a native container to access device hardware.
+    \item \textbf{Kalman Filter}: An algorithm that uses a series of measurements observed over time (containing statistical noise) to produce estimates of unknown variables (e.g., precise GPS coordinates) that tend to be more accurate than those based on a single measurement alone.
     \item \textbf{Native Bridge}: The software mechanism (provided by Capacitor) that allows the web-based client code to communicate with the native operating system and access sensors like the Accelerometer and GPS in the background.
+    \item \textbf{Object Storage}: A computer data storage architecture that manages data as distinct units (objects), used in this system to store large binary assets like user profile pictures.
     \item \textbf{PostGIS}: An open-source software extender for the PostgreSQL database, used in this project to store, index, and query complex geospatial data (geometries) efficiently.
     \item \textbf{Row Level Security (RLS)}: A security mechanism implemented directly in the database engine that restricts access to specific data rows based on the user's authentication token, eliminating the need for application-level security filters.
     \item \textbf{Thick Client}: An architectural style where the client application (running on the user's device) handles the bulk of data processing, validation, and temporary storage, contrasting with a Thin Client that relies heavily on the server.
+    \item \textbf{Webhook}: A mechanism for an application to provide other applications with real-time information. In this system, database webhooks trigger Edge Functions automatically when data is inserted or updated.
 \end{itemize}
 
 \subsection{Acronyms}
 \begin{itemize}
     \item \textbf{API}: Application Programming Interface.
     \item \textbf{BaaS}: Backend-as-a-Service.
+    \item \textbf{CPU}: Central Processing Unit.
     \item \textbf{CRUD}: Create, Read, Update, Delete.
+    \item \textbf{JSON}: JavaScript Object Notation.
     \item \textbf{JWT}: JSON Web Token (used for stateless authentication).
+    \item \textbf{KPI}: Key Performance Indicator.
+    \item \textbf{OS}: Operating System.
     \item \textbf{PWA}: Progressive Web Application.
     \item \textbf{RLS}: Row Level Security.
     \item \textbf{RPC}: Remote Procedure Call (used to invoke Edge Functions).
@@ -97,7 +105,20 @@ Version 1.0: 07/01/2025
     
     \item \textbf{[8] Zod}: TypeScript-first schema declaration and validation library. \\
     Available at: \url{https://zod.dev/}
+
+    \item \textbf{[9] React}: The library for web and native user interfaces. \\
+    Available at: \url{https://react.dev/}
+
+    \item \textbf{[10] PostgreSQL}: The World's Most Advanced Open Source Relational Database. \\
+    Available at: \url{https://www.postgresql.org/}
+
+    \item \textbf{[11] OpenWeatherMap API}: Weather data and forecast API. \\
+    Available at: \url{https://openweathermap.org/api}
+
+    \item \textbf{[12] Lovable}: AI-powered full-stack prototyping tool (used for UI Mockups). \\
+    Available at: \url{https://lovable.dev/}
 \end{itemize}
+
 \section{Document Structure}
 The following list provides a brief overview of the contents of each chapter in this document:
 
