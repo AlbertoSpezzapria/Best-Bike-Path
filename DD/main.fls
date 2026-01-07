@@ -438,6 +438,11 @@ INPUT Files/2_architectural_design/1_overview.tex
 INPUT ./Files/2_architectural_design/2_component-view.tex
 INPUT ./Files/2_architectural_design/2_component-view.tex
 INPUT Files/2_architectural_design/2_component-view.tex
+INPUT ./Images/system_architecture.jpg
+INPUT ./Images/system_architecture.jpg
+INPUT ./Images/system_architecture.jpg
+INPUT ./Images/system_architecture.jpg
+INPUT ./Images/system_architecture.jpg
 INPUT ./Files/2_architectural_design/3_deployment-view.tex
 INPUT ./Files/2_architectural_design/3_deployment-view.tex
 INPUT Files/2_architectural_design/3_deployment-view.tex

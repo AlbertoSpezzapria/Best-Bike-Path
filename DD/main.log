@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  7 JAN 2026 20:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  7 JAN 2026 21:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -884,12 +884,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [12]
 Chapter 2.
-(./Files/2_architectural_design.tex (./Files/2_architectural_design/1_overview.tex
+(./Files/2_architectural_design.tex (./Files/2_architectural_design/1_overview.tex)
 
 [13
 
 
-]) (./Files/2_architectural_design/2_component-view.tex
+] (./Files/2_architectural_design/2_component-view.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -898,7 +898,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14]) (./Files/2_architectural_design/3_deployment-view.tex
+[14]
+<Images/system_architecture.jpg, id=411, 1202.4925pt x 1311.90125pt>
+File: Images/system_architecture.jpg Graphic file (type jpg)
+<use Images/system_architecture.jpg>
+Package pdftex.def Info: Images/system_architecture.jpg  used on input line 77.
+(pdftex.def)             Requested size: 455.24411pt x 496.66599pt.
+)
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -907,8 +913,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[15]) (./Files/2_architectural_design/4_runtime-view.tex
-<Images/uc1_sd.jpeg, id=413, 1399.2275pt x 1606.0pt>
+[15] (./Files/2_architectural_design/3_deployment-view.tex
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[16 <./Images/system_architecture.jpg>]) (./Files/2_architectural_design/4_runtime-view.tex
+<Images/uc1_sd.jpeg, id=421, 1399.2275pt x 1606.0pt>
 File: Images/uc1_sd.jpeg Graphic file (type jpg)
 <use Images/uc1_sd.jpeg>
 Package pdftex.def Info: Images/uc1_sd.jpeg  used on input line 5.
@@ -922,8 +937,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[16]
-<Images/uc2_sd.jpeg, id=421, 1185.42876pt x 1177.39874pt>
+[17]
+<Images/uc2_sd.jpeg, id=428, 1185.42876pt x 1177.39874pt>
 File: Images/uc2_sd.jpeg Graphic file (type jpg)
 <use Images/uc2_sd.jpeg>
 Package pdftex.def Info: Images/uc2_sd.jpeg  used on input line 15.
@@ -937,8 +952,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[17 <./Images/uc1_sd.jpeg>]
-<Images/uc3_sd.jpeg, id=427, 1606.0pt x 1359.0775pt>
+[18 <./Images/uc1_sd.jpeg>]
+<Images/uc3_sd.jpeg, id=434, 1606.0pt x 1359.0775pt>
 File: Images/uc3_sd.jpeg Graphic file (type jpg)
 <use Images/uc3_sd.jpeg>
 Package pdftex.def Info: Images/uc3_sd.jpeg  used on input line 25.
@@ -952,8 +967,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[18 <./Images/uc2_sd.jpeg>]
-<Images/uc4_sd.jpeg, id=433, 1606.0pt x 1354.05875pt>
+[19 <./Images/uc2_sd.jpeg>]
+<Images/uc4_sd.jpeg, id=441, 1606.0pt x 1354.05875pt>
 File: Images/uc4_sd.jpeg Graphic file (type jpg)
 <use Images/uc4_sd.jpeg>
 Package pdftex.def Info: Images/uc4_sd.jpeg  used on input line 35.
@@ -967,8 +982,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[19 <./Images/uc3_sd.jpeg>]
-<Images/uc5_sd.jpeg, id=440, 1105.12875pt x 885.3075pt>
+[20 <./Images/uc3_sd.jpeg>]
+<Images/uc5_sd.jpeg, id=448, 1105.12875pt x 885.3075pt>
 File: Images/uc5_sd.jpeg Graphic file (type jpg)
 <use Images/uc5_sd.jpeg>
 Package pdftex.def Info: Images/uc5_sd.jpeg  used on input line 45.
@@ -982,8 +997,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[20 <./Images/uc4_sd.jpeg>]
-<Images/uc6_sd.jpeg, id=447, 1606.0pt x 1132.23pt>
+[21 <./Images/uc4_sd.jpeg>]
+<Images/uc6_sd.jpeg, id=454, 1606.0pt x 1132.23pt>
 File: Images/uc6_sd.jpeg Graphic file (type jpg)
 <use Images/uc6_sd.jpeg>
 Package pdftex.def Info: Images/uc6_sd.jpeg  used on input line 55.
@@ -997,8 +1012,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[21 <./Images/uc5_sd.jpeg>]
-<Images/uc7_sd.jpeg, id=453, 1596.96625pt x 1076.02pt>
+[22 <./Images/uc5_sd.jpeg>]
+<Images/uc7_sd.jpeg, id=460, 1596.96625pt x 1076.02pt>
 File: Images/uc7_sd.jpeg Graphic file (type jpg)
 <use Images/uc7_sd.jpeg>
 Package pdftex.def Info: Images/uc7_sd.jpeg  used on input line 65.
@@ -1012,7 +1027,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[22 <./Images/uc6_sd.jpeg>]) (./Files/2_architectural_design/5_component-interfaces.tex
+[23 <./Images/uc6_sd.jpeg>]) (./Files/2_architectural_design/5_component-interfaces.tex
 Overfull \hbox (14.82042pt too wide) in paragraph at lines 20--20
 []|\T1/lmtt/m/n/10.95 getCurrentPosition()| 
  []
@@ -1061,7 +1076,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[23 <./Images/uc7_sd.jpeg>]
+[24 <./Images/uc7_sd.jpeg>]
 Underfull \hbox (badness 10000) in paragraph at lines 44--44
 []|\T1/lmtt/m/n/10.95 eventName:
  []
@@ -1145,7 +1160,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[24]
+[25]
 Underfull \hbox (badness 10000) in paragraph at lines 93--93
 []|\T1/ptm/m/n/10.95 Query Params:
  []
@@ -1264,7 +1279,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[25]
+[26]
 Underfull \hbox (badness 1112) in paragraph at lines 139--140
 []|\T1/ptm/m/n/10.95 Fetches cur-rent weather data
  []
@@ -1288,7 +1303,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[26]) (./Files/2_architectural_design/7_other-design-decisions.tex
+[27]) (./Files/2_architectural_design/7_other-design-decisions.tex
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1297,7 +1312,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[27]
+[28]
 Overfull \hbox (3.94978pt too wide) in paragraph at lines 10--11
 \T1/ptm/m/n/10.95 Post-GIS pro-vides na-tive, highly op-ti-mized func-tions for geospa-tial con-fla-tion and Nearest-Neighbor
  []
@@ -1311,31 +1326,31 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[28]
+[29]
 Chapter 3.
 (./Files/3_user_interface_design.tex
-<Images/dashboard.png, id=492, 1182.4175pt x 821.0675pt>
+<Images/dashboard.png, id=499, 1182.4175pt x 821.0675pt>
 File: Images/dashboard.png Graphic file (type png)
 <use Images/dashboard.png>
 Package pdftex.def Info: Images/dashboard.png  used on input line 6.
 (pdftex.def)             Requested size: 364.19667pt x 252.88707pt.
-<Images/registra_viaggio.png, id=494, 1185.42876pt x 822.07124pt>
+<Images/registra_viaggio.png, id=501, 1185.42876pt x 822.07124pt>
 File: Images/registra_viaggio.png Graphic file (type png)
 <use Images/registra_viaggio.png>
 Package pdftex.def Info: Images/registra_viaggio.png  used on input line 15.
 (pdftex.def)             Requested size: 364.19667pt x 252.55647pt.
 
 
-[29
+[30
 
 
  <./Images/dashboard.png>]
-<Images/esplora_percorsi.png, id=500, 1182.4175pt x 822.07124pt>
+<Images/esplora_percorsi.png, id=507, 1182.4175pt x 822.07124pt>
 File: Images/esplora_percorsi.png Graphic file (type png)
 <use Images/esplora_percorsi.png>
 Package pdftex.def Info: Images/esplora_percorsi.png  used on input line 23.
 (pdftex.def)             Requested size: 364.19667pt x 253.19621pt.
-<Images/miei_percorsi.png, id=501, 1179.40625pt x 820.06375pt>
+<Images/miei_percorsi.png, id=508, 1179.40625pt x 820.06375pt>
 File: Images/miei_percorsi.png Graphic file (type png)
 <use Images/miei_percorsi.png>
 Package pdftex.def Info: Images/miei_percorsi.png  used on input line 31.
@@ -1349,8 +1364,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[30 <./Images/registra_viaggio.png> <./Images/esplora_percorsi.png>]
-<Images/impostazioni.png, id=508, 1182.4175pt x 820.06375pt>
+[31 <./Images/registra_viaggio.png> <./Images/esplora_percorsi.png>]
+<Images/impostazioni.png, id=516, 1182.4175pt x 820.06375pt>
 File: Images/impostazioni.png Graphic file (type png)
 <use Images/impostazioni.png>
 Package pdftex.def Info: Images/impostazioni.png  used on input line 44.
@@ -1364,7 +1379,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[31 <./Images/miei_percorsi.png> <./Images/impostazioni.png>]
+[32 <./Images/miei_percorsi.png> <./Images/impostazioni.png>]
 Chapter 4.
 (./Files/4_requirements_traceability.tex
 Overfull \hbox (2.43637pt too wide) in paragraph at lines 10--29
@@ -1378,7 +1393,7 @@ Overfull \hbox (2.43637pt too wide) in paragraph at lines 37--58
 
 
 
-[32
+[33
 
 
 ]
@@ -1405,7 +1420,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[33]
+[34]
 Overfull \hbox (2.43637pt too wide) in paragraph at lines 146--165
  [][] 
  []
@@ -1419,11 +1434,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[34]
+[35]
 Chapter 5.
 (./Files/5_implementation_integration_testplan.tex
 
-[35
+[36
 
 
 ]
@@ -1435,7 +1450,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[36]
+[37]
 Overfull \hbox (12.28317pt too wide) in paragraph at lines 67--68
 []\T1/ptm/b/n/10.95 Network Chaos: \T1/ptm/m/n/10.95 Sim-u-la-tion of ad-verse net-work con-di-tions (sig-nal loss, switch-ing be-tween 4G/WiFi)
  []
@@ -1449,11 +1464,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[37]
+[38]
 Chapter 6.
 (./Files/6_effort.tex)
 
-[38
+[39
 
 
 ] (./main.aux)
@@ -1465,18 +1480,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D8BF3223B325B094F41FCAAF82B65A45;9094.
  ) 
 Here is how much of TeX's memory you used:
- 27044 strings out of 473190
- 498859 string characters out of 5715800
- 878088 words of memory out of 5000000
- 49618 multiletter control sequences out of 15000+600000
+ 27054 strings out of 473190
+ 499160 string characters out of 5715800
+ 878144 words of memory out of 5000000
+ 49626 multiletter control sequences out of 15000+600000
  598547 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,98p,717b,673s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (38 pages, 2087255 bytes).
+Output written on main.pdf (39 pages, 2163482 bytes).
 PDF statistics:
- 618 PDF objects out of 1000 (max. 8388607)
- 541 compressed objects within 6 object streams
- 149 named destinations out of 1000 (max. 500000)
- 502 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 626 PDF objects out of 1000 (max. 8388607)
+ 547 compressed objects within 6 object streams
+ 151 named destinations out of 1000 (max. 500000)
+ 507 words of extra memory for PDF output out of 10000 (max. 10000000)
 
