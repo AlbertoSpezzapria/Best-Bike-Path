@@ -30,7 +30,7 @@ The system is composed of two main logical nodes:
 
 \subsection{Security Model: Row Level Security (RLS)}
 Since clients communicate directly with the database, security is enforced at the database layer using Row Level Security (RLS) policies.
-Upon login, the Auth Service issues a JSON Web Token (JWT) to the client, which is included in every database query. The database engine evaluates RLS policies for each row to determine if the operation is permitted. This ensures that "direct access" does not imply "unrestricted access," maintaining strict data isolation and integrity.
+Upon login, the Auth Service issues a JSON Web Token (JWT) to the client, which is included in every database query. The database engine evaluates RLS policies for each row to determine if the operation is permitted. This ensures that "direct access" does not imply "unrestricted access", maintaining strict data isolation and integrity.
 
 \subsection{Platform-Specific Feature Availability}
 While the Client Application is developed as a Progressive Web App (PWA) with a shared codebase, the feature set varies depending on the deployment target (Mobile vs Web) due to hardware access constraints:
