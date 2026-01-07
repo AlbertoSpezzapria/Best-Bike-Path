@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  7 JAN 2026 08:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  7 JAN 2026 20:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**main.tex
-(./main.tex
+**/Users/alberto/Developement/se2_project/DD/main.tex
+(/Users/alberto/Developement/se2_project/DD/main.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
@@ -1465,15 +1465,15 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D8BF3223B325B094F41FCAAF82B65A45;9094.
  ) 
 Here is how much of TeX's memory you used:
- 27043 strings out of 473190
- 498732 string characters out of 5715800
- 875075 words of memory out of 5000000
+ 27044 strings out of 473190
+ 498859 string characters out of 5715800
+ 878088 words of memory out of 5000000
  49618 multiletter control sequences out of 15000+600000
  598547 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,98p,674b,673s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,20n,98p,717b,673s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (38 pages, 2086950 bytes).
+Output written on main.pdf (38 pages, 2087255 bytes).
 PDF statistics:
  618 PDF objects out of 1000 (max. 8388607)
  541 compressed objects within 6 object streams
