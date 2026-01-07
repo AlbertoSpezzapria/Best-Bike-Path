@@ -11,7 +11,7 @@ The system is composed of two main logical nodes:
     \item \textbf{Hybrid Client Tier:} This tier includes the unified application running on user devices.
     \begin{itemize}
         \item \textbf{Mobile Deployment (Android/iOS):} The application runs within a native container using Capacitor. It accesses hardware sensors via native plugins to perform precise activity tracking and road irregularity detection even when the device screen is off.
-        \item \textbf{Web Deployment:} The same codebase serves as a standard Progressiva Web App for path planning and profile management.
+        \item \textbf{Web Deployment:} The same codebase serves as a standard Progressive Web App for path planning and profile management.
         \item \textbf{Responsibilities:}
         \begin{itemize}
             \item Acquisition and pre-processing of raw sensor data (GPS, Accelerometer) via the Native Bridge.
@@ -31,3 +31,10 @@ The system is composed of two main logical nodes:
 \subsection{Security Model: Row Level Security (RLS)}
 Since clients communicate directly with the database, security is enforced at the database layer using Row Level Security (RLS) policies.
 Upon login, the Auth Service issues a JSON Web Token (JWT) to the client, which is included in every database query. The database engine evaluates RLS policies for each row to determine if the operation is permitted. This ensures that "direct access" does not imply "unrestricted access," maintaining strict data isolation and integrity.
+
+\subsection{Platform-Specific Feature Availability}
+While the Client Application is developed as a Progressive Web App (PWA) with a shared codebase, the feature set varies depending on the deployment target (Mobile vs Web) due to hardware access constraints:
+\begin{itemize}
+    \item \textbf{Mobile Application (Android/IOS):} This version utilizes the Capacitor Native Bridge to access low-level hardware APIs. It supports the full feature set, including the Activity Recording module, which requires continuous access to the GPS and Accelerometer sensors even when the application is running in the background or the device screen is off.
+    \item \textbf{Web Application (browser):} Accessible via standard web browsers, this version focuses on planning and analysis. Due to browser sandboxing policies and the inability to reliably maintain background processes for sensor sampling, the Activity Recording functionality is disabled. Users can utilize this platform for Path Search, Data Visualization and Profile Management.
+\end{itemize}

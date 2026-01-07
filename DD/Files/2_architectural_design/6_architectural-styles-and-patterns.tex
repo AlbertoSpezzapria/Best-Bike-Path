@@ -38,6 +38,6 @@
     \item \textbf{Row Level Security (RLS)}
     \begin{itemize}
         \item \textbf{Description:} Access control logic is implemented directly within the database engine rather than in the application code. Each database query is evaluated against a set of SQL policies that check the user's authentication token against the data being accessed.
-        \item \textbf{Rationale:} Since the architecture allows clients to communicate directly with the database (skipping the middleware layer), RLS is the only mechanism to guarantee dData isolation. It mathematically ensures that a user can never read or modify another user's private data, regardless of any potential bug in the client code.
+        \item \textbf{Rationale:} Since the architecture allows clients to communicate directly with the database (skipping the middleware layer), RLS is the only mechanism to guarantee data isolation. It mathematically ensures that a user can never read or modify another user's private data, regardless of any potential bug in the client code.
     \end{itemize}
 \end{itemize}
