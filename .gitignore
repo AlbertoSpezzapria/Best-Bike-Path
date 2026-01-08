@@ -1,1 +1,4 @@
 .DS_Store
+IT/BestBikePaths/node_modules
+IT/BestBikePaths/dist
+IT/BestBikePaths/dist-ssr
