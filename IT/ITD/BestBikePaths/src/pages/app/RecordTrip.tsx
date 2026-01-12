@@ -29,10 +29,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import BikeMap from "@/components/BikeMap";
 
 const RecordTrip = () => {
   const [isTracking, setIsTracking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+
+  const [manualDistance, setManualDistance] = useState<number>(0);
+  const [manualPath, setManualPath] = useState<[number, number][]>([]);
+
+  const [hazards, setHazards] = useState<any[]>([]);
 
   // Mock tracking data
   const trackingData = {
@@ -50,6 +56,19 @@ const RecordTrip = () => {
     wind: 12,
     humidity: 65,
   };
+
+  const mockLivePath: [number, number][] = [
+      [45.4642, 9.1900],
+      [45.4650, 9.1910],
+      [45.4660, 9.1920],
+      [45.4670, 9.1940]
+  ];
+
+  const handlePathCreated = (coordinates: [number, number][], distanceInMeters: number, newHazards: any[]) => {
+    setManualPath(coordinates);
+    setManualDistance(parseFloat((distanceInMeters / 1000).toFixed(2)));
+    setHazards(newHazards);
+}
 
   const detectedIssues = [
     { id: 1, type: "pothole", location: "Via Roma, 45", confirmed: false },
@@ -95,6 +114,12 @@ const RecordTrip = () => {
                       : "Start tracking to view the route"}
                   </p>
                 </div>
+
+                {!isTracking && (
+                    <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none">
+                       <p className="bg-background/80 p-2 rounded text-sm font-medium">Start tracking to see live path</p>
+                    </div>
+                )}
 
                 {/* Tracking Controls Overlay */}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">
@@ -253,87 +278,111 @@ const RecordTrip = () => {
           </div>
         </TabsContent>
 
-        {/* Manual Entry */}
+        {/* Manual Entry: Creazione Nuovo Percorso (Statico) */}
         <TabsContent value="manual" className="space-y-6">
-          <Card className="border-border/50 max-w-2xl">
-            <CardHeader>
-              <CardTitle className="font-display">
-                Manual Trip Entry
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="start">Starting Point</Label>
-                  <Input id="start" placeholder="E.g. Via Roma, 1 - Milan" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="end">Ending Point</Label>
-                  <Input id="end" placeholder="E.g. Piazza Duomo - Milan" />
-                </div>
-              </div>
+            <div className="grid lg:grid-cols-2 gap-6">
+                
+                {/* Colonna Sinistra: Editor Mappa */}
+                <Card className="border-border/50 h-[600px] overflow-hidden flex flex-col">
+                    <CardHeader className="p-4 bg-muted/20 border-b">
+                        <CardTitle className="text-base flex justify-between items-center">
+                            <span>Draw Geometry</span>
+                            <Badge variant="outline">Click to add points</Badge>
+                        </CardTitle>
+                    </CardHeader>
+                    <div className="flex-1 relative">
+                        <BikeMap 
+                            mode="edit" 
+                            initialCenter={[45.4642, 9.1900]} 
+                            onPathChange={handlePathCreated}
+                        />
+                    </div>
+                </Card>
 
-              <div className="space-y-2">
-                <Label htmlFor="streets">Streets Covered</Label>
-                <Textarea
-                  id="streets"
-                  placeholder="Enter the streets covered, separated by commas..."
-                  rows={3}
-                />
-              </div>
+                {/* Colonna Destra: Attributi del Percorso */}
+                <Card className="border-border/50">
+                    <CardHeader>
+                        <CardTitle className="font-display">
+                            New Path Details
+                        </CardTitle>
+                        <p className="text-sm text-muted-foreground">
+                            Define the static characteristics of this route.
+                        </p>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        
+                        {/* 1. Nome del Percorso (Nuovo campo essenziale) */}
+                        <div className="space-y-2">
+                            <Label htmlFor="pathName">Path Name</Label>
+                            <Input id="pathName" placeholder="e.g. Green Loop Park" />
+                        </div>
 
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="distance">Distance (km)</Label>
-                  <Input id="distance" type="number" placeholder="0.0" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="duration">Duration</Label>
-                  <Input id="duration" type="time" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="date">Date</Label>
-                  <Input id="date" type="date" />
-                </div>
-              </div>
+                        {/* 2. Dati Fisici (Solo Distanza, calcolata dalla mappa) */}
+                        <div className="space-y-2">
+                            <Label htmlFor="distance">Length (km)</Label>
+                            <Input 
+                                id="distance" 
+                                type="number" 
+                                className="bg-muted"
+                                value={manualDistance} 
+                                readOnly 
+                                disabled
+                            />
+                            <p className="text-xs text-muted-foreground">Calculated automatically from map</p>
+                        </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="status">Path Status</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="optimal">🟢 Optimal</SelectItem>
-                    <SelectItem value="good">🟡 Good</SelectItem>
-                    <SelectItem value="sufficient">🟠 Sufficient</SelectItem>
-                    <SelectItem value="maintenance">
-                      🔴 Requires Maintenance
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                        {/* 3. Descrizione */}
+                        <div className="space-y-2">
+                            <Label htmlFor="description">Description</Label>
+                            <Textarea
+                                id="description"
+                                placeholder="Describe the scenery, landmarks, or terrain type..."
+                                rows={3}
+                            />
+                        </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="notes">Notes and Reports</Label>
-                <Textarea
-                  id="notes"
-                  placeholder="Add any notes about the path, obstacles, potholes..."
-                  rows={3}
-                />
-              </div>
+                        {/* 4. Attributi Qualitativi */}
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="status">Condition</Label>
+                                <Select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select condition" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="optimal">🟢 Perfect</SelectItem>
+                                        <SelectItem value="good">🟡 Good</SelectItem>
+                                        <SelectItem value="bad">🟠 Uneven</SelectItem>
+                                        <SelectItem value="critical">🔴 Critical</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            
+                            <div className="space-y-2">
+                                <Label htmlFor="difficulty">Difficulty</Label>
+                                <Select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select level" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="easy">Easy (Flat)</SelectItem>
+                                        <SelectItem value="medium">Medium</SelectItem>
+                                        <SelectItem value="hard">Hard (Steep)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
 
-              <div className="flex gap-4">
-                <Button className="flex-1">
-                  <Upload className="w-4 h-4 mr-2" />
-                  Save and Publish
-                </Button>
-                <Button variant="outline" className="flex-1">
-                  Save Draft
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+                        <div className="pt-4 flex gap-4">
+                            <Button className="flex-1 w-full">
+                                <Upload className="w-4 h-4 mr-2" />
+                                Create Path
+                            </Button>
+                        </div>
+
+                    </CardContent>
+                </Card>
+            </div>
         </TabsContent>
       </Tabs>
     </div>
