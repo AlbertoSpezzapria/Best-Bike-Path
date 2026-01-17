@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Play,
   Pause,
@@ -30,26 +30,49 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import BikeMap from "@/components/BikeMap";
+import { Hazard } from "@/components/BikeMap";
 
+// --- HELPER FUNCTIONS (Fuori dal componente) ---
+function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; // Raggio della terra in km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function deg2rad(deg: number) {
+  return deg * (Math.PI / 180);
+}
+
+// --- COMPONENTE ---
 const RecordTrip = () => {
+  // 1. Stati di Controllo UI
   const [isTracking, setIsTracking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
+  // 2. Stati per "Automatic Tracking" (Dinamici)
+  const [livePath, setLivePath] = useState<[number, number][]>([]);
+  const [currentPos, setCurrentPos] = useState<[number, number]>([45.4642, 9.1900]); 
+  const [stats, setStats] = useState({
+      distance: 0,
+      duration: 0, // secondi
+      currentSpeed: 0
+  });
+
+  // 3. Stati per "Manual Entry"
   const [manualDistance, setManualDistance] = useState<number>(0);
   const [manualPath, setManualPath] = useState<[number, number][]>([]);
+  const [hazards, setHazards] = useState<Hazard[]>([]);
 
-  const [hazards, setHazards] = useState<any[]>([]);
+  // 4. Refs e Utility
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Mock tracking data
-  const trackingData = {
-    distance: 8.42,
-    duration: "00:28:15",
-    avgSpeed: 17.9,
-    currentSpeed: 22.4,
-    elevation: 45,
-    calories: 312,
-  };
-
+  // Mock Meteo (Manteniamo questo statico per ora finché non integriamo un'API Meteo)
   const weatherData = {
     temp: 18,
     condition: "Partially Cloudy",
@@ -57,23 +80,58 @@ const RecordTrip = () => {
     humidity: 65,
   };
 
-  const mockLivePath: [number, number][] = [
-      [45.4642, 9.1900],
-      [45.4650, 9.1910],
-      [45.4660, 9.1920],
-      [45.4670, 9.1940]
-  ];
+  // --- SIMULAZIONE GPS (Effect) ---
+  useEffect(() => {
+    if (isTracking && !isPaused) {
+      timerRef.current = setInterval(() => {
+        setStats(prev => ({ ...prev, duration: prev.duration + 1 }));
 
-  const handlePathCreated = (coordinates: [number, number][], distanceInMeters: number, newHazards: any[]) => {
+        // Simulazione movimento GPS
+        setCurrentPos(prevPos => {
+            const latChange = (Math.random() - 0.2) * 0.0005; 
+            const lngChange = (Math.random() - 0.2) * 0.0005;
+            
+            const newPos: [number, number] = [
+                prevPos[0] + 0.0001 + latChange,
+                prevPos[1] + 0.0001 + lngChange 
+            ];
+            
+            setLivePath(prevPath => [...prevPath, newPos]);
+
+            const dist = getDistanceFromLatLonInKm(prevPos[0], prevPos[1], newPos[0], newPos[1]);
+            
+            setStats(prevStats => ({
+                ...prevStats,
+                distance: prevStats.distance + dist,
+                currentSpeed: (dist / (1/3600)) // km/h
+            }));
+
+            return newPos;
+        });
+
+      }, 1000);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isTracking, isPaused]);
+
+  // --- HANDLERS ---
+  const formatTime = (seconds: number) => {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const handlePathCreated = (coordinates: [number, number][], distanceInMeters: number, newHazards: Hazard[]) => {
     setManualPath(coordinates);
     setManualDistance(parseFloat((distanceInMeters / 1000).toFixed(2)));
     setHazards(newHazards);
-}
-
-  const detectedIssues = [
-    { id: 1, type: "pothole", location: "Via Roma, 45", confirmed: false },
-    { id: 2, type: "pothole", location: "Corso Italia, 120", confirmed: true },
-  ];
+  };
 
   return (
     <div className="p-6 lg:p-8 space-y-8">
@@ -99,59 +157,62 @@ const RecordTrip = () => {
           </TabsTrigger>
         </TabsList>
 
-        {/* Automatic Tracking */}
+        {/* --- AUTOMATIC TRACKING --- */}
         <TabsContent value="auto" className="space-y-6">
           <div className="grid lg:grid-cols-3 gap-6">
-            {/* Map Preview */}
-            <Card className="lg:col-span-2 border-border/50 overflow-hidden">
-              <div className="relative h-[400px] bg-muted/30 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
-                <div className="text-center z-10">
-                  <MapPin className="w-16 h-16 text-primary/30 mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    {isTracking
-                      ? "Real-time route map"
-                      : "Start tracking to view the route"}
-                  </p>
-                </div>
+            
+            {/* Map Preview Live */}
+            <Card className="lg:col-span-2 border-border/50 overflow-hidden h-[500px] flex flex-col relative">
+              <div className="absolute inset-0 z-0">
+                  <BikeMap 
+                    mode="view" 
+                    initialCenter={[45.4642, 9.1900]}
+                    currentLocation={currentPos} // <-- Aggiornato: posizione live
+                    recordedPath={livePath}      // <-- Aggiornato: scia live
+                    autoCenter={isTracking}      // <-- Aggiornato: segue l'utente
+                  />
+              </div>
 
-                {!isTracking && (
-                    <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none">
-                       <p className="bg-background/80 p-2 rounded text-sm font-medium">Start tracking to see live path</p>
-                    </div>
-                )}
+              {/* Overlay per stato "Non attivo" */}
+              {!isTracking && livePath.length === 0 && (
+                  <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none">
+                      <p className="bg-background/80 p-2 rounded text-sm font-medium backdrop-blur">
+                        Start tracking to view live path
+                      </p>
+                  </div>
+              )}
 
-                {/* Tracking Controls Overlay */}
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">
+              {/* Tracking Controls Overlay */}
+              <div className="absolute bottom-8 left-0 right-0 flex justify-center z-[500] gap-6 pointer-events-none">
+                <div className="pointer-events-auto flex gap-4">
                   {!isTracking ? (
                     <Button
                       size="lg"
-                      className="rounded-full w-16 h-16 shadow-lg"
-                      onClick={() => setIsTracking(true)}
+                      className="rounded-full w-20 h-20 shadow-2xl bg-primary hover:bg-primary/90 transition-transform hover:scale-105"
+                      onClick={() => {
+                          setIsTracking(true);
+                          setLivePath([currentPos]); 
+                      }}
                     >
-                      <Play className="w-8 h-8" />
+                      <Play className="w-8 h-8 ml-1" />
                     </Button>
                   ) : (
                     <>
                       <Button
                         size="lg"
-                        variant="outline"
-                        className="rounded-full w-14 h-14"
+                        className="rounded-full w-16 h-16 shadow-xl bg-yellow-500 hover:bg-yellow-600 text-white border-none"
                         onClick={() => setIsPaused(!isPaused)}
                       >
-                        {isPaused ? (
-                          <Play className="w-6 h-6" />
-                        ) : (
-                          <Pause className="w-6 h-6" />
-                        )}
+                        {isPaused ? <Play className="w-6 h-6 ml-1" /> : <Pause className="w-6 h-6" />}
                       </Button>
                       <Button
                         size="lg"
-                        variant="destructive"
-                        className="rounded-full w-14 h-14"
+                        className="rounded-full w-16 h-16 shadow-xl bg-destructive hover:bg-destructive/90 text-white border-none"
                         onClick={() => {
                           setIsTracking(false);
                           setIsPaused(false);
+                          // Qui puoi aggiungere logica di salvataggio
+                          console.log("Ride Finished", stats);
                         }}
                       >
                         <Square className="w-6 h-6" />
@@ -165,7 +226,7 @@ const RecordTrip = () => {
             {/* Stats Panel */}
             <div className="space-y-4">
               {/* Live Stats */}
-              <Card className="border-border/50">
+              <Card className="border-border/50 bg-card/50 backdrop-blur">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg font-display flex items-center gap-2">
                     <Gauge className="w-5 h-5 text-primary" />
@@ -173,38 +234,39 @@ const RecordTrip = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 rounded-xl bg-muted/30">
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Route className="w-5 h-5 text-primary mx-auto mb-1" />
-                    <p className="text-2xl font-bold text-foreground">
-                      {trackingData.distance}
+                    <p className="text-2xl font-bold text-foreground font-mono">
+                      {stats.distance.toFixed(2)}
                     </p>
-                    <p className="text-xs text-muted-foreground">km</p>
+                    <p className="text-xs text-muted-foreground uppercase">km</p>
                   </div>
-                  <div className="text-center p-3 rounded-xl bg-muted/30">
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Clock className="w-5 h-5 text-primary mx-auto mb-1" />
-                    <p className="text-2xl font-bold text-foreground">
-                      {trackingData.duration}
+                    <p className="text-2xl font-bold text-foreground font-mono">
+                      {formatTime(stats.duration)}
                     </p>
-                    <p className="text-xs text-muted-foreground">durata</p>
+                    <p className="text-xs text-muted-foreground uppercase">Time</p>
                   </div>
-                  <div className="text-center p-3 rounded-xl bg-muted/30">
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Gauge className="w-5 h-5 text-accent mx-auto mb-1" />
-                    <p className="text-2xl font-bold text-foreground">
-                      {trackingData.avgSpeed}
+                    <p className="text-2xl font-bold text-foreground font-mono">
+                      {/* Calcolo Velocità Media (evita divisione per zero) */}
+                      {stats.duration > 0 ? (stats.distance / (stats.duration / 3600)).toFixed(1) : "0.0"}
                     </p>
-                    <p className="text-xs text-muted-foreground">km/h media</p>
+                    <p className="text-xs text-muted-foreground uppercase">Avg Km/h</p>
                   </div>
-                  <div className="text-center p-3 rounded-xl bg-muted/30">
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Navigation className="w-5 h-5 text-accent mx-auto mb-1" />
-                    <p className="text-2xl font-bold text-foreground">
-                      {trackingData.currentSpeed}
+                    <p className="text-2xl font-bold text-foreground font-mono">
+                      {isPaused ? "0.0" : stats.currentSpeed.toFixed(1)}
                     </p>
-                    <p className="text-xs text-muted-foreground">km/h attuale</p>
+                    <p className="text-xs text-muted-foreground uppercase">Cur Km/h</p>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Weather */}
+              {/* Weather (Static Mock) */}
               <Card className="border-border/50">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg font-display flex items-center gap-2">
@@ -242,43 +304,11 @@ const RecordTrip = () => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Detected Issues */}
-              {isTracking && detectedIssues.length > 0 && (
-                <Card className="border-border/50 border-accent/50">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg font-display flex items-center gap-2">
-                      <AlertTriangle className="w-5 h-5 text-accent" />
-                      Detected Issues
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {detectedIssues.map((issue) => (
-                      <div
-                        key={issue.id}
-                        className="flex items-center justify-between p-3 rounded-lg bg-muted/30"
-                      >
-                        <div>
-                          <p className="text-sm font-medium">Buca rilevata</p>
-                          <p className="text-xs text-muted-foreground">
-                            {issue.location}
-                          </p>
-                        </div>
-                        <Badge
-                          variant={issue.confirmed ? "default" : "secondary"}
-                        >
-                          {issue.confirmed ? "Confirmed" : "To Confirm"}
-                        </Badge>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
             </div>
           </div>
         </TabsContent>
 
-        {/* Manual Entry: Creazione Nuovo Percorso (Statico) */}
+        {/* --- MANUAL ENTRY --- */}
         <TabsContent value="manual" className="space-y-6">
             <div className="grid lg:grid-cols-2 gap-6">
                 
@@ -311,13 +341,11 @@ const RecordTrip = () => {
                     </CardHeader>
                     <CardContent className="space-y-6">
                         
-                        {/* 1. Nome del Percorso (Nuovo campo essenziale) */}
                         <div className="space-y-2">
                             <Label htmlFor="pathName">Path Name</Label>
                             <Input id="pathName" placeholder="e.g. Green Loop Park" />
                         </div>
 
-                        {/* 2. Dati Fisici (Solo Distanza, calcolata dalla mappa) */}
                         <div className="space-y-2">
                             <Label htmlFor="distance">Length (km)</Label>
                             <Input 
@@ -331,7 +359,6 @@ const RecordTrip = () => {
                             <p className="text-xs text-muted-foreground">Calculated automatically from map</p>
                         </div>
 
-                        {/* 3. Descrizione */}
                         <div className="space-y-2">
                             <Label htmlFor="description">Description</Label>
                             <Textarea
@@ -341,7 +368,6 @@ const RecordTrip = () => {
                             />
                         </div>
 
-                        {/* 4. Attributi Qualitativi */}
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="status">Condition</Label>
@@ -374,7 +400,7 @@ const RecordTrip = () => {
                         </div>
 
                         <div className="pt-4 flex gap-4">
-                            <Button className="flex-1 w-full">
+                            <Button className="flex-1 w-full" onClick={() => console.log("Saving...", { manualPath, manualDistance, hazards })}>
                                 <Upload className="w-4 h-4 mr-2" />
                                 Create Path
                             </Button>
@@ -387,6 +413,4 @@ const RecordTrip = () => {
       </Tabs>
     </div>
   );
-};
-
-export default RecordTrip;
+}

@@ -37,6 +37,16 @@ const HazardIcon = L.divIcon({
   iconAnchor: [12, 12],
 });
 
+const CurrentLocationIcon = L.divIcon({
+  html: `<div class="relative flex items-center justify-center w-6 h-6">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75 animate-ping"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-blue-600 border-2 border-white shadow-sm"></span>
+         </div>`,
+  className: "bg-transparent",
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+});
+
 // --- TIPI ---
 export interface Hazard {
   id: string;
@@ -47,7 +57,9 @@ export interface Hazard {
 interface BikeMapProps {
   mode: "view" | "edit";
   initialCenter?: [number, number];
-  recordedPath?: [number, number][];
+  recordedPath?: [number, number][]; 
+  currentLocation?: [number, number]; 
+  autoCenter?: boolean; 
   onPathChange?: (path: [number, number][], distance: number, hazards: Hazard[]) => void;
 }
 
@@ -106,8 +118,27 @@ const MapInteractionHandler = ({
   return null;
 };
 
+//Gestore auto-center map
+const AutoCenterMap = ({ center, enabled }: { center: [number, number] | null, enabled: boolean }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (center && enabled) {
+      // panTo è più morbido di flyTo per piccoli spostamenti
+      map.panTo(center, { animate: true, duration: 1 }); 
+    }
+  }, [center, enabled, map]);
+  return null;
+};
+
 // --- COMPONENTE PRINCIPALE ---
-const BikeMap = ({ mode, initialCenter = [45.4642, 9.1900], recordedPath = [], onPathChange }: BikeMapProps) => {
+const BikeMap = ({ 
+  mode,
+  initialCenter = [45.4642, 9.1900], 
+  recordedPath = [],
+  currentLocation,
+  autoCenter = false, 
+  onPathChange 
+}: BikeMapProps) => {
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
   
   // STATO EDITOR
@@ -323,6 +354,22 @@ const [searchQuery, setSearchQuery] = useState("");
         
         <MapController center={mapCenter} />
         <MapInteractionHandler mode={mode} editorMode={editorMode} onAddWaypoint={handleAddWaypoint} onAddHazard={handleAddHazard} />
+
+        {mode === "view" && (
+            <>
+                {/* La scia del percorso fatto finora */}
+                {recordedPath.length > 0 && (
+                    <Polyline positions={recordedPath} color="#ef4444" weight={5} /> // Rosso
+                )}
+                
+                {/* La mia posizione attuale */}
+                {currentLocation && (
+                    <Marker position={currentLocation} icon={CurrentLocationIcon} zIndexOffset={1000}>
+                         <Popup>You are here</Popup>
+                    </Marker>
+                )}
+            </>
+        )}
 
         {mode === "edit" && (
             <>
