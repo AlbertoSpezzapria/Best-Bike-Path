@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Play,
   Pause,
   Square,
-  MapPin,
   Navigation,
   Gauge,
   Clock,
@@ -13,8 +13,9 @@ import {
   Cloud,
   Edit3,
   Upload,
-  AlertTriangle,
 } from "lucide-react";
+
+// UI Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,10 +30,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import BikeMap from "@/components/BikeMap";
-import { Hazard } from "@/components/BikeMap";
 
-// --- HELPER FUNCTIONS (Fuori dal componente) ---
+// Custom Components & Libs
+import BikeMap, { Hazard } from "@/components/BikeMap";
+import { supabase } from "@/supabaseClient";
+
+// --- HELPER FUNCTIONS (Matematica GPS) ---
 function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371; // Raggio della terra in km
   const dLat = deg2rad(lat2 - lat1);
@@ -51,11 +54,12 @@ function deg2rad(deg: number) {
 
 // --- COMPONENTE ---
 const RecordTrip = () => {
-  // 1. Stati di Controllo UI
+  const navigate = useNavigate();
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 1. STATI AUTOMATIC TRACKING
   const [isTracking, setIsTracking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-
-  // 2. Stati per "Automatic Tracking" (Dinamici)
   const [livePath, setLivePath] = useState<[number, number][]>([]);
   const [currentPos, setCurrentPos] = useState<[number, number]>([45.4642, 9.1900]); 
   const [stats, setStats] = useState({
@@ -64,15 +68,20 @@ const RecordTrip = () => {
       currentSpeed: 0
   });
 
-  // 3. Stati per "Manual Entry"
+  // 2. STATI MANUAL ENTRY
   const [manualDistance, setManualDistance] = useState<number>(0);
   const [manualPath, setManualPath] = useState<[number, number][]>([]);
   const [hazards, setHazards] = useState<Hazard[]>([]);
+  
+  // Stato del form manuale (sostituisce getElementById)
+  const [manualForm, setManualForm] = useState({
+    name: "",
+    description: "",
+    status: "optimal",
+    difficulty: "easy"
+  });
 
-  // 4. Refs e Utility
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Mock Meteo (Manteniamo questo statico per ora finché non integriamo un'API Meteo)
+  // Mock Meteo (Statico per ora)
   const weatherData = {
     temp: 18,
     condition: "Partially Cloudy",
@@ -119,7 +128,64 @@ const RecordTrip = () => {
     };
   }, [isTracking, isPaused]);
 
-  // --- HANDLERS ---
+  // --- LOGICA SALVATAGGIO ---
+  
+  const saveToSupabase = async (payload: any) => {
+    try {
+      const { error } = await supabase
+        .from('paths')
+        .insert([payload]);
+
+      if (error) throw error;
+
+      alert("Path saved successfully!");
+      navigate("/app/my-paths");
+      
+    } catch (error: any) {
+      console.error("Save error:", error.message);
+      alert("Error saving path: " + error.message);
+    }
+  };
+
+  // Handler: Fine Attività Automatica
+  const handleFinishTracking = () => {
+    setIsTracking(false);
+    setIsPaused(false);
+    if (livePath.length < 2) return alert("Track too short to save.");
+
+    const dbPayload = {
+        name: `Ride ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+        description: "Recorded automatically via GPS",
+        distance: parseFloat(stats.distance.toFixed(2)),
+        duration: formatTime(stats.duration),
+        path_data: livePath, 
+        status: "good",
+        is_public: true
+    };
+
+    saveToSupabase(dbPayload);
+  };
+
+  // Handler: Salvataggio Manuale
+  const handleSaveManualPath = () => {
+    if (!manualForm.name) return alert("Please enter a path name.");
+    if (manualPath.length < 2) return alert("Please draw a path on the map.");
+
+    const dbPayload = {
+        name: manualForm.name,
+        description: manualForm.description,
+        distance: manualDistance,
+        duration: "N/A", // Manual path doesn't have duration
+        path_data: manualPath,
+        hazards: hazards, // Salviamo anche gli ostacoli
+        status: manualForm.status,
+        is_public: true // Default public
+    };
+
+    saveToSupabase(dbPayload);
+  };
+
+  // --- HANDLERS UI ---
   const formatTime = (seconds: number) => {
       const h = Math.floor(seconds / 3600);
       const m = Math.floor((seconds % 3600) / 60);
@@ -137,62 +203,46 @@ const RecordTrip = () => {
     <div className="p-6 lg:p-8 space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-display font-bold text-foreground">
-          Record Trip
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Automatically track or manually enter your trips
-        </p>
+        <h1 className="text-3xl font-display font-bold text-foreground">Record Trip</h1>
+        <p className="text-muted-foreground mt-1">Automatically track or manually enter your trips</p>
       </div>
 
       <Tabs defaultValue="auto" className="space-y-6">
         <TabsList className="grid w-full max-w-md grid-cols-2">
-          <TabsTrigger value="auto" className="gap-2">
-            <Navigation className="w-4 h-4" />
-            Automatic
-          </TabsTrigger>
-          <TabsTrigger value="manual" className="gap-2">
-            <Edit3 className="w-4 h-4" />
-            Manual
-          </TabsTrigger>
+          <TabsTrigger value="auto" className="gap-2"><Navigation className="w-4 h-4" /> Automatic</TabsTrigger>
+          <TabsTrigger value="manual" className="gap-2"><Edit3 className="w-4 h-4" /> Manual</TabsTrigger>
         </TabsList>
 
         {/* --- AUTOMATIC TRACKING --- */}
         <TabsContent value="auto" className="space-y-6">
           <div className="grid lg:grid-cols-3 gap-6">
             
-            {/* Map Preview Live */}
+            {/* Map Preview */}
             <Card className="lg:col-span-2 border-border/50 overflow-hidden h-[500px] flex flex-col relative">
               <div className="absolute inset-0 z-0">
                   <BikeMap 
                     mode="view" 
                     initialCenter={[45.4642, 9.1900]}
-                    currentLocation={currentPos} // <-- Aggiornato: posizione live
-                    recordedPath={livePath}      // <-- Aggiornato: scia live
-                    autoCenter={isTracking}      // <-- Aggiornato: segue l'utente
+                    currentLocation={currentPos} 
+                    recordedPath={livePath}      
+                    autoCenter={isTracking}      
                   />
               </div>
 
-              {/* Overlay per stato "Non attivo" */}
               {!isTracking && livePath.length === 0 && (
                   <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none">
-                      <p className="bg-background/80 p-2 rounded text-sm font-medium backdrop-blur">
-                        Start tracking to view live path
-                      </p>
+                      <p className="bg-background/80 p-2 rounded text-sm font-medium backdrop-blur">Start tracking to view live path</p>
                   </div>
               )}
 
-              {/* Tracking Controls Overlay */}
+              {/* Controls */}
               <div className="absolute bottom-8 left-0 right-0 flex justify-center z-[500] gap-6 pointer-events-none">
                 <div className="pointer-events-auto flex gap-4">
                   {!isTracking ? (
                     <Button
                       size="lg"
                       className="rounded-full w-20 h-20 shadow-2xl bg-primary hover:bg-primary/90 transition-transform hover:scale-105"
-                      onClick={() => {
-                          setIsTracking(true);
-                          setLivePath([currentPos]); 
-                      }}
+                      onClick={() => { setIsTracking(true); setLivePath([currentPos]); }}
                     >
                       <Play className="w-8 h-8 ml-1" />
                     </Button>
@@ -208,12 +258,7 @@ const RecordTrip = () => {
                       <Button
                         size="lg"
                         className="rounded-full w-16 h-16 shadow-xl bg-destructive hover:bg-destructive/90 text-white border-none"
-                        onClick={() => {
-                          setIsTracking(false);
-                          setIsPaused(false);
-                          // Qui puoi aggiungere logica di salvataggio
-                          console.log("Ride Finished", stats);
-                        }}
+                        onClick={handleFinishTracking} // <-- Ora chiama il salvataggio
                       >
                         <Square className="w-6 h-6" />
                       </Button>
@@ -225,81 +270,52 @@ const RecordTrip = () => {
 
             {/* Stats Panel */}
             <div className="space-y-4">
-              {/* Live Stats */}
               <Card className="border-border/50 bg-card/50 backdrop-blur">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-lg font-display flex items-center gap-2">
-                    <Gauge className="w-5 h-5 text-primary" />
-                    Live Stats
-                  </CardTitle>
+                  <CardTitle className="text-lg font-display flex items-center gap-2"><Gauge className="w-5 h-5 text-primary" /> Live Stats</CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Route className="w-5 h-5 text-primary mx-auto mb-1" />
-                    <p className="text-2xl font-bold text-foreground font-mono">
-                      {stats.distance.toFixed(2)}
-                    </p>
+                    <p className="text-2xl font-bold text-foreground font-mono">{stats.distance.toFixed(2)}</p>
                     <p className="text-xs text-muted-foreground uppercase">km</p>
                   </div>
                   <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Clock className="w-5 h-5 text-primary mx-auto mb-1" />
-                    <p className="text-2xl font-bold text-foreground font-mono">
-                      {formatTime(stats.duration)}
-                    </p>
+                    <p className="text-2xl font-bold text-foreground font-mono">{formatTime(stats.duration)}</p>
                     <p className="text-xs text-muted-foreground uppercase">Time</p>
                   </div>
                   <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Gauge className="w-5 h-5 text-accent mx-auto mb-1" />
                     <p className="text-2xl font-bold text-foreground font-mono">
-                      {/* Calcolo Velocità Media (evita divisione per zero) */}
                       {stats.duration > 0 ? (stats.distance / (stats.duration / 3600)).toFixed(1) : "0.0"}
                     </p>
                     <p className="text-xs text-muted-foreground uppercase">Avg Km/h</p>
                   </div>
                   <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
                     <Navigation className="w-5 h-5 text-accent mx-auto mb-1" />
-                    <p className="text-2xl font-bold text-foreground font-mono">
-                      {isPaused ? "0.0" : stats.currentSpeed.toFixed(1)}
-                    </p>
+                    <p className="text-2xl font-bold text-foreground font-mono">{isPaused ? "0.0" : stats.currentSpeed.toFixed(1)}</p>
                     <p className="text-xs text-muted-foreground uppercase">Cur Km/h</p>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Weather (Static Mock) */}
+              {/* Weather Card */}
               <Card className="border-border/50">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-lg font-display flex items-center gap-2">
-                    <Cloud className="w-5 h-5 text-primary" />
-                    Meteo
-                  </CardTitle>
+                  <CardTitle className="text-lg font-display flex items-center gap-2"><Cloud className="w-5 h-5 text-primary" /> Meteo</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Thermometer className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">
-                        Temperature
-                      </span>
-                    </div>
+                    <div className="flex items-center gap-2"><Thermometer className="w-4 h-4 text-muted-foreground" /><span className="text-sm text-muted-foreground">Temperature</span></div>
                     <span className="font-medium">{weatherData.temp}°C</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Cloud className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">
-                        Condition
-                      </span>
-                    </div>
-                    <span className="font-medium text-sm">
-                      {weatherData.condition}
-                    </span>
+                    <div className="flex items-center gap-2"><Cloud className="w-4 h-4 text-muted-foreground" /><span className="text-sm text-muted-foreground">Condition</span></div>
+                    <span className="font-medium text-sm">{weatherData.condition}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Wind className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">Wind</span>
-                    </div>
+                    <div className="flex items-center gap-2"><Wind className="w-4 h-4 text-muted-foreground" /><span className="text-sm text-muted-foreground">Wind</span></div>
                     <span className="font-medium">{weatherData.wind} km/h</span>
                   </div>
                 </CardContent>
@@ -312,7 +328,7 @@ const RecordTrip = () => {
         <TabsContent value="manual" className="space-y-6">
             <div className="grid lg:grid-cols-2 gap-6">
                 
-                {/* Colonna Sinistra: Editor Mappa */}
+                {/* Editor Mappa */}
                 <Card className="border-border/50 h-[600px] overflow-hidden flex flex-col">
                     <CardHeader className="p-4 bg-muted/20 border-b">
                         <CardTitle className="text-base flex justify-between items-center">
@@ -329,21 +345,22 @@ const RecordTrip = () => {
                     </div>
                 </Card>
 
-                {/* Colonna Destra: Attributi del Percorso */}
+                {/* Form Dettagli */}
                 <Card className="border-border/50">
                     <CardHeader>
-                        <CardTitle className="font-display">
-                            New Path Details
-                        </CardTitle>
-                        <p className="text-sm text-muted-foreground">
-                            Define the static characteristics of this route.
-                        </p>
+                        <CardTitle className="font-display">New Path Details</CardTitle>
+                        <p className="text-sm text-muted-foreground">Define the static characteristics of this route.</p>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         
                         <div className="space-y-2">
                             <Label htmlFor="pathName">Path Name</Label>
-                            <Input id="pathName" placeholder="e.g. Green Loop Park" />
+                            <Input 
+                                id="pathName" 
+                                placeholder="e.g. Green Loop Park"
+                                value={manualForm.name}
+                                onChange={(e) => setManualForm({...manualForm, name: e.target.value})}
+                            />
                         </div>
 
                         <div className="space-y-2">
@@ -365,16 +382,19 @@ const RecordTrip = () => {
                                 id="description"
                                 placeholder="Describe the scenery, landmarks, or terrain type..."
                                 rows={3}
+                                value={manualForm.description}
+                                onChange={(e) => setManualForm({...manualForm, description: e.target.value})}
                             />
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="status">Condition</Label>
-                                <Select>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select condition" />
-                                    </SelectTrigger>
+                                <Select 
+                                    value={manualForm.status} 
+                                    onValueChange={(val) => setManualForm({...manualForm, status: val})}
+                                >
+                                    <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="optimal">🟢 Perfect</SelectItem>
                                         <SelectItem value="good">🟡 Good</SelectItem>
@@ -386,10 +406,11 @@ const RecordTrip = () => {
                             
                             <div className="space-y-2">
                                 <Label htmlFor="difficulty">Difficulty</Label>
-                                <Select>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select level" />
-                                    </SelectTrigger>
+                                <Select
+                                    value={manualForm.difficulty} 
+                                    onValueChange={(val) => setManualForm({...manualForm, difficulty: val})}
+                                >
+                                    <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="easy">Easy (Flat)</SelectItem>
                                         <SelectItem value="medium">Medium</SelectItem>
@@ -400,7 +421,7 @@ const RecordTrip = () => {
                         </div>
 
                         <div className="pt-4 flex gap-4">
-                            <Button className="flex-1 w-full" onClick={() => console.log("Saving...", { manualPath, manualDistance, hazards })}>
+                            <Button className="flex-1 w-full" onClick={handleSaveManualPath}>
                                 <Upload className="w-4 h-4 mr-2" />
                                 Create Path
                             </Button>
@@ -414,3 +435,5 @@ const RecordTrip = () => {
     </div>
   );
 }
+
+export default RecordTrip;

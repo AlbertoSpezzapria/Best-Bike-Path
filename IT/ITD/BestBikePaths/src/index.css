@@ -1,15 +1,19 @@
+/* 1. IMPORT (DEVONO STARE IN CIMA ASSOLUTA) */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "leaflet/dist/leaflet.css";
+
+/* 2. TAILWIND */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-@import "leaflet/dist/leaflet.css";
-
+/* 3. STILI CUSTOM */
 /* Fix per la mappa che deve avere un'altezza definita */
 .leaflet-container {
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
+  z-index: 0;
 }
 
 @layer base {

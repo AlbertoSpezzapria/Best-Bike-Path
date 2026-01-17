@@ -11,6 +11,7 @@ import RecordTrip from "./pages/app/RecordTrip";
 import ExplorePaths from "./pages/app/ExplorePaths";
 import MyPaths from "./pages/app/MyPaths";
 import Settings from "./pages/app/Settings";
+import PathDetail from "./pages/app/PathDetail";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="explore" element={<ExplorePaths />} />
             <Route path="my-paths" element={<MyPaths />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="path/:id" element={<PathDetail />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
