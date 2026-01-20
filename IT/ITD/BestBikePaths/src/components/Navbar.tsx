@@ -45,7 +45,7 @@ const Navbar = () => {
               <a href="/app">Accedi</a>
             </Button>
             <Button variant="default" size="sm" asChild>
-              <a href="/app">Registrati</a>
+              <a href="/signup">Registrati</a>
             </Button>
           </div>
 
