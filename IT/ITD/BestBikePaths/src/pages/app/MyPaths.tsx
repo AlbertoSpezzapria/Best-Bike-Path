@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/supabaseClient";
+import { toast } from "sonner"; // Per i messaggi di conferma
 
 // --- CONFIGURAZIONE UI ---
 const getStatusConfig = (status: string | null) => {
@@ -111,22 +112,50 @@ const MyPaths = () => {
 
   // 2. Navigazione
   const handleNewPath = () => {
-    // Prima era "/record", ora deve includere /app
     navigate("/app/record"); 
   };  
   
   const handleOpenDetail = (id: number) => {
-    navigate(`/app/path/${id}`); // Se anche il dettaglio sarà sotto /app
+    navigate(`/app/path/${id}`); 
   };
 
-  // 3. Eliminazione (Opzionale per prototipo)
+  // 3. Toggle Visibilità (Pubblico/Privato)
+  const handleToggleVisibility = async (pathId: number, currentStatus: boolean) => {
+    try {
+        const newStatus = !currentStatus;
+        
+        // A. Aggiorna DB
+        const { error } = await supabase
+            .from('paths')
+            .update({ is_public: newStatus })
+            .eq('id', pathId);
+
+        if (error) throw error;
+
+        // B. Aggiorna Stato Locale (UI immediata)
+        setDbPaths(prev => prev.map(p => 
+            p.id === pathId ? { ...p, is_public: newStatus } : p
+        ));
+
+        toast.success(`Path is now ${newStatus ? 'Public' : 'Private'}`);
+
+    } catch (error: any) {
+        toast.error("Failed to update visibility");
+        console.error(error);
+    }
+  };
+
+  // 4. Eliminazione
   const handleDelete = async (e: React.MouseEvent, id: number) => {
     e.stopPropagation(); // Evita di aprire il dettaglio
-    if(!confirm("Are you sure?")) return;
+    if(!confirm("Are you sure you want to delete this path?")) return;
 
     const { error } = await supabase.from('paths').delete().eq('id', id);
     if (!error) {
         setDbPaths(prev => prev.filter(p => p.id !== id));
+        toast.success("Path deleted");
+    } else {
+        toast.error("Error deleting path");
     }
   };
 
@@ -217,6 +246,7 @@ const MyPaths = () => {
                             </p>
                         </div>
                         
+                        {/* Stop Propagation per non attivare il click della card */}
                         <div onClick={(e) => e.stopPropagation()}> 
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -225,9 +255,23 @@ const MyPaths = () => {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem onClick={() => navigate(`/record?edit=${path.id}`)}>
+                                    <DropdownMenuItem onClick={() => navigate(`/app/record?edit=${path.id}`)}>
                                         <Pencil className="w-4 h-4 mr-2" /> Edit
                                     </DropdownMenuItem>
+                                    
+                                    {/* NUOVO: Toggle Visibilità */}
+                                    <DropdownMenuItem onClick={() => handleToggleVisibility(path.id, path.is_public)}>
+                                        {path.is_public ? (
+                                            <>
+                                                <EyeOff className="w-4 h-4 mr-2" /> Make Private
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Eye className="w-4 h-4 mr-2" /> Make Public
+                                            </>
+                                        )}
+                                    </DropdownMenuItem>
+
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem className="text-destructive" onClick={(e) => handleDelete(e, path.id)}>
                                         <Trash2 className="w-4 h-4 mr-2" /> Delete

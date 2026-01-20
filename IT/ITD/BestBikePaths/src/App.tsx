@@ -35,6 +35,7 @@ const App = () => (
               <Route path="explore" element={<ExplorePaths />} />
               <Route path="my-paths" element={<MyPaths />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="path/:id" element={<PathDetail />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
