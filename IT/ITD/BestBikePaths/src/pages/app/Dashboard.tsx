@@ -82,18 +82,18 @@ const weeklyGoals = [
 
 const Dashboard = () => {
   return (
-    <div className="p-6 lg:p-8 space-y-8">
+    <div className="p-4 lg:p-8 space-y-6 lg:space-y-8">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-foreground">
             Hi, Mario! 👋
           </h1>
           <p className="text-muted-foreground mt-1">
             Here's a summary of your cycling activities
           </p>
         </div>
-        <Button className="w-fit">
+        <Button className="w-full lg:w-fit">
           <Bike className="w-4 h-4 mr-2" />
           Start New Trip
         </Button>
@@ -103,7 +103,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <Card key={stat.label} className="border-border/50 hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
+            <CardContent className="p-4 lg:p-6">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
@@ -138,7 +138,7 @@ const Dashboard = () => {
             {recentTrips.map((trip) => (
               <div
                 key={trip.id}
-                className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
+                className="flex items-center gap-3 lg:gap-4 p-3 lg:p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <MapPin className="w-6 h-6 text-primary" />
