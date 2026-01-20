@@ -13,6 +13,7 @@ import RecordTrip from "./pages/app/RecordTrip";
 import ExplorePaths from "./pages/app/ExplorePaths";
 import MyPaths from "./pages/app/MyPaths";
 import Settings from "./pages/app/Settings";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="record" element={<RecordTrip />} />
