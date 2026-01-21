@@ -119,7 +119,7 @@ const ExplorePaths = () => {
   const [destination, setDestination] = useState("");
 
   return (
-    <div className="p-6 lg:p-8 space-y-8">
+    <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-display font-bold text-foreground">

@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const stats = [
   {
@@ -82,6 +83,7 @@ const weeklyGoals = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { user } = useAuthStore();
   return (
     <div className="mx-2 lg:mx-4 p-4 lg:p-8 space-y-6 lg:space-y-8">
@@ -95,7 +97,7 @@ const Dashboard = () => {
             Here's a summary of your cycling activities
           </p>
         </div>
-        <Button className="w-full lg:w-fit">
+        <Button className="w-full lg:w-fit" onClick={() => navigate("/app/record")}>
           <Bike className="w-4 h-4 mr-2" />
           Start New Trip
         </Button>
