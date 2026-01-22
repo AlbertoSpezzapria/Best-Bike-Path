@@ -41,11 +41,8 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild>
-              <a href="/app">Accedi</a>
-            </Button>
             <Button variant="default" size="sm" asChild>
-              <a href="/login">Registrati</a>
+              <a href="/login">Accedi</a>
             </Button>
           </div>
 

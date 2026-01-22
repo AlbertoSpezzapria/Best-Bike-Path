@@ -11,6 +11,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const stats = [
   {
@@ -81,19 +83,21 @@ const weeklyGoals = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
   return (
-    <div className="p-4 lg:p-8 space-y-6 lg:space-y-8">
+    <div className="mx-2 lg:mx-4 p-4 lg:p-8 space-y-6 lg:space-y-8">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
           <h1 className="text-2xl lg:text-3xl font-display font-bold text-foreground">
-            Hi, Mario! 👋
+            Hi, {user?.user_metadata.name.split(" ")[0]}! 👋
           </h1>
           <p className="text-muted-foreground mt-1">
             Here's a summary of your cycling activities
           </p>
         </div>
-        <Button className="w-full lg:w-fit">
+        <Button className="w-full lg:w-fit" onClick={() => navigate("/app/record")}>
           <Bike className="w-4 h-4 mr-2" />
           Start New Trip
         </Button>

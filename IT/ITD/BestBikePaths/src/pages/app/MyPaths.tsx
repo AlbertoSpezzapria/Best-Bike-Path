@@ -165,7 +165,7 @@ const MyPaths = () => {
   );
 
   return (
-    <div className="p-6 lg:p-8 space-y-8">
+    <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>

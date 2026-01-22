@@ -25,7 +25,7 @@ import {
 
 const Settings = () => {
   return (
-    <div className="p-6 lg:p-8 space-y-8 max-w-4xl">
+    <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8 max-w-4xl">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-display font-bold text-foreground">
