@@ -19,6 +19,22 @@ import { supabase } from "@/supabaseClient";
 import { fetchWeather, WeatherData } from "@/lib/weatherService";
 import { toast } from "sonner"; 
 
+const IS_DEBUG_MODE = true;
+const MOCK_ROUTE: [number, number][] = [
+    [45.46420, 9.19000], 
+    [45.46430, 9.19010],
+    [45.46440, 9.19020],
+    [45.46450, 9.19030],
+    [45.46460, 9.19040],
+    [45.46470, 9.19050],
+    [45.46480, 9.19060],
+    [45.46490, 9.19070],
+    [45.46500, 9.19080],
+    [45.46510, 9.19090], 
+    [45.46520, 9.19100], 
+    [45.46530, 9.19110], 
+];
+
 // --- MATH HELPERS ---
 function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371; 
@@ -40,6 +56,8 @@ const toWKT = (coords: [number, number][]) => {
 };
 
 const RecordTrip = () => {
+  const mockIndexRef = useRef(0);
+
   const navigate = useNavigate();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -79,37 +97,72 @@ const RecordTrip = () => {
   const handleStart = () => {
     setIsTracking(true);
     setStartTime(new Date());
-    setLivePath([currentPos]);
-    fetchWeather(currentPos[0], currentPos[1]).then(setWeather);
+
+    if (IS_DEBUG_MODE) {
+        mockIndexRef.current = 0;
+        const startPoint = MOCK_ROUTE[0];
+        setCurrentPos(startPoint);
+        setLivePath([startPoint]);
+        fetchWeather(startPoint[0], startPoint[1]).then(setWeather);
+        toast.info("Debug mode: starting mock GPS route.");
+    } else {
+        setLivePath([currentPos]);
+        fetchWeather(currentPos[0], currentPos[1]).then(setWeather);
+    }
   };
 
   // --- GPS SIMULATION ---
   useEffect(() => {
     if (isTracking && !isPaused) {
       timerRef.current = setInterval(() => {
-        setStats(prev => ({ ...prev, duration: prev.duration + 1 }));
+        
+        // --- DETERMINISTIC PATH ---
+        if (IS_DEBUG_MODE) {
+            if (mockIndexRef.current >= MOCK_ROUTE.length - 1) {
+                return; 
+            }
+            mockIndexRef.current += 1;
+            const newPos = MOCK_ROUTE[mockIndexRef.current];
+            setStats(prev => {
+                const dist = getDistanceFromLatLonInKm(currentPos[0], currentPos[1], newPos[0], newPos[1]);
+                return {
+                    ...prev,
+                    duration: prev.duration + 1,
+                    distance: prev.distance + dist,
+                    currentSpeed: (dist / (1/3600))
+                };
+            });
+            setCurrentPos(newPos);
+            setLivePath(prev => [...prev, newPos]);
+        } 
+        
+        // --- RANDOM PATH ---
+        else {
+            setStats(prev => ({ ...prev, duration: prev.duration + 1 }));
 
-        setCurrentPos(prevPos => {
-            const latChange = (Math.random() - 0.2) * 0.0005; 
-            const lngChange = (Math.random() - 0.2) * 0.0005;
-            const newPos: [number, number] = [prevPos[0] + 0.0001 + latChange, prevPos[1] + 0.0001 + lngChange];
-            
-            setLivePath(prevPath => [...prevPath, newPos]);
-            const dist = getDistanceFromLatLonInKm(prevPos[0], prevPos[1], newPos[0], newPos[1]);
-            
-            setStats(prevStats => ({
-                ...prevStats,
-                distance: prevStats.distance + dist,
-                currentSpeed: (dist / (1/3600))
-            }));
-            return newPos;
-        });
+            setCurrentPos(prevPos => {
+                const latChange = (Math.random() - 0.2) * 0.0005; 
+                const lngChange = (Math.random() - 0.2) * 0.0005;
+                const newPos: [number, number] = [prevPos[0] + 0.0001 + latChange, prevPos[1] + 0.0001 + lngChange];
+                
+                setLivePath(prevPath => [...prevPath, newPos]);
+                const dist = getDistanceFromLatLonInKm(prevPos[0], prevPos[1], newPos[0], newPos[1]);
+                
+                setStats(prevStats => ({
+                    ...prevStats,
+                    distance: prevStats.distance + dist,
+                    currentSpeed: (dist / (1/3600))
+                }));
+                return newPos;
+            });
+        }
+
       }, 1000);
     } else {
       if (timerRef.current) clearInterval(timerRef.current);
     }
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [isTracking, isPaused]);
+  }, [isTracking, isPaused, currentPos]);
 
   // --- 1. STOP TRACKING HANDLER (Opens Modal) ---
   const handleStopPress = async () => {
