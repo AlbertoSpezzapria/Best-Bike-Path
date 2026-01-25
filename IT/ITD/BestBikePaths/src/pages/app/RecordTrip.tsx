@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Play, Pause, Square, Navigation, Gauge, Clock, Route,
-  Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock
+  Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock, CheckCircle
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,14 +12,14 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { Switch} from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import BikeMap, { Hazard } from "@/components/BikeMap";
 import { supabase } from "@/supabaseClient";
-import { fetchWeather, WeatherData } from "@/lib/weatherService"; // Importa il servizio meteo
+import { fetchWeather, WeatherData } from "@/lib/weatherService";
+import { toast } from "sonner"; 
 
-// --- HELPER MATH ---
+// --- MATH HELPERS ---
 function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371; 
   const dLat = deg2rad(lat2 - lat1);
@@ -32,7 +32,7 @@ function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon
 }
 function deg2rad(deg: number) { return deg * (Math.PI / 180); }
 
-// --- HELPER POSTGIS (WKT Builder) ---
+// --- POSTGIS HELPER (WKT Builder) ---
 const toWKT = (coords: [number, number][]) => {
   if (coords.length < 2) return null;
   const points = coords.map(c => `${c[1]} ${c[0]}`).join(", ");
@@ -43,30 +43,39 @@ const RecordTrip = () => {
   const navigate = useNavigate();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Stati Tracking
+  // Tracking States
   const [isTracking, setIsTracking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
+  const [isCheckingPath, setIsCheckingPath] = useState(false);
 
   const [livePath, setLivePath] = useState<[number, number][]>([]);
   const [currentPos, setCurrentPos] = useState<[number, number]>([45.4642, 9.1900]); 
   const [stats, setStats] = useState({ distance: 0, duration: 0, currentSpeed: 0 });
 
-  // Stati Manuali
+  // Manual Entry States
   const [manualDistance, setManualDistance] = useState<number>(0);
   const [manualPath, setManualPath] = useState<[number, number][]>([]);
   const [hazards, setHazards] = useState<Hazard[]>([]);
-  const [manualForm, setManualForm] = useState({ name: "", description: "", status: "optimal", difficulty: "easy", isPublic: true });
+  const [manualForm, setManualForm] = useState({ 
+    name: `Manual Path of ${new Date().toLocaleDateString()}`, 
+    description: "", 
+    status: "optimal", 
+    difficulty: "easy", 
+    isPublic: false 
+  });
   
-  // Stati per la MODALE DI SALVATAGGIO (Auto)
+  // Modal States
   const [showSaveDialog, setShowSaveDialog] = useState(false);
-  const [saveFormData, setSaveFormData] = useState({ name: "", description: "", isPublic: true });
+  const [matchedPath, setMatchedPath] = useState<{id: number, name: string} | null>(null); 
 
-  // Meteo
+  const [newPathForm, setNewPathForm] = useState({ name: "", description: "", isPublic: true });
+
+  // Weather State
   const [weather, setWeather] = useState<WeatherData>({ temp: 0, condition: "--", wind: 0, humidity: 0 });
 
-  // Start Tracking
+  // Start Tracking Handler
   const handleStart = () => {
     setIsTracking(true);
     setStartTime(new Date());
@@ -74,7 +83,7 @@ const RecordTrip = () => {
     fetchWeather(currentPos[0], currentPos[1]).then(setWeather);
   };
 
-  // --- SIMULAZIONE GPS ---
+  // --- GPS SIMULATION ---
   useEffect(() => {
     if (isTracking && !isPaused) {
       timerRef.current = setInterval(() => {
@@ -102,27 +111,58 @@ const RecordTrip = () => {
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [isTracking, isPaused]);
 
-  // --- 1. GESTIONE STOP TRACKING (Apre la Modale) ---
-  const handleStopPress = () => {
+  // --- 1. STOP TRACKING HANDLER (Opens Modal) ---
+  const handleStopPress = async () => {
     setIsTracking(false);
-    setIsPaused(true); // Mettiamo in pausa visiva
+    setIsPaused(true); 
     
-    if (livePath.length < 2) return alert("Tracciato troppo breve.");
-    
-    // Prepara i dati di default per la modale
-    setSaveFormData({
-        name: `Ride on ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`,
-        description: "Recorded activity via GPS",
-        isPublic: true 
-    });
-    
-    setShowSaveDialog(true);
+    if (livePath.length < 2) {
+        toast.error("Track is too short to save.");
+        return;
+    }
+
+    setIsCheckingPath(true);
+
+    try {
+        const wktString = toWKT(livePath);
+        
+        // 1. RPC CALL: Check immediately if a similar path exists
+        const { data: matchedPaths, error } = await supabase.rpc('check_path_similarity', { 
+            new_geom_wkt: wktString,
+            tolerance_meters: 50,
+            length_tolerance_pct: 0.1
+        });
+
+        if (error) console.error("Check error:", error);
+
+        if (matchedPaths && matchedPaths.length > 0) {
+            // CASE A: EXISTING path found
+            setMatchedPath(matchedPaths[0]);
+        } else {
+            // CASE B: No match -> Prepare form for NEW path
+            setMatchedPath(null);
+            const today = new Date().toLocaleDateString();
+            setNewPathForm({
+                name: `Path of ${today}`,
+                description: "New track created via GPS recording.",
+                isPublic: true
+            });
+        }
+        
+        // 2. Open modal only now, with data ready
+        setShowSaveDialog(true);
+
+    } catch (e) {
+        toast.error("Error analyzing the path.");
+    } finally {
+        setIsCheckingPath(false);
+    }
   };
 
-  // --- 2. LOGICA DI SALVATAGGIO CONFERMATO (Chiamata dalla Modale) ---
+  // --- 2. CONFIRM SAVE LOGIC (Called from Modal) ---
   const confirmSaveTracking = async () => {
     setIsSaving(true);
-    setShowSaveDialog(false); // Chiude la modale
+    setShowSaveDialog(false);
 
     try {
         const user = (await supabase.auth.getUser()).data.user;
@@ -131,49 +171,36 @@ const RecordTrip = () => {
         let targetPathId: number;
         let targetPathName: string;
 
-        // A. CHECK MATCHING
-        const { data: matchedPaths, error: matchError } = await supabase
-            .rpc('check_path_similarity', { 
-                new_geom_wkt: wktString,
-                tolerance_meters: 50,
-                length_tolerance_pct: 0.1
-            });
-
-        if (matchError) console.error("Errore matching:", matchError);
-
-        // B. LOGICA BIVIO (Esistente vs Nuovo)
-        if (matchedPaths && matchedPaths.length > 0) {
-            // MATCH TROVATO
-            const match = matchedPaths[0];
-            targetPathId = match.id;
-            targetPathName = match.name;
-            alert(`Percorso esistente individuato: "${match.name}". Attività collegata!`);
+        if (matchedPath) {
+            // --- SCENARIO: MATCH ---
+            // Use the ID found earlier
+            targetPathId = matchedPath.id;
+            targetPathName = matchedPath.name;
+            toast.success("Activity saved and linked to existing path!");
         } else {
-            // NUOVO PATH (Usa i dati della Modale)
+            // --- SCENARIO: NEW PATH ---
+            // Create path with data entered in modal
             const pathPayload = {
-                name: saveFormData.name, 
-                description: saveFormData.description,
+                name: newPathForm.name, 
+                description: newPathForm.description,
                 distance: stats.distance,
                 duration: formatTime(stats.duration),
                 path_data: livePath,
                 geom: wktString,
-                hazards: [],
+                hazards: hazards, 
                 status: "good",
-                is_public: saveFormData.isPublic // Scelta Utente dalla Modale
+                is_public: newPathForm.isPublic, 
+                id_owner: user?.id
             };
-
-            const { data: newPath, error: createError } = await supabase
-                .from('paths')
-                .insert([pathPayload])
-                .select()
-                .single();
-
+            const { data: newPath, error: createError } = await supabase.from('paths').insert([pathPayload]).select().single();
             if (createError) throw createError;
+            
             targetPathId = newPath.id;
             targetPathName = newPath.name;
+            toast.success("New path created successfully!");
         }
 
-        // C. CREO ATTIVITÀ
+        // CREATE ACTIVITY (Always)
         const activityPayload = {
             name: `${user?.email?.split('@')[0] || 'User'} on ${targetPathName}`,
             path_id: targetPathId,
@@ -191,27 +218,33 @@ const RecordTrip = () => {
         if (activityError) throw activityError;
 
         navigate("/app/my-paths");
-
     } catch (error: any) {
-        console.error("Errore salvataggio:", error);
-        alert("Errore salvataggio: " + error.message);
+        console.error("Error:", error);
+        toast.error("Error saving the activity.");
     } finally {
         setIsSaving(false);
     }
   };
 
-  // --- 3. SALVATAGGIO MANUALE ---
+  // --- 3. MANUAL SAVE ---
   const handleSaveManualPath = async () => {
-    if (!manualForm.name) return alert("Inserisci un nome.");
-    if (manualPath.length < 2) return alert("Disegna un percorso sulla mappa.");
-    
+    const { data: { user } } = await supabase.auth.getUser();
+    if (manualPath.length < 2) {
+        toast.error("Please draw a path on the map.");
+        return;
+    }
     setIsSaving(true);
 
     try {
         const wktString = toWKT(manualPath); 
+        
+        const today = new Date().toLocaleDateString();
+        const finalName = manualForm.name.trim() !== "" 
+            ? manualForm.name 
+            : `Manual Path of ${today}`;
 
         const dbPayload = {
-            name: manualForm.name,
+            name: finalName, 
             description: manualForm.description,
             distance: manualDistance,
             duration: "N/A",
@@ -219,23 +252,24 @@ const RecordTrip = () => {
             geom: wktString, 
             hazards: hazards,
             status: manualForm.status,
-            is_public: manualForm.isPublic 
+            is_public: manualForm.isPublic,
+            id_owner: user?.id
         };
 
         const { error } = await supabase.from('paths').insert([dbPayload]);
         if (error) throw error;
 
-        alert("Percorso manuale creato!");
+        toast.success("Manual path created successfully!");
         navigate("/app/my-paths");
     } catch (error: any) {
-        console.error("Errore:", error);
-        alert(error.message);
+        console.error("Error:", error);
+        toast.error(error.message);
     } finally {
         setIsSaving(false);
     }
   };
 
-  // UI Helper
+  // UI Helpers
   const formatTime = (seconds: number) => {
       const h = Math.floor(seconds / 3600);
       const m = Math.floor((seconds % 3600) / 60);
@@ -250,8 +284,7 @@ const RecordTrip = () => {
   };
 
   return (
-    <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8">
-      {/* Header */}
+    <div className="p-6 lg:p-8 space-y-8">
       <div>
         <h1 className="text-3xl font-display font-bold text-foreground">Record Trip</h1>
         <p className="text-muted-foreground mt-1">Track activities or create paths manually</p>
@@ -263,22 +296,33 @@ const RecordTrip = () => {
           <TabsTrigger value="manual" className="gap-2"><Edit3 className="w-4 h-4" /> Manual</TabsTrigger>
         </TabsList>
 
-        {/* --- AUTOMATIC --- */}
+        {/* --- AUTOMATIC TAB --- */}
         <TabsContent value="auto" className="space-y-6">
           <div className="grid lg:grid-cols-3 gap-6">
             <Card className="lg:col-span-2 border-border/50 overflow-hidden h-[500px] flex flex-col relative">
               <div className="absolute inset-0 z-0">
-                  <BikeMap mode="view" initialCenter={[45.4642, 9.1900]} currentLocation={currentPos} recordedPath={livePath} autoCenter={isTracking} />
+                  <BikeMap 
+                    mode="view" 
+                    initialCenter={[45.4642, 9.1900]} 
+                    currentLocation={currentPos} 
+                    recordedPath={livePath} 
+                    autoCenter={isTracking} 
+                    hazards={hazards} 
+                  />
               </div>
+
               {!isTracking && livePath.length === 0 && (
                  <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none">
-                     <p className="bg-background/80 p-2 rounded text-sm font-medium backdrop-blur">Premi Play per registrare</p>
+                     <p className="bg-background/80 p-2 rounded text-sm font-medium backdrop-blur">Press Play to start recording</p>
                  </div>
               )}
-              <div className="absolute bottom-8 left-0 right-0 flex justify-center z-[500] gap-6 pointer-events-none">
+
+              {/* CONTROLS OVERLAY: z-20 to sit below modals but above map */}
+              <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center justify-end z-20 gap-4 pointer-events-none">
+                
                 <div className="pointer-events-auto flex gap-4">
                   {!isTracking ? (
-                    <Button size="lg" className="rounded-full w-20 h-20 shadow-2xl bg-primary hover:bg-primary/90 hover:scale-105 transition-transform" onClick={handleStart} disabled={isSaving}>
+                    <Button size="lg" className="rounded-full w-20 h-20 shadow-2xl bg-primary hover:bg-primary/90 hover:scale-105 transition-transform" onClick={handleStart} disabled={isSaving || isCheckingPath}>
                       <Play className="w-8 h-8 ml-1" />
                     </Button>
                   ) : (
@@ -286,8 +330,9 @@ const RecordTrip = () => {
                       <Button size="lg" className="rounded-full w-16 h-16 shadow-xl bg-yellow-500 hover:bg-yellow-600 border-none" onClick={() => setIsPaused(!isPaused)}>
                         {isPaused ? <Play className="w-6 h-6 ml-1" /> : <Pause className="w-6 h-6" />}
                       </Button>
-                      <Button size="lg" className="rounded-full w-16 h-16 shadow-xl bg-destructive hover:bg-destructive/90 border-none" onClick={handleStopPress} disabled={isSaving}>
-                        <Square className="w-6 h-6" />
+                      <Button size="lg" className="rounded-full w-16 h-16 shadow-xl bg-destructive hover:bg-destructive/90 border-none" onClick={handleStopPress} disabled={isSaving || isCheckingPath}>
+                        {/* Show loader if checking path */}
+                        {isCheckingPath ? <Loader2 className="w-6 h-6 animate-spin" /> : <Square className="w-6 h-6" />}
                       </Button>
                     </>
                   )}
@@ -296,7 +341,7 @@ const RecordTrip = () => {
             </Card>
 
             <div className="space-y-4">
-               {/* Stats & Weather Cards */}
+               {/* LIVE STATS */}
                <Card className="border-border/50 bg-card/50 backdrop-blur">
                 <CardHeader className="pb-2"><CardTitle className="text-lg font-display flex items-center gap-2"><Gauge className="w-5 h-5 text-primary" /> Live Stats</CardTitle></CardHeader>
                 <CardContent className="grid grid-cols-2 gap-4">
@@ -307,6 +352,7 @@ const RecordTrip = () => {
                 </CardContent>
               </Card>
 
+              {/* LIVE WEATHER */}
               <Card className="border-border/50">
                 <CardHeader className="pb-2"><CardTitle className="text-lg font-display flex items-center gap-2"><Cloud className="w-5 h-5 text-primary" /> Live Weather</CardTitle></CardHeader>
                 <CardContent className="space-y-3">
@@ -330,9 +376,8 @@ const RecordTrip = () => {
                 <Card className="border-border/50">
                     <CardHeader><CardTitle className="font-display">New Path Details</CardTitle><p className="text-sm text-muted-foreground">Static characteristics of the route.</p></CardHeader>
                     <CardContent className="space-y-6">
-                        <div className="space-y-2"><Label>Name</Label><Input value={manualForm.name} onChange={(e) => setManualForm({...manualForm, name: e.target.value})} placeholder="e.g. Navigli Loop" /></div>
+                        <div className="space-y-2"><Label>Name</Label><Input value={manualForm.name} onChange={(e) => setManualForm({...manualForm, name: e.target.value})} /></div>
                         
-                        {/* --- SWITCH VISIBILITÀ MANUALE INTEGRATO --- */}
                         <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/20">
                             <div className="space-y-0.5">
                                 <div className="flex items-center gap-2">
@@ -343,12 +388,8 @@ const RecordTrip = () => {
                                     {manualForm.isPublic ? "Visible to everyone" : "Only visible to you"}
                                 </p>
                             </div>
-                            <Switch 
-                                checked={manualForm.isPublic} 
-                                onCheckedChange={(checked) => setManualForm({...manualForm, isPublic: checked})} 
-                            />
+                            <Switch checked={manualForm.isPublic} onCheckedChange={(checked) => setManualForm({...manualForm, isPublic: checked})} />
                         </div>
-                        {/* ------------------------------------------- */}
 
                         <div className="space-y-2"><Label>Length (km)</Label><Input value={manualDistance} readOnly className="bg-muted" /></div>
                         <div className="space-y-2"><Label>Description</Label><Textarea value={manualForm.description} onChange={(e) => setManualForm({...manualForm, description: e.target.value})} rows={3} /></div>
@@ -375,38 +416,63 @@ const RecordTrip = () => {
         </TabsContent>
       </Tabs>
 
-      {/* --- MODALE DI SALVATAGGIO --- */}
+      {/* --- SAVE DIALOG (Match vs New) --- */}
       <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
         <DialogContent>
-            <DialogHeader>
-                <DialogTitle>Save Activity</DialogTitle>
-                <DialogDescription>Review details before saving your ride.</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-                <div className="space-y-2">
-                    <Label>Activity Name</Label>
-                    <Input value={saveFormData.name} onChange={(e) => setSaveFormData({...saveFormData, name: e.target.value})} />
-                </div>
-                <div className="space-y-2">
-                    <Label>Description</Label>
-                    <Textarea value={saveFormData.description} onChange={(e) => setSaveFormData({...saveFormData, description: e.target.value})} />
-                </div>
-                {/* Switch Modale */}
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center gap-2">
-                        {saveFormData.isPublic ? <Globe className="w-4 h-4 text-primary" /> : <Lock className="w-4 h-4 text-muted-foreground" />}
-                        <Label>Public Path</Label>
+            {matchedPath ? (
+                // CASE A: MATCH FOUND
+                <>
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2 text-green-600">
+                            <CheckCircle className="w-5 h-5" /> Path Recognized!
+                        </DialogTitle>
+                        <DialogDescription>
+                            Good news! Your track matches an existing public path.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4 space-y-4">
+                        <div className="p-4 bg-muted/30 rounded-lg border">
+                            <p className="text-sm text-muted-foreground uppercase font-bold tracking-wider mb-1">Link to:</p>
+                            <p className="text-lg font-medium">{matchedPath.name}</p>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                            Your activity will be recorded and appear on this path's leaderboard.
+                        </p>
                     </div>
-                    <Switch 
-                        checked={saveFormData.isPublic} 
-                        onCheckedChange={(c) => setSaveFormData({...saveFormData, isPublic: c})} 
-                    />
-                </div>
-            </div>
+                </>
+            ) : (
+                // CASE B: NEW PATH
+                <>
+                    <DialogHeader>
+                        <DialogTitle>New Path Detected</DialogTitle>
+                        <DialogDescription>
+                            You explored a new area! Name this track to save it to the public database.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                            <Label>Path Name</Label>
+                            <Input value={newPathForm.name} onChange={(e) => setNewPathForm({...newPathForm, name: e.target.value})} placeholder="Ex. Lake Loop" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Description</Label>
+                            <Textarea value={newPathForm.description} onChange={(e) => setNewPathForm({...newPathForm, description: e.target.value})} placeholder="Terrain features, views, etc." />
+                        </div>
+                        <div className="flex items-center justify-between p-3 border rounded-lg">
+                            <div className="flex items-center gap-2">
+                                {newPathForm.isPublic ? <Globe className="w-4 h-4 text-primary" /> : <Lock className="w-4 h-4 text-muted-foreground" />}
+                                <Label>Public Path</Label>
+                            </div>
+                            <Switch checked={newPathForm.isPublic} onCheckedChange={(c) => setNewPathForm({...newPathForm, isPublic: c})} />
+                        </div>
+                    </div>
+                </>
+            )}
+            
             <DialogFooter>
                 <Button variant="outline" onClick={() => setShowSaveDialog(false)}>Cancel</Button>
                 <Button onClick={confirmSaveTracking} disabled={isSaving}>
-                    {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : "Save Trip"}
+                    {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : "Save Activity"}
                 </Button>
             </DialogFooter>
         </DialogContent>

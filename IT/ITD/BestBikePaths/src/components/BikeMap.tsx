@@ -18,13 +18,15 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "sonner"; // Added import
 
-// --- CONFIGURAZIONE ICONE ---
+// --- ICON CONFIGURATION ---
 const DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
@@ -47,7 +49,7 @@ const CurrentLocationIcon = L.divIcon({
   iconAnchor: [12, 12],
 });
 
-// --- TIPI ---
+// --- TYPES ---
 export interface Hazard {
   id: string;
   location: [number, number];
@@ -61,30 +63,31 @@ interface BikeMapProps {
   currentLocation?: [number, number]; 
   autoCenter?: boolean; 
   onPathChange?: (path: [number, number][], distance: number, hazards: Hazard[]) => void;
+  hazards?: Hazard[]; // Prop to pass existing hazards if necessary
 }
 
-// --- HELPER FUNZIONI ---
-// Trova il punto più vicino sulla polilinea rispetto al click (Logica semplificata per prototipo)
+// --- HELPER FUNCTIONS ---
+// Find the nearest point on the polyline relative to the click
 const findNearestPointOnLine = (clickLatLng: L.LatLng, polylinePoints: [number, number][]) => {
   let minDistance = Infinity;
   let nearestPoint = null;
 
   polylinePoints.forEach(pt => {
     const pointLatLng = L.latLng(pt[0], pt[1]);
-    const dist = clickLatLng.distanceTo(pointLatLng); // Distanza in metri
+    const dist = clickLatLng.distanceTo(pointLatLng); // Distance in meters
     if (dist < minDistance) {
       minDistance = dist;
       nearestPoint = pt;
     }
   });
 
-  // Accettiamo il punto solo se è entro 50 metri dalla linea (per evitare click sbagliati)
+  // Accept the point only if within 50 meters of the line
   return minDistance < 50 ? nearestPoint : null;
 };
 
-// --- SOTTO-COMPONENTI INTERNI ---
+// --- INTERNAL SUB-COMPONENTS ---
 
-// Controller per muovere la mappa (FlyTo)
+// Controller to move map (FlyTo)
 const MapController = ({ center }: { center: [number, number] | null }) => {
   const map = useMap();
   useEffect(() => {
@@ -93,7 +96,7 @@ const MapController = ({ center }: { center: [number, number] | null }) => {
   return null;
 };
 
-// Gestore Click
+// Click Handler
 const MapInteractionHandler = ({ 
   mode, 
   editorMode, 
@@ -118,19 +121,18 @@ const MapInteractionHandler = ({
   return null;
 };
 
-//Gestore auto-center map
+// Auto-center map handler (Live position tracking)
 const AutoCenterMap = ({ center, enabled }: { center: [number, number] | null, enabled: boolean }) => {
   const map = useMap();
   useEffect(() => {
     if (center && enabled) {
-      // panTo è più morbido di flyTo per piccoli spostamenti
       map.panTo(center, { animate: true, duration: 1 }); 
     }
   }, [center, enabled, map]);
   return null;
 };
 
-// --- COMPONENTE PRINCIPALE ---
+// --- MAIN COMPONENT ---
 const BikeMap = ({ 
   mode,
   initialCenter = [45.4642, 9.1900], 
@@ -141,33 +143,20 @@ const BikeMap = ({
 }: BikeMapProps) => {
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
   
-  // STATO EDITOR
+  // EDITOR STATE
   const [waypoints, setWaypoints] = useState<L.LatLng[]>([]);
   const [routeGeometry, setRouteGeometry] = useState<[number, number][]>([]);
   const [hazards, setHazards] = useState<Hazard[]>([]);
   const [editorMode, setEditorMode] = useState<"route" | "hazard">("route");
   
-  // STATO SEARCH
-const [searchQuery, setSearchQuery] = useState("");
+  // SEARCH STATE
+  const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Clean Orphaned Hazards ***
-  // Questa funzione controlla se gli ostacoli sono ancora validi rispetto alla nuova geometria
-  const validateHazardsAgainstRoute = (newRoute: [number, number][], currentHazards: Hazard[]) => {
-    if (newRoute.length === 0) return []; // Se non c'è percorso, via tutti gli ostacoli
-    
-    return currentHazards.filter(h => {
-        const hazardLatLng = L.latLng(h.location[0], h.location[1]);
-        // Controlliamo se l'ostacolo è ancora "vicino" (snapped) a qualche punto del nuovo percorso
-        const point = findNearestPointOnLine(hazardLatLng, newRoute);
-        return point !== null; // Se torna null, vuol dire che è > 50m dalla linea
-    });
-  };
-
-  // Calcolo Rotta (OSRM)
+  // Route Calculation (OSRM)
   const fetchRoute = async (points: L.LatLng[]) => {
     if (points.length < 2) return;
     const coordsString = points.map(p => `${p.lng},${p.lat}`).join(";");
@@ -182,7 +171,7 @@ const [searchQuery, setSearchQuery] = useState("");
     } catch (e) { console.error(e); }
   };
 
-  // Autocomplete Search with Debounce ***
+  // Autocomplete Search with Debounce
   useEffect(() => {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     if (!searchQuery || searchQuery.length < 3) {
@@ -198,7 +187,7 @@ const [searchQuery, setSearchQuery] = useState("");
             setSuggestions(data);
         } catch (e) { console.error(e); }
         setIsLoadingSuggestions(false);
-    }, 300); // 300ms di attesa
+    }, 300);
 
     return () => { if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current); };
   }, [searchQuery]);
@@ -210,7 +199,7 @@ const [searchQuery, setSearchQuery] = useState("");
       setSuggestions([]);
   };
 
-  // Geolocalizzazione Browser
+  // Browser Geolocation (Crosshair button)
   const handleLocateMe = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
@@ -219,18 +208,19 @@ const [searchQuery, setSearchQuery] = useState("");
     }
   };
 
-  // Aggiunta Punto Percorso
+  // Add Path Point
   const handleAddWaypoint = (latlng: L.LatLng) => {
     const newWaypoints = [...waypoints, latlng];
     setWaypoints(newWaypoints);
     if (newWaypoints.length > 1) fetchRoute(newWaypoints);
     else {
         setRouteGeometry([]);
-        setHazards([]); // Niente percorso, niente hazard
+        setHazards([]); // Reset hazards if path resets
+        onPathChange?.([], 0, []);
     }
   };
 
-  // Undo Ultimo Punto
+  // Undo Last Point
   const handleUndo = () => {
     if (waypoints.length === 0) return;
     const newWaypoints = waypoints.slice(0, -1);
@@ -240,26 +230,33 @@ const [searchQuery, setSearchQuery] = useState("");
         fetchRoute(newWaypoints); 
     } else {
       setRouteGeometry([]);
-      setHazards([]); 
+      setHazards([]);
+      onPathChange?.([], 0, []);
     }
   };
 
+  // Add Hazard (Snapping)
   const handleAddHazard = (latlng: L.LatLng) => {
-    if (routeGeometry.length === 0) return alert("Add waypoints to create a route first.");
+    if (routeGeometry.length === 0) {
+        toast.error("Draw a path first!");
+        return;
+    }
     const snappedPoint = findNearestPointOnLine(latlng, routeGeometry);
+    
     if (snappedPoint) {
       const newHazards = [...hazards, { id: Date.now().toString(), location: snappedPoint, type: "pothole" as const }];
       setHazards(newHazards);
-      onPathChange?.(routeGeometry, 0, newHazards);
+      // Notify parent component of change
+      onPathChange?.(routeGeometry, 0, newHazards); 
     } else {
-      alert("Too far from the route. Please click closer to the blue line.");
+      toast.error("Click closer to the blue path line.");
     }
   };
 
   return (
     <div className="relative w-full h-full group overflow-hidden rounded-md">
       
-      {/* *** FIX UI: Collapsible Search Bar *** */}
+      {/* 1. COLLAPSIBLE SEARCH BAR (Top Left) */}
       <div className={`absolute top-4 left-4 z-[1000] flex flex-col gap-2 transition-all duration-300 ${isSearchOpen ? "w-[80%] max-w-sm" : "w-auto"}`}>
         <div className="flex gap-2">
             {!isSearchOpen && (
@@ -317,10 +314,10 @@ const [searchQuery, setSearchQuery] = useState("");
         </div>
       </div>
 
-      {/* Toolbar Azioni (Resta uguale, ma assicuriamoci che non sia coperta) */}
+      {/* 2. EDITOR TOOLBAR (Bottom Right) */}
       {mode === "edit" && (
         <Card className="absolute bottom-6 right-4 z-[1000] p-2 flex flex-col gap-2 shadow-xl bg-white/90 backdrop-blur rounded-full">
-            <Button size="icon" variant="outline" className="rounded-full" onClick={() => navigator.geolocation.getCurrentPosition(p => setMapCenter([p.coords.latitude, p.coords.longitude]))}>
+            <Button size="icon" variant="outline" className="rounded-full" onClick={handleLocateMe}>
                <Crosshair className="w-4 h-4" />
             </Button>
             <Button size="icon" variant="outline" className="rounded-full" onClick={handleUndo} disabled={waypoints.length === 0}>
@@ -338,31 +335,27 @@ const [searchQuery, setSearchQuery] = useState("");
         </Card>
       )}
 
-      {/* MAPPA */}
+      {/* 3. LEAFLET MAP */}
       <MapContainer 
         center={initialCenter} 
         zoom={13} 
         scrollWheelZoom={true} 
-        zoomControl={false} // Nascondiamo quello di default per spostarlo se necessario, o lasciamo false perché coperto
+        zoomControl={false}
         className="w-full h-full z-0"
       >
         <TileLayer attribution='&copy; OSM' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         
-        {/* Usiamo i controlli zoom in basso a sinistra per non confliggere con la search bar */}
-        {/* Nota: React-Leaflet non espone facile ZoomControl position nelle nuove versioni, 
-            ma la search bar a scomparsa risolve il problema dello spazio. */}
-        
+        {/* Invisible Helpers */}
         <MapController center={mapCenter} />
+        {currentLocation && <AutoCenterMap center={currentLocation ? [currentLocation[0], currentLocation[1]] : null} enabled={autoCenter} />}
         <MapInteractionHandler mode={mode} editorMode={editorMode} onAddWaypoint={handleAddWaypoint} onAddHazard={handleAddHazard} />
 
+        {/* --- RENDER VIEW MODE (Tracking) --- */}
         {mode === "view" && (
             <>
-                {/* La scia del percorso fatto finora */}
                 {recordedPath.length > 0 && (
-                    <Polyline positions={recordedPath} color="#ef4444" weight={5} /> // Rosso
+                    <Polyline positions={recordedPath} color="#ef4444" weight={5} /> 
                 )}
-                
-                {/* La mia posizione attuale */}
                 {currentLocation && (
                     <Marker position={currentLocation} icon={CurrentLocationIcon} zIndexOffset={1000}>
                          <Popup>You are here</Popup>
@@ -371,10 +364,13 @@ const [searchQuery, setSearchQuery] = useState("");
             </>
         )}
 
+        {/* --- RENDER EDIT MODE (Planning) --- */}
         {mode === "edit" && (
             <>
                 {waypoints.map((pos, idx) => <Marker key={`wp-${idx}`} position={pos} opacity={0.6} />)}
+                
                 {routeGeometry.length > 0 && <Polyline positions={routeGeometry} color="#2563eb" weight={5} opacity={0.8} />}
+                
                 {hazards.map((h) => (
                     <Marker key={h.id} position={h.location} icon={HazardIcon}>
                          <Popup>⚠️ Pothole</Popup>
@@ -382,7 +378,6 @@ const [searchQuery, setSearchQuery] = useState("");
                 ))}
             </>
         )}
-        {mode === "view" && recordedPath.length > 0 && <Polyline positions={recordedPath} color="red" weight={4} />}
       </MapContainer>
     </div>
   );
