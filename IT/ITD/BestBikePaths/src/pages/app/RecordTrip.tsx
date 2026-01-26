@@ -19,7 +19,7 @@ import { supabase } from "@/supabaseClient";
 import { fetchWeather, WeatherData } from "@/lib/weatherService";
 import { toast } from "sonner"; 
 
-const IS_DEBUG_MODE = true;
+const IS_DEBUG_MODE = false;
 const MOCK_ROUTE: [number, number][] = [
     [45.46420, 9.19000], 
     [45.46430, 9.19010],
