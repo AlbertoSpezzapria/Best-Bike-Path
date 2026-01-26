@@ -22,8 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const Settings = () => {
+  const user = useAuthStore((state) => state.user);
   return (
     <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8 max-w-4xl">
       {/* Header */}
@@ -43,22 +45,19 @@ const Settings = () => {
             <User className="w-5 h-5 text-primary" />
             Profile
           </CardTitle>
-          <CardDescription>
-            Update your personal information
-          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center justify-center gap-6">
             <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
-              <User className="w-10 h-10 text-primary" />
-            </div>
-            <div>
-              <Button variant="outline" size="sm">
-                Change Photo
-              </Button>
-              <p className="text-xs text-muted-foreground mt-2">
-                JPG, PNG or GIF. Max 2MB.
-              </p>
+              {user?.user_metadata?.avatar_url ? (
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt="User"
+                  className="w-20 h-20 rounded-full"
+                />
+              ) : (
+                <User className="w-10 h-10 text-primary" />
+              )}
             </div>
           </div>
 
@@ -66,88 +65,18 @@ const Settings = () => {
 
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First Name</Label>
-              <Input id="firstName" defaultValue="Mario" />
+              <Label>First Name</Label>
+              <Input value={user?.user_metadata?.full_name.split(" ")[0]} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name</Label>
-              <Input id="lastName" defaultValue="Rossi" />
+              <Label>Last Name</Label>
+              <Input value={user?.user_metadata?.full_name.split(" ")[1]} />
             </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" defaultValue="mario@example.com" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="city">City</Label>
-            <Input id="city" defaultValue="Milan" />
-          </div>
-
-          <Button>
-            <Save className="w-4 h-4 mr-2" />
-            Save Changes
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Notifications */}
-      <Card className="border-border/50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-display">
-            <Bell className="w-5 h-5 text-primary" />
-            Notifications
-          </CardTitle>
-          <CardDescription>
-            Configure how and when to receive notifications
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>Push Notifications</Label>
-              <p className="text-sm text-muted-foreground">
-                Receive notifications on your device
-              </p>
-            </div>
-            <Switch defaultChecked />
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>Route Updates</Label>
-              <p className="text-sm text-muted-foreground">
-                Notifications when your saved routes are updated
-              </p>
-            </div>
-            <Switch defaultChecked />
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>Weekly Reports</Label>
-              <p className="text-sm text-muted-foreground">
-                Receive a summary of your activities via email
-              </p>
-            </div>
-            <Switch />
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>Weather Alerts</Label>
-              <p className="text-sm text-muted-foreground">
-                Alerts when weather conditions are not ideal for cycling
-              </p>
-            </div>
-            <Switch defaultChecked />
+            <Input id="email" type="email" value={user?.email} />
           </div>
         </CardContent>
       </Card>
@@ -164,18 +93,6 @@ const Settings = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>Auto-pause</Label>
-              <p className="text-sm text-muted-foreground">
-                Automatically pause when you stop
-              </p>
-            </div>
-            <Switch defaultChecked />
-          </div>
-
-          <Separator />
-
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label>Pothole Detection</Label>
@@ -246,7 +163,7 @@ const Settings = () => {
             </div>
             <div className="space-y-2">
               <Label>Language</Label>
-              <Select defaultValue="it">
+              <Select defaultValue="en">
                 <SelectTrigger>
                   <Globe className="w-4 h-4 mr-2" />
                   <SelectValue />
@@ -275,44 +192,12 @@ const Settings = () => {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label>Public Profile</Label>
-              <p className="text-sm text-muted-foreground">
-                Other users can see your profile
-              </p>
-            </div>
-            <Switch defaultChecked />
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>Show Statistics</Label>
-              <p className="text-sm text-muted-foreground">
-                Your statistics are visible to others
-              </p>
-            </div>
-            <Switch />
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
               <Label>Public Paths by Default</Label>
               <p className="text-sm text-muted-foreground">
                 New paths are public by default
               </p>
             </div>
             <Switch defaultChecked />
-          </div>
-
-          <Separator />
-
-          <div className="pt-4">
-            <Button variant="outline" className="text-destructive border-destructive/50 hover:bg-destructive/10">
-              Delete Account
-            </Button>
           </div>
         </CardContent>
       </Card>
