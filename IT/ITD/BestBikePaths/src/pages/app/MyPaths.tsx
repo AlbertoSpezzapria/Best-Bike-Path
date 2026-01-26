@@ -176,7 +176,7 @@ const MyPaths = () => {
   if (loading) return <div className="flex h-screen items-center justify-center"><Loader2 className="animate-spin text-primary" /></div>;
 
   return (
-    <div className="p-6 lg:p-8 space-y-6 pb-20">
+    <div className="p-6 lg:mx-4 lg:p-8 space-y-6 pb-20">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
             <h1 className="text-3xl font-display font-bold">My Paths</h1>

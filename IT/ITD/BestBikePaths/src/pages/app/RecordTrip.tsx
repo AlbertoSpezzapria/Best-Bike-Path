@@ -337,7 +337,7 @@ const RecordTrip = () => {
   };
 
   return (
-    <div className="p-6 lg:p-8 space-y-8">
+    <div className="p-6 lg:mx-4 lg:p-8 space-y-8">
       <div>
         <h1 className="text-3xl font-display font-bold text-foreground">Record Trip</h1>
         <p className="text-muted-foreground mt-1">Track activities or create paths manually</p>
