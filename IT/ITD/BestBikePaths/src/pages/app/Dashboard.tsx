@@ -22,7 +22,7 @@ const Dashboard = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  
+
   // Data States
   const [stats, setStats] = useState({
     distance: 0,
