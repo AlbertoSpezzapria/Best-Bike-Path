@@ -1,349 +1,234 @@
-import { useState } from "react";
-import {
-  Plus,
-  Search,
-  MoreVertical,
-  MapPin,
-  Route,
-  Clock,
-  Eye,
-  EyeOff,
-  Pencil,
-  Trash2,
-  Star,
-  CheckCircle,
-  AlertTriangle,
-  Calendar,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/supabaseClient";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const myPaths = [
-  {
-    id: 1,
-    name: "Casa - Ufficio",
-    from: "Via Verdi, 10",
-    to: "Via Dante, 25",
-    distance: 6.8,
-    duration: "25 min",
-    status: "optimal",
-    isPublic: true,
-    createdAt: "15 Nov 2024",
-    usedCount: 45,
-  },
-  {
-    id: 2,
-    name: "Giro del Parco",
-    from: "Ingresso Nord",
-    to: "Ingresso Nord",
-    distance: 4.2,
-    duration: "18 min",
-    status: "good",
-    isPublic: true,
-    createdAt: "10 Nov 2024",
-    usedCount: 28,
-  },
-  {
-    id: 3,
-    name: "Workout Loop",
-    from: "Home",
-    to: "Stadium",
-    distance: 12.5,
-    duration: "45 min",
-    status: "sufficient",
-    isPublic: false,
-    createdAt: "5 Nov 2024",
-    usedCount: 12,
-  },
-];
-
-const savedPaths = [
-  {
-    id: 4,
-    name: "Milano - Pavia Ciclabile",
-    from: "Milano Porta Genova",
-    to: "Pavia Centro",
-    distance: 35.2,
-    duration: "2h 10min",
-    status: "optimal",
-    author: "Marco B.",
-    score: 94,
-    savedAt: "20 Nov 2024",
-  },
-  {
-    id: 5,
-    name: "Lago di Como Tour",
-    from: "Lecco",
-    to: "Bellagio",
-    distance: 28.6,
-    duration: "1h 45min",
-    status: "good",
-    author: "Laura M.",
-    score: 88,
-    savedAt: "18 Nov 2024",
-  },
-];
-
-const getStatusConfig = (status: string) => {
-  switch (status) {
-    case "optimal":
-      return {
-        label: "Ottimale",
-        color: "bg-green-500/10 text-green-600 border-green-500/20",
-        icon: CheckCircle,
-      };
-    case "good":
-      return {
-        label: "Buono",
-        color: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
-        icon: CheckCircle,
-      };
-    case "sufficient":
-      return {
-        label: "Sufficiente",
-        color: "bg-orange-500/10 text-orange-600 border-orange-500/20",
-        icon: AlertTriangle,
-      };
-    default:
-      return {
-        label: "Sconosciuto",
-        color: "bg-muted text-muted-foreground",
-        icon: AlertTriangle,
-      };
-  }
-};
+import { Loader2, Plus, Route as RouteIcon, Calendar, Globe, Lock, Trash2, Heart, ArrowUpDown } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const MyPaths = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const [createdPaths, setCreatedPaths] = useState<any[]>([]);
+  const [savedPaths, setSavedPaths] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  
+  // Sort State
+  const [sortOption, setSortOption] = useState<string>("date_desc");
+
+  // Loading state for visibility toggle
+  const [togglingId, setTogglingId] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    setUserId(user.id);
+
+    // 1. Fetch CREATED BY ME
+    const { data: created } = await supabase
+      .from('paths')
+      .select('*')
+      .eq('id_owner', user.id); 
+
+    if (created) setCreatedPaths(created);
+
+    // 2. Fetch SAVED
+    const { data: saved } = await supabase
+      .from('saved_paths')
+      .select(`path_id, created_at, paths:path_id (*)`)
+      .eq('user_id', user.id);
+
+    if (saved) {
+        const cleanSaved = saved.map((item: any) => item.paths).filter((p: any) => p !== null);
+        setSavedPaths(cleanSaved);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchData(); }, []);
+
+  // --- SORTING LOGIC ---
+  const getSortedPaths = (list: any[]) => {
+      const sorted = [...list];
+      switch (sortOption) {
+          case "date_desc": // Newest
+              return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+          case "date_asc": // Oldest
+              return sorted.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+          case "dist_desc": // Longest
+              return sorted.sort((a, b) => (b.distance || 0) - (a.distance || 0));
+          case "dist_asc": // Shortest
+              return sorted.sort((a, b) => (a.distance || 0) - (b.distance || 0));
+          default:
+              return sorted;
+      }
+  };
+
+  // Toggle Public/Private
+  const toggleVisibility = async (e: React.MouseEvent, path: any) => {
+      e.stopPropagation(); 
+      setTogglingId(path.id);
+      const newStatus = !path.is_public;
+
+      const { error } = await supabase
+          .from('paths')
+          .update({ is_public: newStatus })
+          .eq('id', path.id);
+
+      if (error) {
+          toast.error("Error updating visibility");
+      } else {
+          setCreatedPaths(prev => prev.map(p => 
+              p.id === path.id ? { ...p, is_public: newStatus } : p
+          ));
+          toast.success(newStatus ? "Path is now Public" : "Path is now Private");
+      }
+      setTogglingId(null);
+  };
+
+  const handleDelete = async (e: React.MouseEvent, pathId: string, isSavedOnly: boolean) => {
+    e.stopPropagation();
+    
+    if (isSavedOnly) {
+        if (!confirm("Remove from favorites?")) return;
+        const { error } = await supabase.from('saved_paths').delete().eq('user_id', userId).eq('path_id', pathId);
+        if (!error) { toast.success("Removed from favorites"); fetchData(); }
+    } else {
+        if (!confirm("Delete permanently? This will also remove associated leaderboards.")) return;
+        const { error } = await supabase.from('paths').delete().eq('id', pathId);
+        if (!error) { toast.success("Path deleted"); fetchData(); }
+    }
+  };
+
+  // Reusable Card Component
+  const PathCard = ({ path, isSavedView }: { path: any, isSavedView: boolean }) => (
+    <Card 
+        className="group cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-primary/50 overflow-hidden relative"
+        onClick={() => navigate(`/app/path/${path.id}`)}
+    >
+        <div className="h-32 bg-muted/50 w-full flex items-center justify-center relative overflow-hidden">
+            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            <RouteIcon className="w-10 h-10 text-muted-foreground/30" />
+            
+            {/* Visibility Badge/Toggle */}
+            <div className="absolute top-2 right-2 z-10">
+                {!isSavedView ? (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    size="sm"
+                                    variant={path.is_public ? "secondary" : "destructive"} 
+                                    className={`h-6 text-[10px] px-2 gap-1 shadow-sm opacity-90 hover:opacity-100 transition-opacity ${path.is_public ? 'bg-white/90 text-green-700 hover:bg-white' : 'bg-red-100 text-red-700 hover:bg-red-200'}`}
+                                    onClick={(e) => toggleVisibility(e, path)}
+                                    disabled={togglingId === path.id}
+                                >
+                                    {togglingId === path.id ? <Loader2 className="w-3 h-3 animate-spin" /> : (
+                                        <>
+                                            {path.is_public ? <Globe className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+                                            {path.is_public ? "Public" : "Private"}
+                                        </>
+                                    )}
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent><p>Click to make {path.is_public ? "Private" : "Public"}</p></TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ) : (
+                    <Badge variant={path.is_public ? "default" : "secondary"} className="shadow-sm gap-1 cursor-default">
+                        {path.is_public ? <Globe className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+                        {path.is_public ? "Public" : "Private"}
+                    </Badge>
+                )}
+            </div>
+        </div>
+        
+        <CardContent className="p-4">
+            <div className="mb-2">
+                <h3 className="font-bold text-lg truncate pr-6 group-hover:text-primary transition-colors">{path.name}</h3>
+                <p className="text-xs text-muted-foreground line-clamp-1">{path.description || "No description"}</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4">
+                <span className="flex items-center gap-1 bg-muted/50 px-2 py-1 rounded text-xs">
+                    <RouteIcon className="w-3 h-3" /> {Number(path.distance).toFixed(2)} km
+                </span>
+                <span className="flex items-center gap-1 bg-muted/50 px-2 py-1 rounded text-xs">
+                    <Calendar className="w-3 h-3" /> {new Date(path.created_at).toLocaleDateString()}
+                </span>
+            </div>
+
+            <Button 
+                variant="ghost" size="icon" 
+                className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:bg-destructive/10"
+                onClick={(e) => handleDelete(e, path.id, isSavedView)}
+            >
+                {isSavedView ? <Heart className="w-4 h-4 fill-current" /> : <Trash2 className="w-4 h-4" />}
+            </Button>
+        </CardContent>
+    </Card>
+  );
+
+  if (loading) return <div className="flex h-screen items-center justify-center"><Loader2 className="animate-spin text-primary" /></div>;
 
   return (
-    <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8">
-      {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div className="p-6 lg:mx-4 lg:p-8 space-y-6 pb-20">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">
-            My Paths
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            Manage your created and saved paths
-          </p>
+            <h1 className="text-3xl font-display font-bold">My Paths</h1>
+            <p className="text-muted-foreground">Manage your tracks and favorites.</p>
         </div>
-        <Button className="w-fit">
-          <Plus className="w-4 h-4 mr-2" />
-          New Path
-        </Button>
-      </div>
+        
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+             {/* SORT DROPDOWN */}
+             <Select value={sortOption} onValueChange={setSortOption}>
+                <SelectTrigger className="w-[180px]">
+                    <ArrowUpDown className="w-4 h-4 mr-2 text-muted-foreground" />
+                    <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="date_desc">Date: Newest</SelectItem>
+                    <SelectItem value="date_asc">Date: Oldest</SelectItem>
+                    <SelectItem value="dist_desc">Distance: Longest</SelectItem>
+                    <SelectItem value="dist_asc">Distance: Shortest</SelectItem>
+                </SelectContent>
+            </Select>
 
-      {/* Search */}
-      <div className="relative max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-        <Input
-          placeholder="Search in your paths..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10"
-        />
+            <Button onClick={() => navigate("/app/record")} className="gap-2 shadow-lg"><Plus className="w-4 h-4" /> New</Button>
+        </div>
       </div>
 
       <Tabs defaultValue="created" className="space-y-6">
         <TabsList>
-          <TabsTrigger value="created" className="gap-2">
-            <MapPin className="w-4 h-4" />
-            Created by Me ({myPaths.length})
-          </TabsTrigger>
-          <TabsTrigger value="saved" className="gap-2">
-            <Star className="w-4 h-4" />
-            Saved ({savedPaths.length})
-          </TabsTrigger>
+            <TabsTrigger value="created">Created by me ({createdPaths.length})</TabsTrigger>
+            <TabsTrigger value="saved">Saved ({savedPaths.length})</TabsTrigger>
         </TabsList>
 
-        {/* Created Paths */}
-        <TabsContent value="created" className="space-y-4">
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {myPaths.map((path) => {
-              const statusConfig = getStatusConfig(path.status);
-              const StatusIcon = statusConfig.icon;
-
-              return (
-                <Card
-                  key={path.id}
-                  className="border-border/50 hover:shadow-md transition-shadow"
-                >
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <CardTitle className="text-lg font-display">
-                          {path.name}
-                        </CardTitle>
-                        <p className="text-sm text-muted-foreground">
-                          {path.from} → {path.to}
-                        </p>
-                      </div>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreVertical className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Pencil className="w-4 h-4 mr-2" />
-                            Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            {path.isPublic ? (
-                              <>
-                                <EyeOff className="w-4 h-4 mr-2" />
-                                Make Private
-                              </>
-                            ) : (
-                              <>
-                                <Eye className="w-4 h-4 mr-2" />
-                                Make Public
-                              </>
-                            )}
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-destructive">
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-center gap-4 text-sm">
-                      <span className="flex items-center gap-1 text-muted-foreground">
-                        <Route className="w-4 h-4" />
-                        {path.distance} km
-                      </span>
-                      <span className="flex items-center gap-1 text-muted-foreground">
-                        <Clock className="w-4 h-4" />
-                        {path.duration}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className={statusConfig.color}>
-                        <StatusIcon className="w-3 h-3 mr-1" />
-                        {statusConfig.label}
-                      </Badge>
-                      <Badge variant={path.isPublic ? "default" : "secondary"}>
-                        {path.isPublic ? (
-                          <>
-                            <Eye className="w-3 h-3 mr-1" />
-                            Public
-                          </>
-                        ) : (
-                          <>
-                            <EyeOff className="w-3 h-3 mr-1" />
-                            Private
-                          </>
-                        )}
-                      </Badge>
-                    </div>
-
-                    <div className="flex items-center justify-between text-sm text-muted-foreground pt-2 border-t border-border">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {path.createdAt}
-                      </span>
-                      <span>{path.usedCount} uses</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-
-            {/* Add New Card */}
-            <Card className="border-dashed border-2 border-border/50 hover:border-primary/50 transition-colors cursor-pointer">
-              <CardContent className="flex flex-col items-center justify-center h-full min-h-[200px] text-muted-foreground">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Plus className="w-6 h-6 text-primary" />
+        <TabsContent value="created" className="space-y-6">
+            {createdPaths.length === 0 ? (
+                <div className="text-center py-20 bg-muted/20 rounded-xl border border-dashed"><p className="text-muted-foreground">You haven't created any paths yet.</p></div>
+            ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {getSortedPaths(createdPaths).map(path => <PathCard key={path.id} path={path} isSavedView={false} />)}
                 </div>
-                <p className="font-medium">Add New Path</p>
-                <p className="text-sm text-center mt-1">
-                  Create a new path manually
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+            )}
         </TabsContent>
 
-        {/* Saved Paths */}
-        <TabsContent value="saved" className="space-y-4">
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {savedPaths.map((path) => {
-              const statusConfig = getStatusConfig(path.status);
-              const StatusIcon = statusConfig.icon;
-
-              return (
-                <Card
-                  key={path.id}
-                  className="border-border/50 hover:shadow-md transition-shadow"
-                >
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <CardTitle className="text-lg font-display">
-                          {path.name}
-                        </CardTitle>
-                        <p className="text-sm text-muted-foreground">
-                          {path.from} → {path.to}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1 text-primary font-bold">
-                        <Star className="w-4 h-4 fill-primary" />
-                        {path.score}
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-center gap-4 text-sm">
-                      <span className="flex items-center gap-1 text-muted-foreground">
-                        <Route className="w-4 h-4" />
-                        {path.distance} km
-                      </span>
-                      <span className="flex items-center gap-1 text-muted-foreground">
-                        <Clock className="w-4 h-4" />
-                        {path.duration}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className={statusConfig.color}>
-                        <StatusIcon className="w-3 h-3 mr-1" />
-                        {statusConfig.label}
-                      </Badge>
-                      <span className="text-sm text-muted-foreground">
-                        of {path.author}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-2 border-t border-border">
-                      <span className="text-sm text-muted-foreground">
-                        Saved on {path.savedAt}
-                      </span>
-                      <Button variant="ghost" size="sm" className="text-destructive">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+        <TabsContent value="saved" className="space-y-6">
+            {savedPaths.length === 0 ? (
+                <div className="text-center py-20 bg-muted/20 rounded-xl border border-dashed">
+                    <Heart className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-30" />
+                    <p className="text-muted-foreground">No saved paths.</p>
+                </div>
+            ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {getSortedPaths(savedPaths).map(path => <PathCard key={path.id} path={path} isSavedView={true} />)}
+                </div>
+            )}
         </TabsContent>
       </Tabs>
     </div>
