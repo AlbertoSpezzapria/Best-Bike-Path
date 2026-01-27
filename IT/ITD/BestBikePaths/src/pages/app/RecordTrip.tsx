@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Play, Pause, Square, Navigation, Gauge, Clock, Route,
-  Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock, CheckCircle, AlertTriangle, Trash2, MapPin
+  Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock, CheckCircle, AlertTriangle, Trash2, MapPin,
+  UserSquare
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,6 +21,7 @@ import { supabase } from "@/supabaseClient";
 import { fetchWeather, WeatherData } from "@/lib/weatherService";
 import { toast } from "sonner";
 import { useDebugStore } from "@/stores/useDebugStore"; 
+import { useAuthStore } from "@/stores/useAuthStore";
 
 // Mock Route 
 const MOCK_ROUTE: [number, number][] = [
@@ -134,7 +136,7 @@ const RecordTrip = () => {
   
   // Modal States
   const [showSaveDialog, setShowSaveDialog] = useState(false);
-  const [matchedPath, setMatchedPath] = useState<{id: number, name: string} | null>(null); 
+  const [matchedPath, setMatchedPath] = useState<{id: number, id_owner: String, name: string} | null>(null); 
   const [newPathForm, setNewPathForm] = useState({ name: "", description: "", isPublic: true });
 
   const [weather, setWeather] = useState<WeatherData>({ temp: 0, condition: "--", wind: 0, humidity: 0 });
@@ -312,6 +314,25 @@ const RecordTrip = () => {
             // MATCH FOUND
             targetPathId = matchedPath.id;
             targetPathName = matchedPath.name;
+
+            if (matchedPath.id_owner !== user?.id) {
+                try {
+                    await supabase
+                        .from('saved_paths')
+                        .upsert(
+                            { 
+                                user_id: user?.id, 
+                                path_id: matchedPath.id 
+                            }, 
+                            { onConflict: 'user_id, path_id' } 
+                        );
+                    
+                    toast.info("New public path added to your saved list!");
+                } catch (favError) {
+                    console.error("Silent error saving favorite:", favError);
+                }
+    }
+
             toast.success(`Activity saved! Linked to: ${matchedPath.name}`);
         } else {
             // NEW PATH
@@ -413,8 +434,14 @@ const RecordTrip = () => {
 
   const handlePathCreated = (coords: [number, number][], dist: number, haz: Hazard[]) => {
     setManualPath(coords);
-    setManualDistance(parseFloat((dist / 1000).toFixed(2)));
     setHazards(haz);
+
+    if(coords.length >= 2 && dist > 0) {
+        setManualDistance(parseFloat((dist / 1000).toFixed(2)));
+    } else if(coords.length < 2) {
+        setManualDistance(0);
+    }
+
   };
 
   const removeHazard = (index: number) => {

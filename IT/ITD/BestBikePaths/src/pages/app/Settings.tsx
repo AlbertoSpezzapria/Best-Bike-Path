@@ -53,12 +53,13 @@ const Settings = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-center gap-6">
-            <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+              {/* Verifica esatta della proprietà: Supabase usa spesso 'avatar_url' o 'picture' */}
               {user?.user_metadata?.avatar_url ? (
                 <img
                   src={user.user_metadata.avatar_url}
-                  alt="User"
-                  className="w-20 h-20 rounded-full"
+                  alt="Profile"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <User className="w-10 h-10 text-primary" />
@@ -71,12 +72,10 @@ const Settings = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>First Name</Label>
-              <Input value={user?.user_metadata?.full_name.split(" ")[0]} />
-            </div>
+              <Input value={user?.user_metadata?.full_name?.split(" ")[0] || ""} readOnly />            </div>
             <div className="space-y-2">
               <Label>Last Name</Label>
-              <Input value={user?.user_metadata?.full_name.split(" ")[1]} />
-            </div>
+              <Input value={user?.user_metadata?.full_name?.split(" ")[1] || ""} readOnly />            </div>
           </div>
 
           <div className="space-y-2">
