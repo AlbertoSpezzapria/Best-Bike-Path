@@ -4,7 +4,7 @@ import {
   Play, Pause, Square, Navigation, Gauge, Clock, Route,
   Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock, CheckCircle, AlertTriangle, Trash2, MapPin
 } from "lucide-react";
-
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,9 +19,7 @@ import BikeMap, { Hazard } from "@/components/BikeMap";
 import { supabase } from "@/supabaseClient";
 import { fetchWeather, WeatherData } from "@/lib/weatherService";
 import { toast } from "sonner";
-
-// --- DEBUG CONFIG ---
-const IS_DEBUG_MODE = true; 
+import { useDebugStore } from "@/stores/useDebugStore"; 
 
 // Mock Route 
 const MOCK_ROUTE: [number, number][] = [
@@ -104,7 +102,7 @@ const toWKT = (coords: [number, number][]) => {
   return `LINESTRING(${points})`;
 };
 
-const RecordTrip = () => {
+const RecordTrip = () => {  
   const navigate = useNavigate();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const mockIndexRef = useRef(0);
@@ -141,22 +139,21 @@ const RecordTrip = () => {
 
   const [weather, setWeather] = useState<WeatherData>({ temp: 0, condition: "--", wind: 0, humidity: 0 });
 
+  const { isDebugMode, debugPathType } = useDebugStore();
+
   const handleStart = () => {
     setIsTracking(true);
     setStartTime(new Date());
 
-    if (IS_DEBUG_MODE) {
-        mockIndexRef.current = 0;
-        const startPoint = MOCK_ROUTE[0];
-        setCurrentPos(startPoint);
-        setLivePath([startPoint]);
-        fetchWeather(startPoint[0], startPoint[1]).then(setWeather);
-        setHazards([]); 
-        toast.info("DEBUG MODE: Fixed path simulation started");
+    if (isDebugMode) { 
+        if (debugPathType === 'fixed') {
+             mockIndexRef.current = 0;
+             toast.info("DEBUG: Fixed Path Simulation");
+        } else {
+             toast.info("DEBUG: Random Path Simulation");
+        }
     } else {
-        setLivePath([currentPos]);
-        setHazards([]);
-        fetchWeather(currentPos[0], currentPos[1]).then(setWeather);
+        toast.success("Tracking Started (GPS)");
     }
   };
 
@@ -164,58 +161,82 @@ const RecordTrip = () => {
   useEffect(() => {
     if (isTracking && !isPaused) {
       timerRef.current = setInterval(() => {
+
+        const updateSession = (newPos: [number, number]) => {
+            setStats(prev => {
+                const dist = getDistanceFromLatLonInKm(currentPos[0], currentPos[1], newPos[0], newPos[1]);
+                return {
+                    ...prev,
+                    duration: prev.duration + 1,
+                    distance: prev.distance + dist,
+                    currentSpeed: (dist / (1/3600)) // km/h
+                };
+            });
+            setCurrentPos(newPos);
+            setLivePath(prev => [...prev, newPos]);
+
+            if (isDebugMode && Math.random() > 0.95) { 
+                 const types = ["pothole", "obstacle", "other"] as const;
+                 const randomType = types[Math.floor(Math.random() * types.length)];
+                 const newHazard: Hazard = {
+                     id: Date.now().toString(),
+                     location: newPos,
+                     type: randomType,
+                 };
+                 setHazards(prev => {
+                     const updated = [...prev, newHazard];
+                     if (updated.length <= 3) toast.warning(`Simulazione: ${randomType} rilevato!`);
+                     return updated;
+                 });
+            }
+        };
+
+        // --- LOGICA DI SCELTA SORGENTE POSIZIONE ---
         
-        // 1. Move Position
-        let newPos: [number, number];
-        
-        if (IS_DEBUG_MODE) {
-            if (mockIndexRef.current >= MOCK_ROUTE.length - 1) return;
-            mockIndexRef.current += 1;
-            newPos = MOCK_ROUTE[mockIndexRef.current];
+        if (isDebugMode) {
+            // DEBUG MODE
+            let simPos: [number, number] | null = null;
+
+            if (debugPathType === 'fixed') {
+                // 1. Fixed Path
+                if (mockIndexRef.current >= MOCK_ROUTE.length - 1) return; // Fine percorso
+                mockIndexRef.current += 1;
+                simPos = MOCK_ROUTE[mockIndexRef.current];
+            } else {
+                // 2. Random Walk
+                const latChange = (Math.random() - 0.5) * 0.001; // Random movement
+                const lngChange = (Math.random() - 0.5) * 0.001;
+                simPos = [currentPos[0] + latChange, currentPos[1] + lngChange];
+            }
+
+            if (simPos) updateSession(simPos);
+
         } else {
-            const latChange = (Math.random() - 0.2) * 0.0005; 
-            const lngChange = (Math.random() - 0.2) * 0.0005;
-            newPos = [currentPos[0] + 0.0001 + latChange, currentPos[1] + 0.0001 + lngChange];
+            // PRODCUTION (GPS REALE)
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const realPos: [number, number] = [position.coords.latitude, position.coords.longitude];
+                        // Update position with real data
+                        updateSession(realPos);
+                    },
+                    (error) => {
+                        console.error("Errore GPS:", error);
+                        toast.error("Errore nel recupero della posizione GPS.");
+                    },
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                );
+            } else {
+                toast.error("GPS non disponibile su questo dispositivo");
+            }
         }
 
-        // 2. Update Stats
-        setStats(prev => {
-            const dist = getDistanceFromLatLonInKm(currentPos[0], currentPos[1], newPos[0], newPos[1]);
-            return {
-                ...prev,
-                duration: prev.duration + 1,
-                distance: prev.distance + dist,
-                currentSpeed: (dist / (1/3600))
-            };
-        });
-
-        setCurrentPos(newPos);
-        setLivePath(prev => [...prev, newPos]);
-
-        // 3. SIMULATE HAZARD DETECTION
-        if (Math.random() > 0.90) { // 10% chance per second
-             const types = ["pothole", "obstacle", "other"] as const;
-             const randomType = types[Math.floor(Math.random() * types.length)];
-             
-             const newHazard: Hazard = {
-                 id: Date.now().toString(),
-                 location: newPos,
-                 type: randomType,
-             };
-             
-             setHazards(prev => {
-                 const updated = [...prev, newHazard];
-                 if (updated.length <= 3) toast.warning(`Alert: ${randomType} detected!`);
-                 return updated;
-             });
-        }
-
-      }, 1000);
+      }, 1000); // Aggiornamento ogni secondo
     } else {
       if (timerRef.current) clearInterval(timerRef.current);
     }
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [isTracking, isPaused, currentPos]);
+  }, [isTracking, isPaused, currentPos, isDebugMode, debugPathType]);
 
   // --- STOP & CHECK ---
   const handleStopPress = async () => {
@@ -259,6 +280,21 @@ const RecordTrip = () => {
         setIsCheckingPath(false);
     }
   };
+
+  const resetTrackingSession = () => {
+    setIsTracking(false);
+    setIsPaused(false);
+    setLivePath([]);
+    setHazards([]);
+    setStats({ distance: 0, duration: 0, currentSpeed: 0 });
+    setStartTime(null);
+    
+    mockIndexRef.current = 0;
+    
+    setShowSaveDialog(false);
+    
+    toast.info("Session discarded");
+};
 
   // --- SAVE LOGIC ---
   const confirmSaveTracking = async () => {
@@ -391,10 +427,10 @@ const RecordTrip = () => {
         <h1 className="text-3xl font-display font-bold text-foreground">Record Trip</h1>
         <p className="text-muted-foreground mt-1">Track activities or create paths manually</p>
         
-        {IS_DEBUG_MODE && (
-            <div className="mt-2 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors bg-yellow-500 text-white shadow hover:bg-yellow-600">
-                DEBUG MODE: AUTO HAZARDS ON
-            </div>
+{       isDebugMode && (
+            <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-200">
+            DEBUG: {debugPathType.toUpperCase()}
+            </Badge>
         )}
       </div>
 
@@ -433,12 +469,22 @@ const RecordTrip = () => {
                     </Button>
                   ) : (
                     <>
-                      <Button size="lg" className="rounded-full w-16 h-16 shadow-xl bg-yellow-500 hover:bg-yellow-600 border-none" onClick={() => setIsPaused(!isPaused)}>
-                        {isPaused ? <Play className="w-6 h-6 ml-1" /> : <Pause className="w-6 h-6" />}
-                      </Button>
-                      <Button size="lg" className="rounded-full w-16 h-16 shadow-xl bg-destructive hover:bg-destructive/90 border-none" onClick={handleStopPress} disabled={isSaving || isCheckingPath}>
-                        {isCheckingPath ? <Loader2 className="w-6 h-6 animate-spin" /> : <Square className="w-6 h-6" />}
-                      </Button>
+                    <Button size="lg" className="rounded-full w-16 h-16 shadow-xl bg-yellow-500 hover:bg-yellow-600 border-none" onClick={() => setIsPaused(!isPaused)}>
+                    {isPaused ? <Play className="w-6 h-6 ml-1" /> : <Pause className="w-6 h-6" />}
+                    </Button>
+                    <Button 
+                    variant="destructive" 
+                    size="lg" 
+                    className="rounded-full w-16 h-16 shadow-xl border-none" 
+                    onClick={handleStopPress} 
+                    disabled={isSaving || isCheckingPath}
+                    >
+                    {isCheckingPath ? (
+                        <Loader2 className="w-6 h-6 animate-spin" />
+                    ) : (
+                        <Square className="w-6 h-6 fill-current" />
+                    )}
+                    </Button>
                     </>
                   )}
                 </div>
@@ -607,7 +653,7 @@ const RecordTrip = () => {
             )}
             
             <DialogFooter>
-                <Button variant="outline" onClick={() => setShowSaveDialog(false)}>Cancel</Button>
+                <Button variant="outline" onClick={() => resetTrackingSession()}>Cancel</Button>
                 <Button onClick={confirmSaveTracking} disabled={isSaving}>
                     {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : "Save Activity"}
                 </Button>
