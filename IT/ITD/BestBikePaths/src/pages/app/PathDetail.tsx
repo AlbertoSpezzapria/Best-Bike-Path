@@ -81,7 +81,15 @@ const PathDetail = () => {
       const { data: pData } = await supabase.from('paths').select('*').eq('id', id).single();
       setPathData(pData);
 
-      const { data: aData } = await supabase.from('activities').select('*').eq('path_id', id);
+      const { data: aData } = await supabase
+        .from('activities')
+        .select(`
+            *,
+            profiles!user_id (
+            Surname
+            )
+      `)
+      .eq('path_id', id);
       setActivities(aData || []);
 
       setLoading(false);
@@ -263,8 +271,14 @@ const PathDetail = () => {
                                               </div>
                                               <div className="overflow-hidden min-w-0">
                                                   <p className="text-sm font-medium flex items-center gap-1 truncate">
-                                                      {isMe ? <span className="text-primary font-bold">You</span> : <><User className="w-3 h-3" /> User {act.user_id?.slice(0,4)}</>}
-                                                  </p>
+                                                        {isMe ? (
+                                                        <span className="text-primary font-bold">You</span>
+                                                        ) : (
+                                                        <>
+                                                            <User className="w-3 h-3" />
+                                                            {act.profiles?.Surname || `Rider ${act.user_id.slice(0, 4)}`}
+                                                        </>
+                                                        )}                                                  </p>
                                                   <p className="text-[10px] text-muted-foreground flex items-center gap-1">
                                                       {new Date(act.started_at).toLocaleDateString()}
                                                   </p>

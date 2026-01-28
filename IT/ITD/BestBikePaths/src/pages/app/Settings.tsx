@@ -8,6 +8,8 @@ import {
   Globe,
   Smartphone,
   Save,
+  Bug,
+  Cpu
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,9 +25,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useDebugStore } from "@/stores/useDebugStore";
 
 const Settings = () => {
   const user = useAuthStore((state) => state.user);
+  const { isDebugMode, debugPathType, toggleDebugMode, setDebugPathType } = useDebugStore();
+  
   return (
     <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8 max-w-4xl">
       {/* Header */}
@@ -48,12 +53,13 @@ const Settings = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-center gap-6">
-            <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+              {/* Verifica esatta della proprietà: Supabase usa spesso 'avatar_url' o 'picture' */}
               {user?.user_metadata?.avatar_url ? (
                 <img
                   src={user.user_metadata.avatar_url}
-                  alt="User"
-                  className="w-20 h-20 rounded-full"
+                  alt="Profile"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <User className="w-10 h-10 text-primary" />
@@ -66,12 +72,10 @@ const Settings = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>First Name</Label>
-              <Input value={user?.user_metadata?.full_name.split(" ")[0]} />
-            </div>
+              <Input value={user?.user_metadata?.full_name?.split(" ")[0] || ""} readOnly />            </div>
             <div className="space-y-2">
               <Label>Last Name</Label>
-              <Input value={user?.user_metadata?.full_name.split(" ")[1]} />
-            </div>
+              <Input value={user?.user_metadata?.full_name?.split(" ")[1] || ""} readOnly />            </div>
           </div>
 
           <div className="space-y-2">
@@ -201,6 +205,66 @@ const Settings = () => {
           </div>
         </CardContent>
       </Card>
+
+      <Card className="border-amber-500/30 bg-amber-500/5">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 font-display text-amber-700 dark:text-amber-500">
+            <Bug className="w-5 h-5" />
+            Developer Options
+          </CardTitle>
+          <CardDescription>
+            Simulation tools for testing GPS tracking without moving.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label className="text-amber-900 dark:text-amber-100">Enable Mock Location</Label>
+              <p className="text-sm text-muted-foreground">
+                Override real GPS with simulated data
+              </p>
+            </div>
+            {/* Switch controllato dallo Store */}
+            <Switch 
+              checked={isDebugMode} 
+              onCheckedChange={toggleDebugMode} 
+              className="data-[state=checked]:bg-amber-600"
+            />
+          </div>
+
+          {/* Mostra le opzioni extra solo se il debug è attivo */}
+          {isDebugMode && (
+            <div className="animate-in fade-in slide-in-from-top-2 pt-2">
+                <Separator className="mb-4 bg-amber-500/20" />
+                <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                        <Cpu className="w-4 h-4" /> Simulation Type
+                    </Label>
+                    <Select 
+                        value={debugPathType} 
+                        onValueChange={(v: any) => setDebugPathType(v)}
+                    >
+                        <SelectTrigger className="border-amber-200 focus:ring-amber-500">
+                        <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                        <SelectItem value="fixed">Fixed Path (Deterministic)</SelectItem>
+                        <SelectItem value="random">Random Walk (Stochastic)</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <p className="text-xs text-muted-foreground">
+                        {debugPathType === 'fixed' 
+                        ? "Repeats the exact same route every time." 
+                        : "Generates a random path nearby."}
+                    </p>
+                    </div>
+                </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
     </div>
   );
 };
