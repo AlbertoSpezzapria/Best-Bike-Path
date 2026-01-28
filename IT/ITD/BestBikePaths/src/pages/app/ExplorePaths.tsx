@@ -222,34 +222,6 @@ const ExplorePaths = () => {
               Search Paths
             </Button>
           </div>
-
-          {/* Filters */}
-          <div className="flex flex-wrap gap-3 mt-4 pt-4 border-t border-border">
-            <Select defaultValue="score">
-              <SelectTrigger className="w-[160px]">
-                <TrendingUp className="w-4 h-4 mr-2" />
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="score">Sort by Score</SelectItem>
-                <SelectItem value="distance">Sort by Distance</SelectItem>
-                <SelectItem value="duration">Sort by Duration</SelectItem>
-                <SelectItem value="recent">Most Recent</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select defaultValue="all">
-              <SelectTrigger className="w-[160px]">
-                <Filter className="w-4 h-4 mr-2" />
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All States</SelectItem>
-                <SelectItem value="optimal">Optimal Only</SelectItem>
-                <SelectItem value="good">Good or Better</SelectItem>
-                <SelectItem value="sufficient">Sufficient</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </CardContent>
       </Card>
 
@@ -274,7 +246,6 @@ const ExplorePaths = () => {
                   key={path.id}
                   className="border-border/50 hover:shadow-md transition-shadow cursor-pointer"
                   onClick={() => {
-                    // Usa i backticks ` ` non le virgolette " " o ' '
                     navigate(`/app/path/${path.id}`); 
                   }}
                 >
@@ -284,18 +255,10 @@ const ExplorePaths = () => {
                         <h3 className="font-medium text-foreground">
                           {path.name}
                         </h3>
-                        {/* 
-                          API currently doesn't return from/to addresses 
-                          We can conditionally render or hide for now
-                        */}
-                        {/* <p className="text-sm text-muted-foreground">
-                           NA
-                        </p> */}
                       </div>
                       <div className="text-right">
                         <div className="flex items-center gap-1 text-primary font-bold">
-                          <Star className="w-4 h-4 fill-primary" />
-                          {path.score ? Math.round(path.score) : "-"}
+                          {path.score ? Math.round(path.score) : "-"}/100
                         </div>
                       </div>
                     </div>
