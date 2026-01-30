@@ -35,25 +35,25 @@ const getStatusConfig = (status: string) => {
   switch (status) {
     case "optimal":
       return {
-        label: "Ottimale",
+        label: "Optimal",
         color: "bg-green-500/10 text-green-600 border-green-500/20",
         icon: CheckCircle,
       };
     case "good":
       return {
-        label: "Buono",
+        label: "Good",
         color: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
         icon: CheckCircle,
       };
     case "sufficient":
       return {
-        label: "Sufficiente",
+        label: "Sufficient",
         color: "bg-orange-500/10 text-orange-600 border-orange-500/20",
         icon: AlertTriangle,
       };
     case "maintenance":
       return {
-        label: "Manutenzione",
+        label: "Maintenance",
         color: "bg-red-500/10 text-red-600 border-red-500/20",
         icon: AlertTriangle,
       };
@@ -246,7 +246,11 @@ const ExplorePaths = () => {
                   key={path.id}
                   className="border-border/50 hover:shadow-md transition-shadow cursor-pointer"
                   onClick={() => {
-                    navigate(`/app/path/${path.id}`); 
+                    if(localStorage.getItem("guestMode") == "true"){
+                      navigate(`/guest-app/guest-path/${path.id}`)
+                    }else{
+                      navigate(`/app/path/${path.id}`);
+                    } 
                   }}
                 >
                   <CardContent className="p-4 space-y-3">

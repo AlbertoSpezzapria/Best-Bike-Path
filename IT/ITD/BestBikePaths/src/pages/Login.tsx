@@ -4,13 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bike } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
+      localStorage.setItem("guestMode", "false");
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
@@ -23,6 +26,11 @@ const Login = () => {
       toast.error(error.message || "An error occurred during login");
       setLoading(false);
     }
+  };
+
+  const handleGuestLogin = () => {
+    localStorage.setItem("guestMode", "true");
+    navigate("/guest-app");
   };
 
   return (
@@ -71,6 +79,33 @@ const Login = () => {
                 Sign in with Google
               </div>
             )}
+          </Button>
+
+          <div className="relative my-4">
+            {/* La riga orizzontale */}
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            
+            {/* Il testo che ci sta sopra */}
+            <div className="relative flex justify-center text-xs uppercase">
+              {/* bg-white (o bg-card) serve a mascherare la riga sotto il testo */}
+              <span className="bg-white px-2 text-muted-foreground">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          {/* Pulsante Ospite */}
+          <Button 
+            className="w-full h-11 text-base" 
+            variant="outline" 
+            onClick={handleGuestLogin}
+            disabled={loading}
+          >
+            <div className="flex items-center gap-2">
+              Continue as Guest
+            </div>
           </Button>
         </CardContent>
       </Card>

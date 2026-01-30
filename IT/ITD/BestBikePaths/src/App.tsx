@@ -52,6 +52,8 @@ const App = () => {
               <Route path="settings" element={<Settings />} />
               <Route path="path/:id" element={<PathDetail />} />
             </Route>
+            <Route path="/guest-app" element={<ExplorePaths/>}/>
+            <Route path="/guest-app/guest-path/:id" element={<PathDetail/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

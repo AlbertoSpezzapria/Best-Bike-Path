@@ -143,6 +143,10 @@ const PathDetail = () => {
   const statusConfig = getStatusConfig(pathData.status);
   const difficultyConfig = getDifficultyConfig(pathData.difficulty);
   const mergedHazards: Hazard[] = Array.isArray(pathData.hazards) ? pathData.hazards : [];
+  let isGuest = false;
+  if(localStorage.getItem("guestMode") == "true"){
+    isGuest = true;
+  }
 
   return (
     <div className="p-6 space-y-6 h-full flex flex-col max-w-6xl mx-auto">
@@ -177,13 +181,15 @@ const PathDetail = () => {
         </div>
 
         {/* SAVE BUTTON */}
-        <Button 
-            variant="outline" size="sm" onClick={toggleSavePath}
-            className={isSaved ? "bg-red-50 border-red-200 text-red-600 hover:text-red-700" : ""}
-        >
-            <Heart className={`w-4 h-4 mr-2 ${isSaved ? "fill-current" : ""}`} />
-            {isSaved ? "Saved" : "Save"}
-        </Button>
+        {!isGuest && (
+            <Button 
+                variant="outline" size="sm" onClick={toggleSavePath}
+                className={isSaved ? "bg-red-50 border-red-200 text-red-600 hover:text-red-700" : ""}
+            >
+                <Heart className={`w-4 h-4 mr-2 ${isSaved ? "fill-current" : ""}`} />
+                {isSaved ? "Saved" : "Save"}
+            </Button>
+        )}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
