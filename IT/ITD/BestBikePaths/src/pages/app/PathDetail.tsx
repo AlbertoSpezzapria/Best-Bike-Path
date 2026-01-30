@@ -91,7 +91,6 @@ const PathDetail = () => {
       `)
       .eq('path_id', id);
       setActivities(aData || []);
-
       setLoading(false);
     };
     fetchData();
@@ -239,84 +238,86 @@ const PathDetail = () => {
           </div>
 
           {/* LEADERBOARD COLUMNS */}
-          <div className="lg:col-span-1">
-              <Card className="h-full border-border/50 flex flex-col">
-                  <CardHeader className="pb-3 border-b bg-muted/10">
-                      <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg flex items-center gap-2"><Trophy className="w-5 h-5 text-yellow-500" /> Leaderboard</CardTitle>
-                      </div>
-                      <div className="pt-2">
-                          <Select value={sortBy} onValueChange={(v: any) => setSortBy(v)}>
-                              <SelectTrigger className="w-full h-8 text-xs">
-                                  <div className="flex items-center gap-2"><Filter className="w-3 h-3" /><SelectValue placeholder="Sort by" /></div>
-                              </SelectTrigger>
-                              <SelectContent>
-                                  <SelectItem value="performance">Speed</SelectItem>
-                                  <SelectItem value="duration">Duration</SelectItem>
-                                  <SelectItem value="date">Date</SelectItem>
-                              </SelectContent>
-                          </Select>
-                      </div>
-                  </CardHeader>
-                  <CardContent className="p-0 flex-1 overflow-y-auto max-h-[600px]">
-                      {sortedActivities.length === 0 ? (
-                          <div className="p-8 text-center text-muted-foreground text-sm flex flex-col items-center gap-2">
-                              <Trophy className="w-8 h-8 text-muted opacity-30" /><p>No activities recorded.</p>
-                          </div>
-                      ) : (
-                          <div className="divide-y">
-                              {sortedActivities.map((act, index) => {
-                                  // CHECK IF CURRENT USER OWNS THIS ACTIVITY
-                                  const isMe = currentUser && act.user_id === currentUser.id;
-                                  
-                                  return (
-                                      <div key={act.id} className={`p-3 flex items-center justify-between hover:bg-muted/20 transition-colors ${isMe ? "bg-primary/5 border-l-2 border-primary" : ""}`}>
-                                          <div className="flex items-center gap-3 overflow-hidden">
-                                              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${sortBy === 'performance' && index === 0 ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-200' : 'text-muted-foreground bg-muted'}`}>
-                                                  {index + 1}
-                                              </div>
-                                              <div className="overflow-hidden min-w-0">
-                                                  <p className="text-sm font-medium flex items-center gap-1 truncate">
-                                                        {isMe ? (
-                                                        <span className="text-primary font-bold">You</span>
-                                                        ) : (
-                                                        <>
-                                                            <User className="w-3 h-3" />
-                                                            {act.profiles?.Surname || `Rider ${act.user_id.slice(0, 4)}`}
-                                                        </>
-                                                        )}                                                  </p>
-                                                  <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                                                      {new Date(act.started_at).toLocaleDateString()}
-                                                  </p>
-                                              </div>
-                                          </div>
-                                          
-                                          <div className="flex items-center gap-3 shrink-0">
-                                              <div className="text-right">
-                                                  <p className="text-sm font-bold font-mono">{act.average_speed ? act.average_speed.toFixed(1) : '-'} <span className="text-[10px] font-normal text-muted-foreground">km/h</span></p>
-                                                  <p className="text-[10px] text-muted-foreground">{formatDuration(act.duration_second)}</p>
-                                              </div>
+          {!isGuest && (
+            <div className="lg:col-span-1">
+                <Card className="h-full border-border/50 flex flex-col">
+                    <CardHeader className="pb-3 border-b bg-muted/10">
+                        <div className="flex items-center justify-between">
+                            <CardTitle className="text-lg flex items-center gap-2"><Trophy className="w-5 h-5 text-yellow-500" /> Leaderboard</CardTitle>
+                        </div>
+                        <div className="pt-2">
+                            <Select value={sortBy} onValueChange={(v: any) => setSortBy(v)}>
+                                <SelectTrigger className="w-full h-8 text-xs">
+                                    <div className="flex items-center gap-2"><Filter className="w-3 h-3" /><SelectValue placeholder="Sort by" /></div>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="performance">Speed</SelectItem>
+                                    <SelectItem value="duration">Duration</SelectItem>
+                                    <SelectItem value="date">Date</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="p-0 flex-1 overflow-y-auto max-h-[600px]">
+                        {sortedActivities.length === 0 ? (
+                            <div className="p-8 text-center text-muted-foreground text-sm flex flex-col items-center gap-2">
+                                <Trophy className="w-8 h-8 text-muted opacity-30" /><p>No activities recorded.</p>
+                            </div>
+                        ) : (
+                            <div className="divide-y">
+                                {sortedActivities.map((act, index) => {
+                                    // CHECK IF CURRENT USER OWNS THIS ACTIVITY
+                                    const isMe = currentUser && act.user_id === currentUser.id;
+                                    
+                                    return (
+                                        <div key={act.id} className={`p-3 flex items-center justify-between hover:bg-muted/20 transition-colors ${isMe ? "bg-primary/5 border-l-2 border-primary" : ""}`}>
+                                            <div className="flex items-center gap-3 overflow-hidden">
+                                                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${sortBy === 'performance' && index === 0 ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-200' : 'text-muted-foreground bg-muted'}`}>
+                                                    {index + 1}
+                                                </div>
+                                                <div className="overflow-hidden min-w-0">
+                                                    <p className="text-sm font-medium flex items-center gap-1 truncate">
+                                                            {isMe ? (
+                                                            <span className="text-primary font-bold">You</span>
+                                                            ) : (
+                                                            <>
+                                                                <User className="w-3 h-3" />
+                                                                {act.profiles?.Surname || `Rider ${act.user_id.slice(0, 4)}`}
+                                                            </>
+                                                            )}                                                  </p>
+                                                    <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                                                        {new Date(act.started_at).toLocaleDateString()}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="flex items-center gap-3 shrink-0">
+                                                <div className="text-right">
+                                                    <p className="text-sm font-bold font-mono">{act.average_speed ? act.average_speed.toFixed(1) : '-'} <span className="text-[10px] font-normal text-muted-foreground">km/h</span></p>
+                                                    <p className="text-[10px] text-muted-foreground">{formatDuration(act.duration_second)}</p>
+                                                </div>
 
-                                              {/* DELETE BUTTON (Solo se è la mia attività) */}
-                                              {isMe && (
-                                                  <Button 
-                                                      variant="ghost" 
-                                                      size="icon" 
-                                                      className="h-8 w-8 text-muted-foreground hover:text-red-600 hover:bg-red-50"
-                                                      onClick={() => setActivityToDelete(act.id)}
-                                                  >
-                                                      <Trash2 className="w-4 h-4" />
-                                                  </Button>
-                                              )}
-                                          </div>
-                                      </div>
-                                  );
-                              })}
-                          </div>
-                      )}
-                  </CardContent>
-              </Card>
-          </div>
+                                                {/* DELETE BUTTON (Solo se è la mia attività) */}
+                                                {isMe && (
+                                                    <Button 
+                                                        variant="ghost" 
+                                                        size="icon" 
+                                                        className="h-8 w-8 text-muted-foreground hover:text-red-600 hover:bg-red-50"
+                                                        onClick={() => setActivityToDelete(act.id)}
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+            </div>
+            )}
       </div>
 
       {/* CONFIRM DELETE DIALOG */}
