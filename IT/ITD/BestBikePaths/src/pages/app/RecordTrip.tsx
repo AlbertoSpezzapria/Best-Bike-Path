@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Play, Pause, Square, Navigation, Gauge, Clock, Route,
   Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock, CheckCircle, AlertTriangle, Trash2, MapPin,
-  UserSquare
+  UserSquare, AlertCircle, CheckCircle2, ThumbsDown, ThumbsUp, Activity
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,6 +22,7 @@ import { fetchWeather, WeatherData } from "@/lib/weatherService";
 import { toast } from "sonner";
 import { useDebugStore } from "@/stores/useDebugStore"; 
 import { useAuthStore } from "@/stores/useAuthStore";
+import { diff } from "util";
 
 // Mock Route 
 const MOCK_ROUTE: [number, number][] = [
@@ -119,6 +120,9 @@ const RecordTrip = () => {
   const [livePath, setLivePath] = useState<[number, number][]>([]);
   const [currentPos, setCurrentPos] = useState<[number, number]>([45.4642, 9.1900]); 
   const [stats, setStats] = useState({ distance: 0, duration: 0, currentSpeed: 0 });
+
+  const [difficulty, setDifficulty] = useState<string>("medium");
+  const [status, setStatus] = useState<string>("good");
 
   // Hazards State (Used for both Manual and Auto-detected)
   const [hazards, setHazards] = useState<Hazard[]>([]);
@@ -346,7 +350,7 @@ const RecordTrip = () => {
                 hazards: hazards, 
                 status: "good",
                 is_public: newPathForm.isPublic, 
-                id_owner: user?.id
+                id_owner: user?.id,
             };
             const { data: newPath, error: createError } = await supabase.from('paths').insert([pathPayload]).select().single();
             if (createError) throw createError;
@@ -369,7 +373,9 @@ const RecordTrip = () => {
             raw_data: livePath, 
             path: wktString,
             hazards: hazards, 
-            weather_data: weather
+            weather_data: weather,
+            difficulty: difficulty,
+            status: status
         };
 
         const { error: activityError } = await supabase.from('activities').insert([activityPayload]);
@@ -450,31 +456,36 @@ const RecordTrip = () => {
   };
 
   return (
-    <div className="p-6 lg:mx-4 lg:p-8 space-y-8">
-      <div>
-        <h1 className="text-3xl font-display font-bold text-foreground">Record Trip</h1>
-        <p className="text-muted-foreground mt-1">Track activities or create paths manually</p>
+    <div className="p-4 lg:mx-4 lg:p-8 space-y-6 pb-24">
+      {/* HEADER */}
+      <div className="flex items-center justify-between">
+        <div>
+            <h1 className="text-3xl font-display font-bold text-foreground">Record Trip</h1>
+            <p className="text-muted-foreground mt-1">Track your performance or map a route manually.</p>
+        </div>
         
-{       isDebugMode && (
-            <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-200">
-            DEBUG: {debugPathType.toUpperCase()}
+        {isDebugMode && (
+            <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-200 font-mono text-xs">
+                DEBUG: {debugPathType.toUpperCase()}
             </Badge>
         )}
       </div>
 
       <Tabs defaultValue="auto" className="space-y-6">
         <TabsList className="grid w-full max-w-md grid-cols-2">
-          <TabsTrigger value="auto" className="gap-2"><Navigation className="w-4 h-4" /> Automatic</TabsTrigger>
-          <TabsTrigger value="manual" className="gap-2"><Edit3 className="w-4 h-4" /> Manual</TabsTrigger>
+          <TabsTrigger value="auto" className="gap-2"><Navigation className="w-4 h-4" /> Automatic Tracker</TabsTrigger>
+          <TabsTrigger value="manual" className="gap-2"><Edit3 className="w-4 h-4" /> Manual Editor</TabsTrigger>
         </TabsList>
 
         {/* --- AUTOMATIC TAB --- */}
-        <TabsContent value="auto" className="space-y-6">
+        <TabsContent value="auto" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="grid lg:grid-cols-3 gap-6">
-            <Card className="lg:col-span-2 border-border/50 overflow-hidden h-[500px] flex flex-col relative">
+            
+            {/* LEFT COLUMN: MAP */}
+            <Card className="lg:col-span-2 border-border/50 overflow-hidden h-[500px] flex flex-col relative shadow-md">
               <div className="absolute inset-0 z-0">
                   <BikeMap 
-                    mode="view" 
+                    mode="record" // Usa mode record per mostrare la posizione live
                     initialCenter={[45.4642, 9.1900]} 
                     currentLocation={currentPos} 
                     recordedPath={livePath} 
@@ -483,70 +494,121 @@ const RecordTrip = () => {
                   />
               </div>
 
+              {/* Overlay Start Hint */}
               {!isTracking && livePath.length === 0 && (
-                 <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none">
-                     <p className="bg-background/80 p-2 rounded text-sm font-medium backdrop-blur">Press Play to start recording</p>
+                 <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none backdrop-blur-[2px]">
+                     <p className="bg-background/90 px-4 py-2 rounded-full text-sm font-medium shadow-lg border animate-pulse">
+                        Press Play to start recording
+                     </p>
                  </div>
               )}
 
+              {/* Controls Overlay */}
               <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center justify-end z-20 gap-4 pointer-events-none">
-                <div className="pointer-events-auto flex gap-4">
+                <div className="pointer-events-auto flex gap-4 items-center">
                   {!isTracking ? (
-                    <Button size="lg" className="rounded-full w-20 h-20 shadow-2xl bg-primary hover:bg-primary/90 hover:scale-105 transition-transform" onClick={handleStart} disabled={isSaving || isCheckingPath}>
+                    <Button 
+                        size="lg" 
+                        className="rounded-full w-20 h-20 shadow-2xl bg-primary hover:bg-primary/90 hover:scale-105 transition-all duration-300" 
+                        onClick={handleStart} 
+                        disabled={isSaving || isCheckingPath}
+                    >
                       <Play className="w-8 h-8 ml-1" />
                     </Button>
                   ) : (
                     <>
-                    <Button size="lg" className="rounded-full w-16 h-16 shadow-xl bg-yellow-500 hover:bg-yellow-600 border-none" onClick={() => setIsPaused(!isPaused)}>
-                    {isPaused ? <Play className="w-6 h-6 ml-1" /> : <Pause className="w-6 h-6" />}
-                    </Button>
-                    <Button 
-                    variant="destructive" 
-                    size="lg" 
-                    className="rounded-full w-16 h-16 shadow-xl border-none" 
-                    onClick={handleStopPress} 
-                    disabled={isSaving || isCheckingPath}
-                    >
-                    {isCheckingPath ? (
-                        <Loader2 className="w-6 h-6 animate-spin" />
-                    ) : (
-                        <Square className="w-6 h-6 fill-current" />
-                    )}
-                    </Button>
+                        <Button 
+                            size="lg" 
+                            className="rounded-full w-16 h-16 shadow-xl bg-amber-500 hover:bg-amber-600 border-none transition-all hover:scale-105" 
+                            onClick={() => setIsPaused(!isPaused)}
+                        >
+                            {isPaused ? <Play className="w-6 h-6 ml-1" /> : <Pause className="w-6 h-6" />}
+                        </Button>
+                        
+                        <Button 
+                            variant="destructive" 
+                            size="lg" 
+                            className="rounded-full w-16 h-16 shadow-xl border-none transition-all hover:scale-105" 
+                            onClick={handleStopPress} 
+                            disabled={isSaving || isCheckingPath}
+                        >
+                            {isCheckingPath ? (
+                                <Loader2 className="w-6 h-6 animate-spin" />
+                            ) : (
+                                <Square className="w-6 h-6 fill-current" />
+                            )}
+                        </Button>
                     </>
                   )}
                 </div>
               </div>
             </Card>
 
+            {/* RIGHT COLUMN: STATS & HAZARDS */}
             <div className="space-y-4">
-               {/* STATS */}
-               <Card className="border-border/50 bg-card/50 backdrop-blur">
-                <CardHeader className="pb-2"><CardTitle className="text-lg font-display flex items-center gap-2"><Gauge className="w-5 h-5 text-primary" /> Live Stats</CardTitle></CardHeader>
-                <CardContent className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm"><Route className="w-5 h-5 text-primary mx-auto mb-1" /><p className="text-2xl font-bold font-mono">{stats.distance.toFixed(2)}</p><p className="text-xs text-muted-foreground">km</p></div>
-                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm"><Clock className="w-5 h-5 text-primary mx-auto mb-1" /><p className="text-2xl font-bold font-mono">{formatTime(stats.duration)}</p><p className="text-xs text-muted-foreground">Time</p></div>
-                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm"><Gauge className="w-5 h-5 text-accent mx-auto mb-1" /><p className="text-2xl font-bold font-mono">{stats.duration > 0 ? (stats.distance / (stats.duration / 3600)).toFixed(1) : "0.0"}</p><p className="text-xs text-muted-foreground">Avg Km/h</p></div>
-                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm"><Navigation className="w-5 h-5 text-accent mx-auto mb-1" /><p className="text-2xl font-bold font-mono">{isPaused ? "0.0" : stats.currentSpeed.toFixed(1)}</p><p className="text-xs text-muted-foreground">Cur Km/h</p></div>
+               {/* LIVE STATS */}
+               <Card className="border-border/50 bg-card/50 backdrop-blur shadow-sm">
+                <CardHeader className="pb-2 border-b border-border/50 bg-muted/20">
+                    <CardTitle className="text-base font-display flex items-center gap-2">
+                        <Gauge className="w-4 h-4 text-primary" /> Live Statistics
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-2 gap-3 pt-4">
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
+                      <Route className="w-4 h-4 text-primary mx-auto mb-1 opacity-70" />
+                      <p className="text-xl font-bold font-mono">{stats.distance.toFixed(2)}</p>
+                      <p className="text-[10px] text-muted-foreground uppercase font-bold">km</p>
+                  </div>
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
+                      <Clock className="w-4 h-4 text-primary mx-auto mb-1 opacity-70" />
+                      <p className="text-xl font-bold font-mono">{formatTime(stats.duration)}</p>
+                      <p className="text-[10px] text-muted-foreground uppercase font-bold">Duration</p>
+                  </div>
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
+                      <Gauge className="w-4 h-4 text-blue-500 mx-auto mb-1 opacity-70" />
+                      <p className="text-xl font-bold font-mono">{stats.duration > 0 ? (stats.distance / (stats.duration / 3600)).toFixed(1) : "0.0"}</p>
+                      <p className="text-[10px] text-muted-foreground uppercase font-bold">Avg Km/h</p>
+                  </div>
+                  <div className="text-center p-3 rounded-xl bg-background border shadow-sm">
+                      <Navigation className="w-4 h-4 text-blue-500 mx-auto mb-1 opacity-70" />
+                      <p className="text-xl font-bold font-mono">{isPaused ? "0.0" : stats.currentSpeed.toFixed(1)}</p>
+                      <p className="text-[10px] text-muted-foreground uppercase font-bold">Cur Km/h</p>
+                  </div>
                 </CardContent>
               </Card>
 
-              {/* HAZARD LIST PREVIEW */}
-              <Card className="border-border/50 flex-1">
-                <CardHeader className="pb-2"><CardTitle className="text-lg font-display flex items-center gap-2"><AlertTriangle className="w-5 h-5 text-orange-500" /> Detected Hazards</CardTitle></CardHeader>
-                <CardContent>
-                    <ScrollArea className="h-[120px]">
+              {/* DETECTED HAZARDS LIST */}
+              <Card className="border-border/50 flex-1 shadow-sm h-[200px] flex flex-col">
+                <CardHeader className="pb-2 border-b border-border/50 bg-muted/20">
+                    <CardTitle className="text-base font-display flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-orange-500" /> Detected Hazards
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 flex-1">
+                    <ScrollArea className="h-full">
                         {hazards.length === 0 ? (
-                            <p className="text-xs text-muted-foreground text-center py-4">No hazards detected yet.</p>
+                            <div className="h-full flex flex-col items-center justify-center text-muted-foreground opacity-50 p-4">
+                                <CheckCircle className="w-8 h-8 mb-2" />
+                                <p className="text-xs">No hazards detected yet.</p>
+                            </div>
                         ) : (
-                            <div className="space-y-2">
+                            <div className="divide-y">
                                 {hazards.map((h, i) => (
-                                    <div key={i} className="flex items-center justify-between text-sm bg-muted/40 p-2 rounded">
-                                        <div className="flex items-center gap-2">
-                                            <AlertTriangle className="w-3 h-3 text-orange-500" />
-                                            <span className="capitalize font-medium">{h.type}</span>
+                                    <div key={i} className="flex items-center justify-between text-sm p-3 hover:bg-muted/50 transition-colors">
+                                        <div className="flex items-center gap-3">
+                                            <div className="bg-orange-100 dark:bg-orange-900/30 p-1.5 rounded-full">
+                                                <AlertTriangle className="w-3 h-3 text-orange-600 dark:text-orange-400" />
+                                            </div>
+                                            <div>
+                                                <p className="capitalize font-medium text-xs">{h.type}</p>
+                                                <p className="text-[10px] font-mono text-muted-foreground">
+                                                    Lat: {h.location[0].toFixed(4)}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <span className="text-[10px] font-mono text-muted-foreground">{h.location[0].toFixed(4)}, {h.location[1].toFixed(4)}</span>
+                                        <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+                                            #{i+1}
+                                        </span>
                                     </div>
                                 ))}
                             </div>
@@ -558,58 +620,99 @@ const RecordTrip = () => {
           </div>
         </TabsContent>
 
-        {/* --- MANUAL TAB (RIPRISTINATO COMPLETAMENTE) --- */}
-        <TabsContent value="manual" className="space-y-6">
+        {/* --- MANUAL TAB --- */}
+        <TabsContent value="manual" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="grid lg:grid-cols-2 gap-6">
-                <Card className="border-border/50 h-[600px] overflow-hidden flex flex-col">
-                    <CardHeader className="p-4 bg-muted/20 border-b"><CardTitle className="text-base">Draw Geometry</CardTitle></CardHeader>
-                    <div className="flex-1 relative"><BikeMap mode="edit" initialCenter={[45.4642, 9.1900]} onPathChange={handlePathCreated} /></div>
+                {/* Manual Editor Map */}
+                <Card className="border-border/50 h-[600px] overflow-hidden flex flex-col shadow-md">
+                    <CardHeader className="p-4 bg-muted/20 border-b flex flex-row items-center justify-between">
+                        <CardTitle className="text-base flex items-center gap-2"><Edit3 className="w-4 h-4" /> Geometry Editor</CardTitle>
+                        <Badge variant="outline" className="text-[10px] font-normal">Click map to draw</Badge>
+                    </CardHeader>
+                    <div className="flex-1 relative">
+                        <BikeMap 
+                            mode="edit" 
+                            initialCenter={[45.4642, 9.1900]} 
+                            onPathChange={handlePathCreated} 
+                        />
+                    </div>
                 </Card>
 
-                <Card className="border-border/50">
-                    <CardHeader><CardTitle className="font-display">New Path Details</CardTitle><p className="text-sm text-muted-foreground">Static characteristics of the route.</p></CardHeader>
+                {/* Manual Details Form */}
+                <Card className="border-border/50 shadow-md">
+                    <CardHeader>
+                        <CardTitle className="font-display">Path Details</CardTitle>
+                        <p className="text-sm text-muted-foreground">Define the static characteristics of this route.</p>
+                    </CardHeader>
                     <CardContent className="space-y-6">
-                        <div className="space-y-2"><Label>Name</Label><Input value={manualForm.name} onChange={(e) => setManualForm({...manualForm, name: e.target.value})} /></div>
+                        <div className="space-y-2">
+                            <Label>Path Name</Label>
+                            <Input 
+                                placeholder="e.g. Martesana Cycleway"
+                                value={manualForm.name} 
+                                onChange={(e) => setManualForm({...manualForm, name: e.target.value})} 
+                            />
+                        </div>
                         
                         <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/20">
                             <div className="space-y-0.5">
                                 <div className="flex items-center gap-2">
-                                    {manualForm.isPublic ? <Globe className="w-4 h-4 text-primary" /> : <Lock className="w-4 h-4 text-muted-foreground" />}
-                                    <Label className="text-base cursor-pointer">Public Path</Label>
+                                    {manualForm.isPublic ? <Globe className="w-4 h-4 text-emerald-600" /> : <Lock className="w-4 h-4 text-muted-foreground" />}
+                                    <Label className="text-sm font-semibold cursor-pointer">Public Path</Label>
                                 </div>
                                 <p className="text-xs text-muted-foreground">
-                                    {manualForm.isPublic ? "Visible to everyone" : "Only visible to you"}
+                                    {manualForm.isPublic ? "Visible on community map" : "Private (only visible to you)"}
                                 </p>
                             </div>
                             <Switch checked={manualForm.isPublic} onCheckedChange={(checked) => setManualForm({...manualForm, isPublic: checked})} />
                         </div>
 
-                        {/* Length Field Restored */}
                         <div className="space-y-2">
-                            <Label>Length (km)</Label>
-                            <Input value={manualDistance} readOnly className="bg-muted font-mono" />
+                            <Label>Total Length (km)</Label>
+                            <Input value={manualDistance} readOnly className="bg-muted font-mono text-muted-foreground" />
                         </div>
 
-                        <div className="space-y-2"><Label>Description</Label><Textarea value={manualForm.description} onChange={(e) => setManualForm({...manualForm, description: e.target.value})} rows={3} /></div>
+                        <div className="space-y-2">
+                            <Label>Description</Label>
+                            <Textarea 
+                                value={manualForm.description} 
+                                onChange={(e) => setManualForm({...manualForm, description: e.target.value})} 
+                                rows={3} 
+                                placeholder="Add notes about landmarks or surface type..."
+                            />
+                        </div>
                         
-                        {/* Selects Restored */}
+                        {/* Selectors aligned with DB Schema */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2"><Label>Condition</Label>
+                            <div className="space-y-2">
+                                <Label>Condition</Label>
                                 <Select value={manualForm.status} onValueChange={(v) => setManualForm({...manualForm, status: v})}>
-                                    <SelectTrigger><SelectValue /></SelectTrigger>
-                                    <SelectContent><SelectItem value="optimal">Optimal</SelectItem><SelectItem value="good">Good</SelectItem><SelectItem value="bad">Bad</SelectItem></SelectContent>
+                                    <SelectTrigger><SelectValue placeholder="Select..." /></SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="optimal">Optimal</SelectItem>
+                                        <SelectItem value="good">Good</SelectItem>
+                                        <SelectItem value="fair">Fair</SelectItem>
+                                        <SelectItem value="bad">Bad</SelectItem>
+                                    </SelectContent>
                                 </Select>
                             </div>
-                            <div className="space-y-2"><Label>Difficulty</Label>
+                            <div className="space-y-2">
+                                <Label>Difficulty</Label>
                                 <Select value={manualForm.difficulty} onValueChange={(v) => setManualForm({...manualForm, difficulty: v})}>
-                                    <SelectTrigger><SelectValue /></SelectTrigger>
-                                    <SelectContent><SelectItem value="easy">Easy</SelectItem><SelectItem value="medium">Medium</SelectItem><SelectItem value="hard">Hard</SelectItem></SelectContent>
+                                    <SelectTrigger><SelectValue placeholder="Select..." /></SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="easy">Easy</SelectItem>
+                                        <SelectItem value="medium">Medium</SelectItem>
+                                        <SelectItem value="hard">Hard</SelectItem>
+                                        <SelectItem value="expert">Expert</SelectItem>
+                                    </SelectContent>
                                 </Select>
                             </div>
                         </div>
 
-                        <Button className="w-full mt-4" onClick={handleSaveManualPath} disabled={isSaving}>
-                            {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Upload className="w-4 h-4 mr-2" />} Create Path
+                        <Button className="w-full mt-4 bg-primary hover:bg-primary/90" onClick={handleSaveManualPath} disabled={isSaving}>
+                            {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Upload className="w-4 h-4 mr-2" />} 
+                            Create Path
                         </Button>
                     </CardContent>
                 </Card>
@@ -617,73 +720,171 @@ const RecordTrip = () => {
         </TabsContent>
       </Tabs>
 
-      {/* --- SAVE DIALOG --- */}
+      {/* --- SAVE DIALOG (TRACKING) --- */}
       <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-                <DialogTitle className={matchedPath ? "text-green-600 flex items-center gap-2" : ""}>
+                <DialogTitle className={matchedPath ? "text-emerald-600 flex items-center gap-2" : ""}>
                     {matchedPath ? <><CheckCircle className="w-5 h-5" /> Path Recognized!</> : "New Path Detected"}
                 </DialogTitle>
                 <DialogDescription>
-                    {matchedPath ? "Your track matches an existing public path." : "You explored a new area! Name this track."}
+                    {matchedPath 
+                        ? "Your track matches an existing public path. Your stats will be added to the leaderboard." 
+                        : "You explored a new area! Give this track a name to save it."}
                 </DialogDescription>
             </DialogHeader>
 
-            {matchedPath ? (
-                <div className="p-4 bg-muted/30 rounded-lg border mb-4">
-                    <p className="text-sm text-muted-foreground uppercase font-bold tracking-wider mb-1">Link to:</p>
-                    <p className="text-lg font-medium">{matchedPath.name}</p>
-                </div>
-            ) : (
-                <div className="space-y-4 py-4">
-                    <div className="space-y-2"><Label>Path Name</Label><Input value={newPathForm.name} onChange={(e) => setNewPathForm({...newPathForm, name: e.target.value})} /></div>
-                    <div className="space-y-2"><Label>Description</Label><Textarea value={newPathForm.description} onChange={(e) => setNewPathForm({...newPathForm, description: e.target.value})} /></div>
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                        <div className="flex items-center gap-2"><Globe className="w-4 h-4 text-primary" /><Label>Public Path</Label></div>
-                        <Switch checked={newPathForm.isPublic} onCheckedChange={(c) => setNewPathForm({...newPathForm, isPublic: c})} />
+            <div className="space-y-6 py-2">
+                
+                {/* 1. PATH IDENTITY */}
+                {matchedPath ? (
+                    <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900 rounded-lg flex flex-col gap-1">
+                        <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">Linking Activity to:</span>
+                        <span className="text-lg font-bold text-emerald-900 dark:text-emerald-100 flex items-center gap-2">
+                            <MapPin className="w-4 h-4" /> {matchedPath.name}
+                        </span>
                     </div>
-                </div>
-            )}
-
-            {/* --- DETECTED HAZARDS REVIEW SECTION --- */}
-            {hazards.length > 0 && (
-                <div className="border-t pt-4 mt-2">
-                    <Label className="mb-2 block flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4 text-orange-500" /> 
-                        Review Detected Hazards ({hazards.length})
-                    </Label>
-                    <div className="bg-muted/30 rounded-md border p-2">
-                        <ScrollArea className="h-[150px]">
-                            <div className="space-y-2">
-                                {hazards.map((h, index) => (
-                                    <div key={index} className="flex items-center justify-between p-2 bg-background border rounded-md shadow-sm">
-                                        <div className="flex items-center gap-3">
-                                            <div className="bg-orange-100 p-1.5 rounded-full"><AlertTriangle className="w-3 h-3 text-orange-600" /></div>
-                                            <div>
-                                                <p className="text-sm font-medium capitalize">{h.type}</p>
-                                                <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                                                    <MapPin className="w-3 h-3" /> {h.location[0].toFixed(5)}, {h.location[1].toFixed(5)}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-red-600" onClick={() => removeHazard(index)}>
-                                            <Trash2 className="w-4 h-4" />
-                                        </Button>
-                                    </div>
-                                ))}
+                ) : (
+                    <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                        <div className="space-y-2">
+                            <Label>Path Name</Label>
+                            <Input 
+                                placeholder="e.g. Navigli Sunday Ride" 
+                                value={newPathForm.name} 
+                                onChange={(e) => setNewPathForm({...newPathForm, name: e.target.value})} 
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Description</Label>
+                            <Textarea 
+                                placeholder="Brief description of the route..." 
+                                value={newPathForm.description} 
+                                onChange={(e) => setNewPathForm({...newPathForm, description: e.target.value})} 
+                            />
+                        </div>
+                        <div className="flex items-center justify-between pt-2">
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <Globe className="w-4 h-4" />
+                                <span>Make Public?</span>
                             </div>
-                        </ScrollArea>
-                        <p className="text-[10px] text-muted-foreground mt-2 text-center">
-                            Hazards left in this list will be saved to your activity.
-                        </p>
+                            <Switch 
+                                checked={newPathForm.isPublic} 
+                                onCheckedChange={(c) => setNewPathForm({...newPathForm, isPublic: c})} 
+                            />
+                        </div>
+                    </div>
+                )}
+
+                {/* 2. RIDE FEEDBACK */}
+                <div className="space-y-4 border-t pt-4">
+                    <h3 className="text-sm font-semibold flex items-center gap-2">
+                        <Activity className="w-4 h-4 text-primary" /> How was the ride?
+                    </h3>
+                    
+                    {/* Difficulty */}
+                    <div className="space-y-2">
+                        <Label className="text-[10px] text-muted-foreground uppercase">Difficulty Level</Label>
+                        <div className="grid grid-cols-4 gap-2">
+                            {['easy', 'medium', 'hard', 'expert'].map((level) => (
+                                <div 
+                                    key={level}
+                                    onClick={() => setDifficulty(level)}
+                                    className={`
+                                        cursor-pointer flex items-center justify-center py-2 px-1 rounded-md border text-xs capitalize transition-all font-medium select-none
+                                        ${difficulty === level 
+                                            ? 'bg-primary text-primary-foreground border-primary shadow-sm' 
+                                            : 'bg-background hover:bg-muted text-muted-foreground'}
+                                    `}
+                                >
+                                    {level}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Status */}
+                    <div className="space-y-2">
+                        <Label className="text-[10px] text-muted-foreground uppercase">Path Condition</Label>
+                        <div className="grid grid-cols-2 gap-2">
+                            {[
+                                { val: 'optimal', label: 'Optimal', icon: CheckCircle2, color: 'text-emerald-500' },
+                                { val: 'good', label: 'Good', icon: ThumbsUp, color: 'text-blue-500' },
+                                { val: 'fair', label: 'Bumpy/Fair', icon: AlertCircle, color: 'text-amber-500' },
+                                { val: 'bad', label: 'Bad/Gravel', icon: ThumbsDown, color: 'text-red-500' }
+                            ].map((opt) => (
+                                <div 
+                                    key={opt.val}
+                                    onClick={() => setStatus(opt.val)}
+                                    className={`
+                                        cursor-pointer flex items-center gap-2 p-2 rounded-md border text-sm transition-all select-none
+                                        ${status === opt.val 
+                                            ? 'bg-accent border-accent-foreground/20 ring-1 ring-accent-foreground/20 shadow-sm' 
+                                            : 'bg-background hover:bg-muted text-muted-foreground'}
+                                    `}
+                                >
+                                    <opt.icon className={`w-4 h-4 ${status === opt.val ? opt.color : 'opacity-50'}`} />
+                                    <span className={status === opt.val ? 'font-semibold text-foreground' : ''}>{opt.label}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            )}
+
+                {/* 3. HAZARDS REVIEW */}
+                {hazards.length > 0 && (
+                    <div className="space-y-2 pt-2 border-t mt-2">
+                        <div className="flex items-center justify-between">
+                            <Label className="flex items-center gap-2 text-orange-600 dark:text-orange-400 font-semibold">
+                                <AlertTriangle className="w-4 h-4" /> 
+                                Detected Hazards ({hazards.length})
+                            </Label>
+                        </div>
+                        
+                        <div className="bg-orange-50/50 dark:bg-orange-950/10 border border-orange-100 dark:border-orange-900 rounded-lg p-2">
+                            <ScrollArea className="h-[120px] pr-3">
+                                <div className="space-y-2">
+                                    {hazards.map((h, index) => (
+                                        <div key={index} className="flex items-center justify-between p-2 bg-background/80 backdrop-blur border rounded-md shadow-sm group">
+                                            <div className="flex items-center gap-3">
+                                                <div className="bg-orange-100 dark:bg-orange-900/50 p-1.5 rounded-full shrink-0">
+                                                    <AlertTriangle className="w-3 h-3 text-orange-600 dark:text-orange-400" />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="text-sm font-medium capitalize truncate">{h.type}</p>
+                                                    <p className="text-[10px] text-muted-foreground font-mono">
+                                                        {h.location[0].toFixed(4)}, {h.location[1].toFixed(4)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <Button 
+                                                variant="ghost" 
+                                                size="icon" 
+                                                className="h-7 w-7 text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20" 
+                                                onClick={() => removeHazard(index)}
+                                                title="Remove hazard"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </Button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </ScrollArea>
+                            <p className="text-[10px] text-muted-foreground/70 mt-2 text-center italic">
+                                Review hazards. You can delete false detections before saving.
+                            </p>
+                        </div>
+                    </div>
+                )}
+            </div>
             
-            <DialogFooter>
-                <Button variant="outline" onClick={() => resetTrackingSession()}>Cancel</Button>
-                <Button onClick={confirmSaveTracking} disabled={isSaving}>
-                    {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : "Save Activity"}
+            <DialogFooter className="gap-2 sm:gap-0">
+                <Button variant="outline" onClick={() => resetTrackingSession()}>Discard Activity</Button>
+                <Button onClick={confirmSaveTracking} disabled={isSaving} className="bg-primary hover:bg-primary/90">
+                    {isSaving ? (
+                        <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving...</>
+                    ) : (
+                        "Save Activity"
+                    )}
                 </Button>
             </DialogFooter>
         </DialogContent>

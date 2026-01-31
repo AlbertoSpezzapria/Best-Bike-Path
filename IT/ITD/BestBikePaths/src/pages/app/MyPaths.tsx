@@ -4,11 +4,19 @@ import { supabase } from "@/supabaseClient";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Plus, Route as RouteIcon, Calendar, Globe, Lock, Trash2, Heart, ArrowUpDown } from "lucide-react";
+import { Loader2, Plus, Route as RouteIcon, Calendar, Globe, Lock, Trash2, Heart, ArrowUpDown, AlertTriangle, Copy, Merge } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "@/components/ui/alert-dialog";
+
+// --- WKT BUILDER ---
+const toWKT = (coords: [number, number][]) => {
+  if (coords.length < 2) return null;
+  const points = coords.map(c => `${c[1]} ${c[0]}`).join(", ");
+  return `LINESTRING(${points})`;
+};
 
 const MyPaths = () => {
   const navigate = useNavigate();
@@ -16,6 +24,9 @@ const MyPaths = () => {
   const [savedPaths, setSavedPaths] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const [showConflictDialog, setShowConflictDialog] = useState(false);
+  const [conflictPath, setConflictPath] = useState<any>(null); 
+  const [pendingPathToPublic, setPendingPathToPublic] = useState<any>(null); 
   
   // Sort State
   const [sortOption, setSortOption] = useState<string>("date_desc");
@@ -69,22 +80,96 @@ const MyPaths = () => {
       }
   };
 
-  // Toggle Public/Private
+   // Smart Visibility Toggle
   const toggleVisibility = async (e: React.MouseEvent, path: any) => {
-      e.stopPropagation(); 
-      setTogglingId(path.id);
-      const newStatus = !path.is_public;
+    e.stopPropagation();
+    
+    // --- CASE A: PUBLIC -> PRIVATE (Blocco se usato da altri) ---
+    if (path.is_public) {
+        setTogglingId(path.id);
+        console.log("RPC Call Payload:", { p_path_id: path.id, type: typeof path.id });
 
+        if (!path.id) {
+            toast.error("Error: Path ID is missing");
+            setTogglingId(null);
+            return;
+        }
+        
+        // 1. Controlla se qualcuno altro lo sta usando
+        // Nota: Assicurati di aver creato la funzione RPC 'get_path_community_usage' su Supabase come discusso prima
+        const { data: usageCount, error } = await supabase.rpc('get_path_community_usage', {
+            p_path_id: path.id,
+        });
+
+        if (error) {
+            console.error("RPC Error Details:", error);
+            toast.error(`Error checking usage: ${error.message}`);
+            setTogglingId(null);
+            return;
+        }
+
+        if (usageCount > 0) {
+            toast.warning("Cannot make private", {
+                description: `This path is actively used by ${usageCount} other rider(s). It must remain public.`
+            });
+            setTogglingId(null);
+            return;
+        }
+
+        // Se nessuno lo usa, procedi pure a renderlo privato
+        await performUpdate(path.id, false);
+        return;
+    }
+
+    // --- CASE B: PRIVATE -> PUBLIC (Controllo Duplicati) ---
+    if (!path.is_public) {
+        setTogglingId(path.id);
+
+        const wktString = toWKT(path.path_data);
+
+
+        // 1. Cerca duplicati geometrici
+        const { data: matches, error } = await supabase.rpc('check_path_similarity', {
+            new_geom_wkt: wktString,
+            tolerance_meters: 20,
+            length_tolerance_pct: 0.1
+        });
+
+        if (error) {
+             console.error("Match error", error);
+             // In caso di errore tecnico, procediamo con cautela permettendo l'update
+             await performUpdate(path.id, true);
+             return;
+        }
+
+        // Cerchiamo se esiste UN ALTRO percorso pubblico diverso dal mio
+        const existingPublic = matches?.find((m: any) => m.id !== path.id && m.is_public === true);
+
+        if (existingPublic) {
+            setConflictPath(existingPublic);
+            setPendingPathToPublic(path);
+            setShowConflictDialog(true);
+            setTogglingId(null); // Sblocca lo spinner
+            return;
+        }
+
+        // Nessun duplicato, procedi
+        await performUpdate(path.id, true);
+    }
+  };
+
+  // Funzione helper per l'update effettivo
+  const performUpdate = async (pathId: string, newStatus: boolean) => {
       const { error } = await supabase
           .from('paths')
           .update({ is_public: newStatus })
-          .eq('id', path.id);
+          .eq('id', pathId);
 
       if (error) {
-          toast.error("Error updating visibility");
+          toast.error("Update failed");
       } else {
           setCreatedPaths(prev => prev.map(p => 
-              p.id === path.id ? { ...p, is_public: newStatus } : p
+              p.id === pathId ? { ...p, is_public: newStatus } : p
           ));
           toast.success(newStatus ? "Path is now Public" : "Path is now Private");
       }
@@ -103,6 +188,66 @@ const MyPaths = () => {
         const { error } = await supabase.from('paths').delete().eq('id', pathId);
         if (!error) { toast.success("Path deleted"); fetchData(); }
     }
+  };
+
+  const handleMerge = async () => {
+    const { data: { user } } = await supabase.auth.getUser();    
+    if (!conflictPath || !pendingPathToPublic) return;
+    setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
+
+    try {
+        // 1. Sposta le mie attività sul path pubblico esistente
+        const { error: moveError } = await supabase
+            .from('activities')
+            .update({ path_id: conflictPath.id })
+            .eq('path_id', pendingPathToPublic.id);
+        
+        if (moveError) throw moveError;
+
+        const { error: saveError } = await supabase
+            .from('saved_paths')
+            .upsert({ 
+                user_id: user.id, 
+                path_id: conflictPath.id 
+            }, { onConflict: 'user_id, path_id' }); 
+
+        if (saveError) {
+            console.error("Errore nel salvataggio dei preferiti:", saveError);
+        }
+
+        // 2. Elimina il mio path privato (non serve più)
+        const { error: deleteError } = await supabase
+            .from('paths')
+            .delete()
+            .eq('id', pendingPathToPublic.id);
+        
+        if (deleteError) throw deleteError;
+
+        // 3. Aggiorna la UI rimuovendo il path vecchio
+        setCreatedPaths(prev => prev.filter(p => p.id !== pendingPathToPublic.id));
+
+        await fetchData(); 
+    
+        toast.success("Merged successfully!", { 
+            description: `Rides moved to "${conflictPath.name}" and added to your favorites.` 
+        });
+
+    } catch (e) {
+        console.error(e);
+        toast.error("Merge failed. Try again.");
+    } finally {
+        setShowConflictDialog(false);
+        setTogglingId(null);
+        setConflictPath(null);
+        setPendingPathToPublic(null);
+    }
+  };
+
+  const handleDuplicate = async () => {
+     if (pendingPathToPublic) {
+         await performUpdate(pendingPathToPublic.id, true);
+     }
+     setShowConflictDialog(false);
   };
 
   // Reusable Card Component
@@ -231,6 +376,55 @@ const MyPaths = () => {
             )}
         </TabsContent>
       </Tabs>
+
+      {/* --- CONFLICT DIALOG (PRIVATE -> PUBLIC) --- */}
+      <AlertDialog open={showConflictDialog} onOpenChange={setShowConflictDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2 text-amber-600">
+               <AlertTriangle className="w-5 h-5" /> Duplicate Path Detected
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              We found an existing public path <strong>"{conflictPath?.name}"</strong> that matches your route perfectly.
+              <br /><br />
+              Do you want to merge your activities into the existing public leaderboard (recommended) or publish yours as a separate duplicate?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          
+          <div className="flex flex-col gap-3 my-2">
+             {/* Opzione 1: Merge */}
+             <button 
+                onClick={handleMerge}
+                className="flex items-center gap-3 p-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors text-left group"
+             >
+                <div className="bg-primary/20 p-2 rounded-full group-hover:bg-primary/30"><Merge className="w-4 h-4 text-primary" /></div>
+                <div>
+                    <p className="font-bold text-sm text-foreground">Merge & Delete Mine</p>
+                    <p className="text-xs text-muted-foreground">Link your rides to the existing leaderboard. Keeps the map clean.</p>
+                </div>
+             </button>
+
+             {/* Opzione 2: Duplicate */}
+             <button 
+                onClick={handleDuplicate}
+                className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors text-left group"
+             >
+                <div className="bg-muted p-2 rounded-full group-hover:bg-muted/80"><Copy className="w-4 h-4" /></div>
+                <div>
+                    <p className="font-bold text-sm text-foreground">Create Duplicate</p>
+                    <p className="text-xs text-muted-foreground">Publish my path anyway with its own separate leaderboard.</p>
+                </div>
+             </button>
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => {
+                setShowConflictDialog(false);
+                setPendingPathToPublic(null);
+            }}>Cancel</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
