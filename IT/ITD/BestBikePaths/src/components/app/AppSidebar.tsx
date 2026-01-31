@@ -10,18 +10,31 @@ import {
   LogOut,
   User,
   Menu,
+  LogInIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
 
-const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", to: "/app" },
-  { icon: Route, label: "Record Path", to: "/app/record" },
-  { icon: Map, label: "Explore Paths", to: "/app/explore" },
-  { icon: FolderOpen, label: "My Paths", to: "/app/my-paths" },
-];
+let isGuest = false;
+if(localStorage.getItem("guestMode") == "true"){
+  isGuest = true;
+}
+let navItems = [];
+if(isGuest){
+  navItems = [
+    { icon: Map, label: "Explore Paths", to: "/guest-app" },
+    { icon: LogInIcon, label: "SignIn", to: "/"}
+  ];
+}else{
+  navItems = [
+    { icon: LayoutDashboard, label: "Dashboard", to: "/app" },
+    { icon: Route, label: "Record Path", to: "/app/record" },
+    { icon: Map, label: "Explore Paths", to: "/app/explore" },
+    { icon: FolderOpen, label: "My Paths", to: "/app/my-paths" },
+  ];
+}
 
 const SidebarContent = ({ onNavClick }: { onNavClick?: () => void }) => {
   const { user, signOut } = useAuthStore();
@@ -70,31 +83,33 @@ const SidebarContent = ({ onNavClick }: { onNavClick?: () => void }) => {
 
       {/* User section */}
       <div className="p-4 border-t border-border">
-        <NavLink 
-          to="/app/settings"
-          onClick={onNavClick}
-          className="flex items-center gap-3 px-4 py-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
-        >
-          <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-            {user?.user_metadata?.avatar_url ? (
-                <img
-                  src={user.user_metadata.avatar_url}
-                  alt="User"
-                  className="w-10 h-10 rounded-full"
-                />
-              ) : (
-                <User className="w-5 h-5 text-primary" />
-              )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-foreground truncate">
-              {user?.user_metadata?.full_name || "User"}
-            </p>
-            <p className="text-xs text-muted-foreground truncate">
-              {user?.email}
-            </p>
-          </div>
-        </NavLink>
+        {!isGuest &&(
+          <NavLink 
+            to="/app/settings"
+            onClick={onNavClick}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+          >
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+              {user?.user_metadata?.avatar_url ? (
+                  <img
+                    src={user.user_metadata.avatar_url}
+                    alt="User"
+                    className="w-10 h-10 rounded-full"
+                  />
+                ) : (
+                  <User className="w-5 h-5 text-primary" />
+                )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground truncate">
+                {user?.user_metadata?.full_name || "User"}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {user?.email}
+              </p>
+            </div>
+          </NavLink>
+        )}
         <button 
           onClick={handleSignOut}
           className="flex items-center gap-3 px-4 py-3 mt-2 w-full rounded-xl text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all duration-200"

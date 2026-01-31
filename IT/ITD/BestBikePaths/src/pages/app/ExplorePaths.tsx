@@ -183,6 +183,11 @@ const ExplorePaths = () => {
     setIsSearching(false);
   }
 
+  let isGuest = false;
+  if(localStorage.getItem("guestMode") == "true"){
+    isGuest = true;
+  }
+
   return (
     <div className="mx-2 lg:mx-4 p-6 lg:p-8 space-y-8">
       {/* Header */}
@@ -246,7 +251,7 @@ const ExplorePaths = () => {
                   key={path.id}
                   className="border-border/50 hover:shadow-md transition-shadow cursor-pointer"
                   onClick={() => {
-                    if(localStorage.getItem("guestMode") == "true"){
+                    if(isGuest){
                       navigate(`/guest-app/guest-path/${path.id}`)
                     }else{
                       navigate(`/app/path/${path.id}`);

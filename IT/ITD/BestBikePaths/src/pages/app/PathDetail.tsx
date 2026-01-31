@@ -91,7 +91,6 @@ const PathDetail = () => {
       `)
       .eq('path_id', id);
       setActivities(aData || []);
-
       setLoading(false);
     };
     fetchData();
@@ -193,8 +192,8 @@ const PathDetail = () => {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-              {/* MAP & DESCRIPTION (Same as before) */}
+          <div className={isGuest ? "lg:col-span-3 space-y-6" : "lg:col-span-2 space-y-6"}>
+              {/* MAP & DESCRIPTION */}
               <Card className="overflow-hidden border-border/50 relative h-[450px]">
                 <BikeMap mode="view" recordedPath={pathData.path_data || []} initialCenter={pathData.path_data?.[0] || [45.4642, 9.1900]} hazards={mergedHazards} />
               </Card>
@@ -215,7 +214,7 @@ const PathDetail = () => {
                               <AlertTriangle className="w-4 h-4 text-orange-500" /> Detected Hazards ({mergedHazards.length})
                           </CardTitle>
                       </CardHeader>
-                      <ScrollArea className="h-[150px]">
+                      <ScrollArea className="h-[200px]">
                           <CardContent className="p-0">
                              {mergedHazards.length === 0 ? (
                                  <div className="p-4 text-center text-xs text-muted-foreground">No hazards reported.</div>
