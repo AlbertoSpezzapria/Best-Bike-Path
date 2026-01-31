@@ -61,9 +61,7 @@ const PathDetail = () => {
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<"performance" | "date" | "duration">("performance");
   const [isSaved, setIsSaved] = useState(false);
-  
-  // State for deletion dialog
-  const [activityToDelete, setActivityToDelete] = useState<string | null>(null);
+    const [activityToDelete, setActivityToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

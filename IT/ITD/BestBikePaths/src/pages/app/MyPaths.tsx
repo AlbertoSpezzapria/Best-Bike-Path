@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction } from "@/components/ui/alert-dialog";
 
 // --- WKT BUILDER ---
 const toWKT = (coords: [number, number][]) => {
@@ -27,6 +27,7 @@ const MyPaths = () => {
   const [showConflictDialog, setShowConflictDialog] = useState(false);
   const [conflictPath, setConflictPath] = useState<any>(null); 
   const [pendingPathToPublic, setPendingPathToPublic] = useState<any>(null); 
+  const [pathToDelete, setPathToDelete] = useState<any>(null);
   
   // Sort State
   const [sortOption, setSortOption] = useState<string>("date_desc");
@@ -176,24 +177,61 @@ const MyPaths = () => {
       setTogglingId(null);
   };
 
-  const handleDelete = async (e: React.MouseEvent, pathId: string, isSavedOnly: boolean) => {
-    e.stopPropagation();
+const handleDeleteFavorite = async (pathId: string) => {
+    if (!confirm("Remove from favorites?")) return;
+    const { error } = await supabase
+        .from('saved_paths')
+        .delete()
+        .eq('user_id', userId)
+        .eq('path_id', pathId);
     
-    if (isSavedOnly) {
-        if (!confirm("Remove from favorites?")) return;
-        const { error } = await supabase.from('saved_paths').delete().eq('user_id', userId).eq('path_id', pathId);
-        if (!error) { toast.success("Removed from favorites"); fetchData(); }
-    } else {
-        if (!confirm("Delete permanently? This will also remove associated leaderboards.")) return;
-        const { error } = await supabase.from('paths').delete().eq('id', pathId);
-        if (!error) { toast.success("Path deleted"); fetchData(); }
+    if (!error) { 
+        toast.success("Removed from favorites"); 
+        fetchData(); 
     }
-  };
+};
 
-  const handleMerge = async () => {
-    const { data: { user } } = await supabase.auth.getUser();    
-    if (!conflictPath || !pendingPathToPublic) return;
-    setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
+const confirmDeletePath = async () => {
+    if (!pathToDelete) return;
+    const pathId = pathToDelete.id;
+
+    // 1. Check utilizzo community
+    const { data: usageCount } = await supabase.rpc('get_path_community_usage', {
+        p_path_id: pathId,
+    });
+
+    if (usageCount > 0) {
+        toast.warning("Cannot delete", {
+            description: `This path is actively used by ${usageCount} other rider(s). It cannot be deleted.`
+        });
+        setPathToDelete(null);
+        return;
+    }
+
+    // 2. Cancellazione
+    const { error, count } = await supabase
+        .from('paths')
+        .delete()
+        .eq('id', pathId)
+        .eq('id_owner', userId) 
+        .select(); 
+
+    if (error) {
+        toast.error("Error deleting path.");
+    } else if (count === 0) {
+        toast.warning("Cannot delete", { description: "You don't have permission or path is protected." });
+    } else {
+        toast.success("Path deleted permanently");
+        fetchData();
+    }
+    setPathToDelete(null);
+};
+
+
+const handleMerge = async () => {
+const { data: { user } } = await supabase.auth.getUser();    
+if (!conflictPath || !pendingPathToPublic) return;
+setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
 
     try {
         // 1. Sposta le mie attività sul path pubblico esistente
@@ -306,11 +344,17 @@ const MyPaths = () => {
                     <Calendar className="w-3 h-3" /> {new Date(path.created_at).toLocaleDateString()}
                 </span>
             </div>
-
             <Button 
                 variant="ghost" size="icon" 
                 className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:bg-destructive/10"
-                onClick={(e) => handleDelete(e, path.id, isSavedView)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    if (isSavedView) {
+                        handleDeleteFavorite(path.id); // Funzione diretta per i preferiti
+                    } else {
+                        setPathToDelete(path); // Apre il Dialog per il percorso creato da te
+                    }
+                }}
             >
                 {isSavedView ? <Heart className="w-4 h-4 fill-current" /> : <Trash2 className="w-4 h-4" />}
             </Button>
@@ -425,6 +469,30 @@ const MyPaths = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      
+        {/* --- CONFIRM DELETE DIALOG --- */}
+        <AlertDialog open={!!pathToDelete} onOpenChange={(open) => !open && setPathToDelete(null)}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <AlertDialogTitle>Delete Path?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    Are you sure you want to delete <strong>"{pathToDelete?.name}"</strong>? 
+                    This will permanently remove the path and all its associated data. This action cannot be undone.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction 
+                    onClick={confirmDeletePath} 
+                    className="bg-red-600 hover:bg-red-700"
+                >
+                    Delete
+                </AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+        </AlertDialog>
+
+
     </div>
   );
 };

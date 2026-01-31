@@ -79,6 +79,18 @@ interface BikeMapProps {
 
 // --- 3. HELPER LOGIC ---
 
+function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; 
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+function deg2rad(deg: number) { return deg * (Math.PI / 180); }
+
 // Trova il punto più vicino sulla linea (Snapping)
 const findNearestPointOnLine = (clickLatLng: L.LatLng, polylinePoints: [number, number][]) => {
   let minDistance = Infinity;
@@ -273,16 +285,34 @@ const BikeMap = ({
     }
   };
 
-  const handleUndo = () => {
+const handleUndo = () => {
     if (waypoints.length === 0) return;
+
+    const removedWaypoint = waypoints[waypoints.length - 1];
     const newWaypoints = waypoints.slice(0, -1);
-    setWaypoints(newWaypoints);
     
+    setLocalHazards((prevHazards) => {
+      return prevHazards.filter((hazard) => {
+        const dist = getDistanceFromLatLonInKm(
+          hazard.location[0],
+          hazard.location[1],
+          removedWaypoint[0],
+          removedWaypoint[1]
+        );
+        return dist > 0.015; 
+      });
+    });
+
+    setWaypoints(newWaypoints);
+
     if (newWaypoints.length > 1) {
-        fetchRoute(newWaypoints); 
+      fetchRoute(newWaypoints); 
+    } else if (newWaypoints.length === 1) {
+      setRouteGeometry([]);
+      onPathChange?.([], 0, []); 
     } else {
       setRouteGeometry([]);
-      setLocalHazards([]); // Reset ostacoli se non c'è percorso
+      setLocalHazards([]); 
       onPathChange?.([], 0, []);
     }
   };

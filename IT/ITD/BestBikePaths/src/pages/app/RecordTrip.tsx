@@ -143,11 +143,16 @@ const RecordTrip = () => {
   const [matchedPath, setMatchedPath] = useState<{id: number, id_owner: String, name: string} | null>(null); 
   const [newPathForm, setNewPathForm] = useState({ name: "", description: "", isPublic: true });
 
-  const [weather, setWeather] = useState<WeatherData>({ temp: 0, condition: "--", wind: 0, humidity: 0 });
-
   const { isDebugMode, debugPathType } = useDebugStore();
 
   const handleStart = () => {
+    setLivePath([]); 
+    setStats({
+        distance: 0,
+        duration: 0,
+        currentSpeed: 0
+    });
+    
     setIsTracking(true);
     setStartTime(new Date());
 
@@ -170,7 +175,12 @@ const RecordTrip = () => {
 
         const updateSession = (newPos: [number, number]) => {
             setStats(prev => {
-                const dist = getDistanceFromLatLonInKm(currentPos[0], currentPos[1], newPos[0], newPos[1]);
+                let dist = 0;
+                if (livePath.length > 0) {
+                    const lastPos = livePath[livePath.length - 1];
+                    dist = getDistanceFromLatLonInKm(lastPos[0], lastPos[1], newPos[0], newPos[1]);
+                    if (dist > 1 && !isDebugMode) dist = 0;
+                }
                 return {
                     ...prev,
                     duration: prev.duration + 1,
@@ -181,7 +191,7 @@ const RecordTrip = () => {
             setCurrentPos(newPos);
             setLivePath(prev => [...prev, newPos]);
 
-            if (isDebugMode && Math.random() > 0.95) { 
+            if (isDebugMode && Math.random() > 0.85) { 
                  const types = ["pothole", "obstacle", "other"] as const;
                  const randomType = types[Math.floor(Math.random() * types.length)];
                  const newHazard: Hazard = {
@@ -198,7 +208,6 @@ const RecordTrip = () => {
         };
 
         // --- LOGICA DI SCELTA SORGENTE POSIZIONE ---
-        
         if (isDebugMode) {
             // DEBUG MODE
             let simPos: [number, number] | null = null;
@@ -223,7 +232,6 @@ const RecordTrip = () => {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const realPos: [number, number] = [position.coords.latitude, position.coords.longitude];
-                        // Update position with real data
                         updateSession(realPos);
                     },
                     (error) => {
@@ -242,7 +250,7 @@ const RecordTrip = () => {
       if (timerRef.current) clearInterval(timerRef.current);
     }
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [isTracking, isPaused, currentPos, isDebugMode, debugPathType]);
+  }, [isTracking, isPaused, currentPos, isDebugMode, debugPathType, livePath.length]);
 
   // --- STOP & CHECK ---
   const handleStopPress = async () => {
@@ -308,6 +316,16 @@ const RecordTrip = () => {
     setShowSaveDialog(false);
 
     try {
+        let finalWeather = { temp: 0, condition: "--", wind: 0, humidity: 0 };
+        if (livePath.length > 0) {
+            const lastPos = livePath[livePath.length - 1];
+            try {
+                finalWeather = await fetchWeather(lastPos[0], lastPos[1]);
+            } catch (wError) {
+                console.error("Weather fetch failed during save:", wError);
+            }
+        }
+
         const user = (await supabase.auth.getUser()).data.user;
         const wktString = toWKT(livePath); 
         
@@ -351,6 +369,7 @@ const RecordTrip = () => {
                 status: "good",
                 is_public: newPathForm.isPublic, 
                 id_owner: user?.id,
+                is_manual_setup: false
             };
             const { data: newPath, error: createError } = await supabase.from('paths').insert([pathPayload]).select().single();
             if (createError) throw createError;
@@ -373,7 +392,7 @@ const RecordTrip = () => {
             raw_data: livePath, 
             path: wktString,
             hazards: hazards, 
-            weather_data: weather,
+            weather_data: finalWeather,
             difficulty: difficulty,
             status: status
         };
@@ -413,9 +432,10 @@ const RecordTrip = () => {
             geom: wktString, 
             hazards: hazards,
             status: manualForm.status,
-            difficulty: manualForm.difficulty, // AGGIUNTO
+            difficulty: manualForm.difficulty, 
             is_public: manualForm.isPublic,
-            id_owner: user?.id
+            id_owner: user?.id,
+            is_manual_setup: true
         };
 
         const { error } = await supabase.from('paths').insert([dbPayload]);
