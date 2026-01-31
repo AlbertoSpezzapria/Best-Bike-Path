@@ -5,7 +5,7 @@ import BikeMap, { Hazard } from "@/components/BikeMap";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Loader2, Calendar, Route as RouteIcon, Trophy, User, Filter, Heart, Activity, AlertTriangle, BarChart3, Trash2 } from "lucide-react"; // Added Trash2
+import { ArrowLeft, Loader2, Calendar, Route as RouteIcon, Trophy, User, Filter, Heart, Activity, AlertTriangle, BarChart3, Trash2, ChevronRight } from "lucide-react"; // Added Trash2
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -266,51 +266,74 @@ const PathDetail = () => {
                       ) : (
                           <div className="divide-y">
                               {sortedActivities.map((act, index) => {
-                                  // CHECK IF CURRENT USER OWNS THIS ACTIVITY
                                   const isMe = currentUser && act.user_id === currentUser.id;
                                   
                                   return (
-                                      <div key={act.id} className={`p-3 flex items-center justify-between hover:bg-muted/20 transition-colors ${isMe ? "bg-primary/5 border-l-2 border-primary" : ""}`}>
-                                          <div className="flex items-center gap-3 overflow-hidden">
-                                              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${sortBy === 'performance' && index === 0 ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-200' : 'text-muted-foreground bg-muted'}`}>
-                                                  {index + 1}
-                                              </div>
-                                              <div className="overflow-hidden min-w-0">
-                                                  <p className="text-sm font-medium flex items-center gap-1 truncate">
-                                                        {isMe ? (
+                                    <div key={act.id} className={`p-3 flex items-center justify-between hover:bg-muted/20 transition-colors ${isMe ? "bg-primary/5 border-l-2 border-primary" : ""}`}>
+                                        {/* LATO SINISTRO: Posizione e Info Utente */}
+                                        <div className="flex items-center gap-3 overflow-hidden">
+                                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${sortBy === 'performance' && index === 0 ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-200' : 'text-muted-foreground bg-muted'}`}>
+                                                {index + 1}
+                                            </div>
+                                            <div className="overflow-hidden min-w-0">
+                                                <p className="text-sm font-medium flex items-center gap-1 truncate">
+                                                    {isMe ? (
                                                         <span className="text-primary font-bold">You</span>
-                                                        ) : (
+                                                    ) : (
                                                         <>
                                                             <User className="w-3 h-3" />
                                                             {act.profiles?.Surname || `Rider ${act.user_id.slice(0, 4)}`}
                                                         </>
-                                                        )}                                                  </p>
-                                                  <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                                                      {new Date(act.started_at).toLocaleDateString()}
-                                                  </p>
-                                              </div>
-                                          </div>
-                                          
-                                          <div className="flex items-center gap-3 shrink-0">
-                                              <div className="text-right">
-                                                  <p className="text-sm font-bold font-mono">{act.average_speed ? act.average_speed.toFixed(1) : '-'} <span className="text-[10px] font-normal text-muted-foreground">km/h</span></p>
-                                                  <p className="text-[10px] text-muted-foreground">{formatDuration(act.duration_second)}</p>
-                                              </div>
+                                                    )}
+                                                </p>
+                                                <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                                                    {new Date(act.started_at).toLocaleDateString()}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* LATO DESTRO: Statistiche e Pulsanti Azione */}
+                                        <div className="flex items-center gap-3 shrink-0">
+                                            {/* Statistiche */}
+                                            <div className="text-right hidden sm:block">
+                                                <p className="text-sm font-bold font-mono">
+                                                    {act.average_speed ? act.average_speed.toFixed(1) : '-'} <span className="text-[10px] font-normal text-muted-foreground">km/h</span>
+                                                </p>
+                                                <p className="text-[10px] text-muted-foreground">
+                                                    {formatDuration(act.duration_second)}
+                                                </p>
+                                            </div>
 
-                                              {/* DELETE BUTTON (Solo se è la mia attività) */}
-                                              {isMe && (
-                                                  <Button 
-                                                      variant="ghost" 
-                                                      size="icon" 
-                                                      className="h-8 w-8 text-muted-foreground hover:text-red-600 hover:bg-red-50"
-                                                      onClick={() => setActivityToDelete(act.id)}
-                                                  >
-                                                      <Trash2 className="w-4 h-4" />
-                                                  </Button>
-                                              )}
-                                          </div>
-                                      </div>
-                                  );
+                                            {/* GRUPPO PULSANTI */}
+                                            <div className="flex items-center gap-1">
+                                                
+                                                {/* 1. TASTO VAI A DETTAGLI (Nuovo) */}
+                                                <Button 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                                                    onClick={() => navigate('/app/activity/' + act.id)}
+                                                    title="View Details"
+                                                >
+                                                    <ChevronRight className="w-5 h-5" />
+                                                </Button>
+
+                                                {/* 2. TASTO ELIMINA (Solo se è mio) */}
+                                                {isMe && (
+                                                    <Button 
+                                                        variant="ghost" 
+                                                        size="icon" 
+                                                        className="h-8 w-8 text-muted-foreground hover:text-red-600 hover:bg-red-50"
+                                                        onClick={() => setActivityToDelete(act.id)}
+                                                        title="Delete Activity"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
                               })}
                           </div>
                       )}

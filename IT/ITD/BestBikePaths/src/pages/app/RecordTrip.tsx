@@ -368,7 +368,8 @@ const RecordTrip = () => {
             average_speed: stats.duration > 0 ? (stats.distance * 1000) / stats.duration : 0,
             raw_data: livePath, 
             path: wktString,
-            hazards: hazards 
+            hazards: hazards, 
+            weather_data: weather
         };
 
         const { error: activityError } = await supabase.from('activities').insert([activityPayload]);
