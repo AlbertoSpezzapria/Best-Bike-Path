@@ -11,6 +11,7 @@ import MyPaths from "./pages/app/MyPaths";
 import Settings from "./pages/app/Settings";
 import PathDetail from "./pages/app/PathDetail";
 import Login from "./pages/Login";
+import ActivityDetail from "./pages/app/ActivityDetail";
 
 import { useEffect } from "react";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -51,6 +52,7 @@ const App = () => {
               <Route path="my-paths" element={<MyPaths />} />
               <Route path="settings" element={<Settings />} />
               <Route path="path/:id" element={<PathDetail />} />
+              <Route path="activity/:id" element={<ActivityDetail />} />
             </Route>
             <Route path="/guest-app" element={<AppLayout />}>
               <Route index element={<ExplorePaths/>}/>

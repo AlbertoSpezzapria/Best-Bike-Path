@@ -7,14 +7,16 @@ export interface WeatherData {
 
 // Mappa codici WMO (World Meteorological Organization) a testo leggibile
 const getWeatherCondition = (code: number): string => {
-  if (code === 0) return "Clear Sky";
-  if (code >= 1 && code <= 3) return "Partly Cloudy";
-  if (code >= 45 && code <= 48) return "Fog";
-  if (code >= 51 && code <= 67) return "Rain";
-  if (code >= 71 && code <= 77) return "Snow";
-  if (code >= 80 && code <= 82) return "Showers";
-  if (code >= 95) return "Thunderstorm";
-  return "Unknown";
+  const codes: Record<number, string> = {
+    0: "Clear Sky",
+    1: "Mainly Clear", 2: "Partly Cloudy", 3: "Overcast",
+    45: "Fog", 48: "Depositing Rime Fog",
+    51: "Light Drizzle", 53: "Moderate Drizzle", 55: "Dense Drizzle",
+    61: "Slight Rain", 63: "Moderate Rain", 65: "Heavy Rain",
+    71: "Slight Snow", 73: "Moderate Snow", 75: "Heavy Snow",
+    95: "Thunderstorm", 96: "Thunderstorm with Hail"
+  };
+  return codes[code] || "Unknown";
 };
 
 export const fetchWeather = async (lat: number, lon: number): Promise<WeatherData> => {
