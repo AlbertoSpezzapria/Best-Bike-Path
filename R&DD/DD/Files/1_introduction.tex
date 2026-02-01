@@ -82,16 +82,22 @@ The system interacts with external services, specifically third-party \textbf{we
 \section{Revision History}
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|p{10cm}|}
+    \renewcommand{\arraystretch}{1.5} 
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c|p{11cm}|} 
         \hline
         \textbf{Version} & \textbf{Date} & \textbf{Description} \\
         \hline
         1.0 & 22/12/2025 & Initial release of the document. \\
         \hline
         2.0 & 01/02/2026 & Major updates and fixes: \newline
-        - Updated User Interface mockups (\textit{Section 3.1}) to the Phone version. \\
+        - Updated User Interface mockups (\textit{Section 3.1}) to the Phone version. \newline
+        - Revised \textit{Section 2.3} to include detailed component interfaces. \newline
+        - Revised DB and Edge Functions section to match the final implementation. \newline
+        - Added definitive list of implemented RLS policies in \textit{Table 2.1}. \\
         \hline
-    \end{tabular}
+    \end{tabular}%
+    }
     \caption{Revision History}
     \label{tab:revision_history}
 \end{table}
