@@ -17,24 +17,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
 
-let isGuest = false;
-if(localStorage.getItem("guestMode") == "true"){
-  isGuest = true;
-}
-let navItems = [];
-if(isGuest){
-  navItems = [
-    { icon: Map, label: "Explore Paths", to: "/guest-app" },
-    { icon: LogInIcon, label: "SignIn", to: "/"}
-  ];
-}else{
-  navItems = [
-    { icon: LayoutDashboard, label: "Dashboard", to: "/app" },
-    { icon: Route, label: "Record Path", to: "/app/record" },
-    { icon: Map, label: "Explore Paths", to: "/app/explore" },
-    { icon: FolderOpen, label: "My Paths", to: "/app/my-paths" },
-  ];
-}
+import { getSidebarItems } from "@/config/navigation";
+
+let isGuest = localStorage.getItem("guestMode") === "true";
+const navItems = getSidebarItems(isGuest);
 
 const SidebarContent = ({ onNavClick }: { onNavClick?: () => void }) => {
   const { user, signOut } = useAuthStore();
