@@ -1,0 +1,128 @@
+\documentclass[a4paper,11pt]{report}
+\input{commandsFile}
+\usepackage{multirow}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Definizione colori per il codice
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95, 0.95, 0.95}
+
+% Stile generale del blocco codice
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single
+}
+
+\begin{document}
+
+%TITLE PAGE
+
+\begin{titlepage}
+
+
+%LOGO
+
+{\begin{table}[t!]
+\centering
+\begin{tabu} to \textwidth { X[1.3,r,p] X[1.7,l,p] }
+\textcolor{Blue}
+{\textbf{\small{Best Bike Paths, Luca Suzani, Alberto Spezzapria, Alessio Pesavento}}} & \includegraphics[scale=0.5]{Images/PolimiLogo}
+\end{tabu}
+\end{table}}~\\ [7cm]
+
+%TITLE 
+
+\begin{flushleft}
+
+%Replace the text string with your title
+{\textcolor{Blue}{\textbf{\Huge{ITD Document}}}} \\ [1cm]
+
+\end{flushleft}
+
+\end{titlepage}
+
+%Define deliverable specific info
+%Replace cell contents where needed
+\begin{table}[h!]
+\begin{tabu} to \textwidth { X[0.3,r,p] X[0.7,l,p] }
+\hline
+
+\textbf{Deliverable:} & ITD\\
+\textbf{Title:} & ITD Document \\
+\textbf{Authors:} & Luca Suzani, Alberto Spezzapria, Alessio Pesavento \\
+\textbf{Version:} & 1.0 \\ 
+\textbf{Date:} & 01-February-2026 \\
+\textbf{Download page:} & https://github.com/Alessio01103/PesaventoSpezzapriaSuzani.git \\
+\textbf{Copyright:} & Copyright © 2026, Luca Suzani, Alberto Spezzapria, Alessio Pesavento – All rights reserved \\
+\hline
+\end{tabu}
+\end{table}
+
+\setcounter{page}{2}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\addcontentsline{toc}{section}{Table of Contents}
+\tableofcontents
+\newpage
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Introduction}}
+\label{sect:introduction}
+\input{Files/1_introduction}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Implemented Requirements and Functions}}
+\label{sect:implemented_requirements_and_functions}
+\input{Files/2_implemented_requirements_functions}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Adopted Development Frameworks and Technologies}}
+\label{sect:adopted_frameworks_and_technologies}
+\input{Files/3_adopted_frameworks_technologies}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Source Code Structure}}
+\label{sect:source_code_structure}
+\input{Files/4_source_code_structure}
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Testing}}
+\label{sect:testing}
+\input{Files/5_testing}
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{{Installation Instructions}}
+\label{sect:installation_instructions}
+\input{Files/6_installation_instructions}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\chapter{Effort Spent}
+\label{sect:effort}
+\input{Files/7_effort}
+
+\end{document}
