@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 FEB 2026 15:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 FEB 2026 16:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -611,23 +611,81 @@ Chapter 4.
 
 ]
 Chapter 5.
-(./Files/5_testing.tex)
+(./Files/5_testing.tex
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Underfull \hbox (badness 2600) in paragraph at lines 17--17
+[]|\T1/ptm/b/n/10.95 Partial Match / De-vi-a-tion: \T1/ptm/m/n/10.95 User
+ []
+
+
+Underfull \hbox (badness 1515) in paragraph at lines 19--19
+\T1/ptm/m/n/10.95 ex-ist-ing path start-ing from the end
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 19--19
+[]|\T1/ptm/m/n/10.95 The al-go-rithm (us-ing un-directed
+ []
+
+
+Overfull \hbox (3.09274pt too wide) in paragraph at lines 11--22
+ [][] 
+ []
+
+
+Underfull \hbox (badness 3250) in paragraph at lines 36--36
+[]|\T1/ptm/m/n/10.95 The dele-tion pro-ceeds suc-cess-fully.
+ []
+
+
+Underfull \hbox (badness 1383) in paragraph at lines 38--38
+[]|\T1/ptm/b/n/10.95 Protected Dele-tion: \T1/ptm/m/n/10.95 An owner at-
+ []
+
+
+Underfull \hbox (badness 2409) in paragraph at lines 38--38
+[]|\T1/ptm/m/n/10.95 The database re-jects the op-er-a-tion.
+ []
+
+
+Overfull \hbox (0.67271pt too wide) in paragraph at lines 32--43
+ [][] 
+ []
+
+
 
 [10
 
 
-]
+{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
+Overfull \hbox (6.13675pt too wide) in paragraph at lines 53--62
+ [][] 
+ []
+
+)
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[11]
 Chapter 6.
 (./Files/6_installation_instructions.tex)
 
-[11
+[12
 
 
 ]
 Chapter 7.
 (./Files/7_effort.tex)
 
-[12
+[13
 
 
 ] (./main.aux)
@@ -636,21 +694,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 349C9F0B24B7C8EB7394379A97BCC56F;1530.
+(rerunfilecheck)             Checksum: 2D7E91A35AC8127D3EBADB6B8F914D47;2419.
  ) 
 Here is how much of TeX's memory you used:
- 15855 strings out of 473190
- 249357 string characters out of 5715800
- 661688 words of memory out of 5000000
- 38820 multiletter control sequences out of 15000+600000
- 586173 words of font info for 76 fonts, out of 8000000 for 9000
+ 15922 strings out of 473190
+ 250425 string characters out of 5715800
+ 663871 words of memory out of 5000000
+ 38871 multiletter control sequences out of 15000+600000
+ 595386 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,98p,394b,616s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (12 pages, 48008 bytes).
+ 94i,20n,98p,496b,616s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on main.pdf (13 pages, 98109 bytes).
 PDF statistics:
- 133 PDF objects out of 1000 (max. 8388607)
- 111 compressed objects within 2 object streams
- 26 named destinations out of 1000 (max. 500000)
- 86 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 181 PDF objects out of 1000 (max. 8388607)
+ 152 compressed objects within 2 object streams
+ 34 named destinations out of 1000 (max. 500000)
+ 118 words of extra memory for PDF output out of 10000 (max. 10000000)
 
