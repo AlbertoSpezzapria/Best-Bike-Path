@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  1 FEB 2026 22:20
-=======
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  1 FEB 2026 20:23
->>>>>>> dfaeec9162196382f3b6920d8d264644a1b02c01
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.10)  1 FEB 2026 22:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-<<<<<<< HEAD
 **"c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/IT/ITD/ITD_Documentation/main.tex"
 (c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/IT/ITD/ITD_Documentation/main.tex
 LaTeX2e <2025-11-01>
@@ -16,16 +11,6 @@ L3 programming layer <2025-10-24>
 Document Class: report 2025/01/22 v1.4n Standard LaTeX document class
 (c:/texlive/2025/texmf-dist/tex/latex/base/size11.clo
 File: size11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
-=======
-**main.tex
-(./main.tex
-LaTeX2e <2024-11-01> patch level 2
-L3 programming layer <2025-01-18>
-(/usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
-Document Class: report 2024/06/29 v1.4n Standard LaTeX document class
-(/usr/local/texlive/2025/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
->>>>>>> dfaeec9162196382f3b6920d8d264644a1b02c01
 )
 \c@part=\count275
 \c@chapter=\count276
@@ -673,13 +658,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[2] (./main.toc)
+[2] (./main.toc [3
+
+])
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
- [3
 
-]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -882,7 +867,6 @@ Underfull \hbox (badness 5787) in paragraph at lines 73--73
 []|\T1/ptm/b/n/10.95 Passive Can-cel-la-tion: \T1/ptm/m/n/10.95 User
  []
 
-)
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -891,8 +875,56 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [22]
+Underfull \hbox (badness 1365) in paragraph at lines 101--101
+\T1/ptm/m/n/10.95 firm-ing that \T1/lmtt/m/n/10.95 geo_match_score \T1/ptm/m/n/10.95 and
+ []
+
+
+Underfull \hbox (badness 1430) in paragraph at lines 101--101
+\T1/lmtt/m/n/10.95 geo_match_score_rev \T1/ptm/m/n/10.95 are han-dled
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--101
+[]|$\OML/cmm/m/it/10.95 P[]$ \T1/ptm/m/n/10.95 ranks sig-nif-i-cantly higher
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--101
+\T1/ptm/m/n/10.95 than $\OML/cmm/m/it/10.95 P[]$\T1/ptm/m/n/10.95 . This val-i-dates the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--101
+\T1/lmtt/m/n/10.95 freshnessFactor \T1/ptm/m/n/10.95 (ex-po-nen-tial
+ []
+
+
+Underfull \hbox (badness 3364) in paragraph at lines 101--101
+[]|\T1/ptm/b/n/10.95 Geometric Prox-im-ity: \T1/ptm/m/n/10.95 User
+ []
+
+
+Underfull \hbox (badness 1565) in paragraph at lines 101--101
+\T1/ptm/m/n/10.95 ex-actly at $\OML/cmm/m/it/10.95 O=D$\T1/ptm/m/n/10.95 . Path $\OML/cmm/m/it/10.95 P[]$
+ []
+
+
+Underfull \hbox (badness 2205) in paragraph at lines 101--101
+[]|\T1/ptm/b/n/10.95 Result Lim-it-ing: \T1/ptm/m/n/10.95 Per-form a
+ []
+
+)
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[23]
 Chapter 6.
-(./Files/6_installation_instructions.tex [23
+(./Files/6_installation_instructions.tex [24
 
 
 ])
@@ -903,9 +935,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[24]
+[25]
 Chapter 7.
-(./Files/7_effort.tex) [25
+(./Files/7_effort.tex) [26
 
 
 ] (./main.aux)
@@ -914,33 +946,21 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D47AC589A07CA31414F4D3522C1A2F66;6320.
+(rerunfilecheck)             Checksum: 3CB21A34275FA5818445CCCE849F7EA7;6528.
  ) 
 Here is how much of TeX's memory you used:
-<<<<<<< HEAD
- 16403 strings out of 467538
- 253375 string characters out of 5423724
- 1208211 words of memory out of 5000000
- 44767 multiletter control sequences out of 15000+600000
+ 16408 strings out of 467538
+ 253460 string characters out of 5423724
+ 1209272 words of memory out of 5000000
+ 44769 multiletter control sequences out of 15000+600000
  669081 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  92i,20n,96p,927b,2077s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (25 pages, 210511 bytes).
-=======
- 16008 strings out of 473190
- 251581 string characters out of 5715800
- 667948 words of memory out of 5000000
- 38912 multiletter control sequences out of 15000+600000
- 598234 words of font info for 85 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 94i,20n,98p,790b,721s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (21 pages, 158379 bytes).
->>>>>>> dfaeec9162196382f3b6920d8d264644a1b02c01
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (26 pages, 233688 bytes).
 PDF statistics:
- 619 PDF objects out of 1000 (max. 8388607)
- 568 compressed objects within 6 object streams
- 273 named destinations out of 1000 (max. 500000)
- 302 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 640 PDF objects out of 1000 (max. 8388607)
+ 584 compressed objects within 6 object streams
+ 276 named destinations out of 1000 (max. 500000)
+ 310 words of extra memory for PDF output out of 10000 (max. 10000000)
 

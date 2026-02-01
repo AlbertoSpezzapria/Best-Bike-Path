@@ -32,13 +32,14 @@
 \contentsline {subsection}{\numberline {5.1.1}Geospatial Path Recognition}{21}{subsection.5.1.1}%
 \contentsline {subsection}{\numberline {5.1.2}Community Integrity and Data Protection}{21}{subsection.5.1.2}%
 \contentsline {subsection}{\numberline {5.1.3}Privacy and Workflow Consistency}{22}{subsection.5.1.3}%
-\contentsline {chapter}{\numberline {6}{Installation Instructions}}{23}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Installation and Configuration}{23}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Prerequisites}{23}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Getting the Source Code}{23}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Frontend Setup}{23}{subsection.6.1.3}%
-\contentsline {subsubsection}{Installing Dependencies}{23}{section*.20}%
-\contentsline {subsection}{\numberline {6.1.4}Environment and Database Connection}{24}{subsection.6.1.4}%
-\contentsline {subsubsection}{Pre-configured Credentials}{24}{section*.21}%
-\contentsline {subsection}{\numberline {6.1.5}Running the Application}{24}{subsection.6.1.5}%
-\contentsline {chapter}{\numberline {7}Effort Spent}{25}{chapter.7}%
+\contentsline {subsection}{\numberline {5.1.4}Ranking Algorithm Validation}{23}{subsection.5.1.4}%
+\contentsline {chapter}{\numberline {6}{Installation Instructions}}{24}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Installation and Configuration}{24}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Prerequisites}{24}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Getting the Source Code}{24}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Frontend Setup}{24}{subsection.6.1.3}%
+\contentsline {subsubsection}{Installing Dependencies}{24}{section*.21}%
+\contentsline {subsection}{\numberline {6.1.4}Environment and Database Connection}{25}{subsection.6.1.4}%
+\contentsline {subsubsection}{Pre-configured Credentials}{25}{section*.22}%
+\contentsline {subsection}{\numberline {6.1.5}Running the Application}{25}{subsection.6.1.5}%
+\contentsline {chapter}{\numberline {7}Effort Spent}{26}{chapter.7}%

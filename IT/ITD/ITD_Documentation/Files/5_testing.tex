@@ -74,3 +74,31 @@ WRK-05 & \textbf{Passive Cancellation:} User chooses ``Keep Private'' during a p
 \caption{Privacy and Workflow Logic Test Cases}
 \label{tab:workflow_tests}
 \end{table}
+
+\subsection{Ranking Algorithm Validation}
+
+This subsection verifies the multi-variable scoring formula implemented in the \texttt{func\_path\_search} Edge Function. The tests isolate specific factors (Geometry, Status, Freshness) to ensure each component correctly influences the final sorting order.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|p{5cm}|p{6cm}|c|}
+\hline
+\textbf{ID} & \textbf{Test Scenario} & \textbf{Expected Outcome} & \textbf{Result} \\
+\hline
+RNK-01 & \textbf{Direction Invariance:} Perform a search $A \rightarrow B$ and then immediately $B \rightarrow A$. & The system returns identical scores for the same path in both directions, confirming that \texttt{geo\_match\_score} and \texttt{geo\_match\_score\_rev} are handled symmetrically. & \textbf{Pass} \\
+\hline
+RNK-02 & \textbf{Status Weighting:} Two paths have identical geometry and update timestamps. Path $P_{opt}$ is "Optimal", Path $P_{suff}$ is "Sufficient". & $P_{opt}$ appears higher in the list. The score difference reflects the status multiplier (1.0 vs 0.6), proving the quality attribute is active. & \textbf{Pass} \\
+\hline
+RNK-03 & \textbf{Data Freshness (Time Decay):} Two identical paths with "Good" status exist. Path $P_{new}$ was updated today, Path $P_{old}$ was updated 1 year ago. & $P_{new}$ ranks significantly higher than $P_{old}$. This validates the \texttt{freshnessFactor} (exponential decay), ensuring users are directed to recently verified routes. & \textbf{Pass} \\
+\hline
+RNK-04 & \textbf{Geometric Proximity:} User searches for a route from point $O$ to $D$. Path $P_{near}$ starts/ends exactly at $O/D$. Path $P_{far}$ starts/ends 500m away. & $P_{near}$ obtains a higher geometric score ($e^{-0.001 \times distance}$) compared to $P_{far}$, confirming that the algorithm prioritizes paths that minimize the distance to the user's requested endpoints. & \textbf{Pass} \\
+\hline
+RNK-05 & \textbf{Result Limiting:} Perform a broad search in a dense area with 50+ potential paths. & The API returns exactly the top 10 results sorted by score descending, validating the performance limit logic. & \textbf{Pass} \\
+\hline
+\end{tabular}%
+}
+\caption{Ranking Algorithm Test Cases}
+\label{tab:ranking_tests_extended}
+\end{table}
