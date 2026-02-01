@@ -1,0 +1,30 @@
+\section{Implemented Requirements}
+This section outlines the requirements satisfied by the current implementation, details those that were excluded, and describes the additional functionalities introduced.
+
+\subsection{Implemented Functional Requirements}
+\begin{itemize}
+    \item \textbf{User Management (R1, R2, R4):} Users can choose to register and log in or access the application as a guest.
+    \item \textbf{Activity Recording (R5, R6, R7, R10, R11):} Users can start, pause, and stop the recording of their activity. The system calculates basic statistics (such as speed) and tracks the route via GPS in real-time.
+    \item \textbf{Route Creation (R12, R13 [partial], R14, R15, R17, R18, R19):} Upon completion of an activity, detected obstacles are displayed (note: these are currently simulated/fictitious) and can be deleted by the user. A new route is created from the completed activity, subject to a matching process with existing routes to prevent duplication. Once created, routes are saved to "My Paths".
+    \item \textbf{Manual Creation (R20, R21, R22):} Users can manually create a route by drawing it on the map, with the ability to report obstacles and define the route status. Upon completion, the route is saved to "My Paths".
+    \item \textbf{Search and Visualization (R23, R25):} Users can search for routes by specifying a starting point and a destination. Results are sorted in descending order based on the score assigned by the search algorithm.
+    \item \textbf{Route Management (R28, R29):} Users can publish their own routes. Once a route is published, it is considered immutable and can no longer be deleted or updated.
+\end{itemize}
+
+\subsection{Excluded or Partially Implemented Functionalities}
+Functionalities excluded in accordance with the project assignment specifications:
+\begin{itemize}
+    \item \textbf{Automatic Obstacle Detection (R8, R9):} Detection via accelerometer/gyroscope was excluded. Validation is partial as data is not automatically detected but simulated. Furthermore, velocity checks to confirm cycling patterns are disabled, primarily because the mocking function generates activities faster than actual cycling speeds.
+    \item \textbf{Merge Logic (R16, R26, R27):} The complex logic for merging reports to update the status of public routes has been excluded, along with the general management of user reports.
+\end{itemize}
+
+Functionalities excluded to focus on the project's core features:
+\begin{itemize}
+    \item \textbf{Route Search Filter (R24):} Routes are filtered only within a fixed radius from the origin and destination points, excluding the ability for the user to customize filter parameters.
+    \item \textbf{Credential Management (R3):} The modification of credentials was excluded as registration and authentication are handled exclusively via Google OAuth.
+\end{itemize}
+
+\subsection{Additional Functionalities}
+\begin{itemize}
+    \item \textbf{Fictitious Route Generation (Mocking):} Implementation of a simulated route generator that creates plausible GPS tracks with pre-inserted obstacles. The primary purpose is to enable the demonstration of the "Activity Recording", "Statistics Visualization", "Map Interaction", and "Activity Completion and Automatic Route Creation" flows without physical movement. Additionally, this feature facilitates the development and testing of the aforementioned workflows.
+\end{itemize}

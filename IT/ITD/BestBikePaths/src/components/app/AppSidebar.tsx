@@ -17,14 +17,33 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
 
+<<<<<<< HEAD
+=======
 import { getSidebarItems } from "@/config/navigation";
 
 let isGuest = localStorage.getItem("guestMode") === "true";
 const navItems = getSidebarItems(isGuest);
 
+>>>>>>> 06cba6686ff98cddbb2978cda9aeff167877e21f
 const SidebarContent = ({ onNavClick }: { onNavClick?: () => void }) => {
   const { user, signOut } = useAuthStore();
   const navigate = useNavigate();
+  const isGuest = localStorage.getItem("guestMode") === "true";
+
+  let navItems = [];
+  if(isGuest){
+    navItems = [
+      { icon: Map, label: "Explore Paths", to: "/guest-app" },
+      { icon: LogInIcon, label: "SignIn", to: "/"}
+    ];
+  }else{
+    navItems = [
+      { icon: LayoutDashboard, label: "Dashboard", to: "/app" },
+      { icon: Route, label: "Record Path", to: "/app/record" },
+      { icon: Map, label: "Explore Paths", to: "/app/explore" },
+      { icon: FolderOpen, label: "My Paths", to: "/app/my-paths" },
+    ];
+  }
 
   const handleSignOut = async () => {
     await signOut();
