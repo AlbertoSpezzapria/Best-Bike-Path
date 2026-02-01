@@ -1,0 +1,51 @@
+\section{Adopted Programming Languages}
+
+For the development of the \textbf{BestBikePaths} platform, the architecture of choice is a \textbf{Progressive Web App (PWA)}. This technology bridges the gap between traditional web applications and native mobile software. By utilizing a web app manifest, the platform can be installed directly onto a user's device, providing a native-like cross-platform experience from a single codebase. This approach significantly optimizes the development lifecycle, testing procedures, and long-term maintenance.
+
+While PWAs can occasionally encounter limitations regarding offline data persistence and deep hardware integration, current technological standards provide robust solutions to these challenges:
+
+\begin{itemize}
+    \item \textbf{Connection Resilience:} Through the implementation of \textbf{Service Workers}, the application can intercept network requests and manage advanced caching strategies, ensuring that core functionalities remain available even in offline environments.
+    \item \textbf{Hardware Integration:} Regarding access to system sensors (such as the accelerometer, camera, or microphone), frameworks like \textbf{Capacitor} offer a solution by providing a standardized interface between web code and the native APIs of iOS and Android, effectively addressing interoperability constraints.
+\end{itemize}
+
+\subsection*{TypeScript: Advantages and Disadvantages}
+
+The application was developed using \textbf{TypeScript}, a superset of JavaScript that introduces static typing. Its adoption within the project is justified by the following technical analysis:
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Static Typing and Reliability:} TypeScript allows for the detection of type-related errors during the compilation phase rather than at runtime. This leads to more stable code and a significant reduction in production bugs.
+    \item \textbf{Maintainability and Scalability:} The use of explicit interfaces and custom types ensures the codebase is self-documenting. This facilitates collaborative development and simplifies the process of scaling the application as new features are added.
+    \item \textbf{Enhanced Developer Tooling:} TypeScript provides superior IDE support, including advanced autocompletion, precise navigation, and safer refactoring, which collectively increase development velocity.
+\end{itemize}
+
+\subsubsection*{Disadvantages}
+\begin{itemize}
+    \item \textbf{Transpilation Requirement:} TypeScript cannot be executed natively by web browsers. It requires a compilation (transpilation) step into JavaScript, which adds complexity to the automated build pipeline.
+    \item \textbf{Learning Curve:} Proper implementation of strict typing and advanced architectural patterns requires a higher level of technical expertise compared to standard JavaScript.
+    \item \textbf{Initial Verbosity:} The requirement to explicitly define data structures results in more boilerplate code during the early stages of development, which can slightly increase the time required for rapid prototyping.
+\end{itemize}
+
+\section{Middleware}
+
+\subsection*{Serverless Logic and Infrastructure: Supabase Edge Functions}
+
+To handle server-side business logic and third-party integrations, the project utilizes \textbf{Supabase Edge Functions}. These are serverless TypeScript functions executed across a distributed Edge Network—a global infrastructure of nodes (Points of Presence) designed to process data at the "edge" of the internet, physically closer to the end-user than traditional centralized cloud servers.
+
+The adoption of this architecture provides several strategic advantages and some trade-offs:
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Minimal Latency:} By executing logic on the edge node nearest to the user, the application significantly reduces data travel time, ensuring a highly responsive experience for mobile users in motion.
+    \item \textbf{Enhanced Security:} Edge Functions provide a secure environment to manage private API keys and sensitive validation logic, keeping them isolated from the client-side environment.
+    \item \textbf{Automated Scalability:} The serverless nature of the infrastructure allows it to scale dynamically with traffic, removing the need for manual server provisioning or maintenance.
+    \item \textbf{Native Ecosystem Integration:} Full compatibility with Supabase Auth and PostgreSQL enables the seamless implementation of complex workflows, such as secure data processing and automated notifications.
+\end{itemize}
+
+\subsubsection*{Disadvantages}
+\begin{itemize}
+    \item \textbf{Cold Starts:} Infrequently used functions may encounter a minor delay during the initial invocation as the execution environment warms up.
+    \item \textbf{Resource Limits:} Compared to traditional dedicated servers, Edge Functions operate within stricter memory and execution time constraints.
+    \item \textbf{Distributed Debugging:} Testing and monitoring logic across a global network can be more complex than managing a centralized, monolithic backend.
+\end{itemize}

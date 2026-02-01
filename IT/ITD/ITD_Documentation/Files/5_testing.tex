@@ -1,0 +1,64 @@
+\section{Testing and Validation}
+
+The implementation has undergone a rigorous testing phase focusing on the geospatial algorithms, data integrity constraints, and user permission logic (Row Level Security). The following subsections detail the critical test scenarios designed to validate the core functionalities: path similarity recognition, community usage protection, and the public/private data workflow.
+
+\subsection{Geospatial Path Recognition}
+This module verifies the system's ability to identify if a newly recorded activity matches an existing path in the database using the PostGIS-powered \texttt{check\_path\_similarity} RPC function.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|p{6cm}|p{6cm}|c|}
+\hline
+\textbf{ID} & \textbf{Test Scenario} & \textbf{Expected Outcome} & \textbf{Result} \\
+\hline
+GEO-01 & \textbf{Perfect Match:} User records an activity that strictly follows the geometry of an existing public path within the 50m tolerance buffer. & The system identifies the existing path ID. The UI displays a ``Match Found'' dialog, prompting the user to link the activity to the existing path instead of creating a new one. & \textbf{Pass} \\
+\hline
+GEO-02 & \textbf{Partial Match / Deviation:} User records a track that overlaps with an existing path for 40\% of the length but deviates significantly for the rest. & The system returns no match (null). The UI prompts the user to create a new path with a new name and description. & \textbf{Pass} \\
+\hline
+GEO-03 & \textbf{Reverse Direction:} User traverses an existing path starting from the end point to the start point. & The algorithm (using un-directed Hausdroff distance or spatial buffering) recognizes the path regardless of the direction. & \textbf{Pass} \\
+\hline
+\end{tabular}
+\caption{Geospatial Similarity Test Cases}
+\label{tab:geo_tests}
+\end{table}
+
+\subsection{Community Integrity and Data Protection}
+These tests validate the logic governed by the \texttt{get\_path\_community\_usage} function and RLS policies, ensuring that public resources used by the community cannot be destroyed by the original creator.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|p{6cm}|p{6cm}|c|}
+\hline
+\textbf{ID} & \textbf{Test Scenario} & \textbf{Expected Outcome} & \textbf{Result} \\
+\hline
+SEC-01 & \textbf{Safe Deletion:} An owner attempts to delete a path that has 0 associated activities from other users. & The deletion proceeds successfully. The path and the owner's personal activities are removed (Cascade delete). & \textbf{Pass} \\
+\hline
+SEC-02 & \textbf{Protected Deletion:} An owner attempts to delete a public path that has been used by at least one other rider (Activity count $> 0$). & The database rejects the operation. The frontend displays a warning toast: ``Cannot delete: Path is actively used by X riders''. The path remains persistent. & \textbf{Pass} \\
+\hline
+SEC-03 & \textbf{Privatization Attempt:} An owner attempts to switch a path from Public to Private while it has community activities. & The operation is blocked to prevent breaking data visibility for other users who have activities linked to that path. & \textbf{Pass} \\
+\hline
+\end{tabular}
+\caption{Community Integrity Test Cases}
+\label{tab:integrity_tests}
+\end{table}
+
+\subsection{Public/Private Workflow and Merging}
+This section tests the user experience when transitioning a private activity into the public domain, ensuring data redundancy is minimized.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|p{6cm}|p{6cm}|c|}
+\hline
+\textbf{ID} & \textbf{Test Scenario} & \textbf{Expected Outcome} & \textbf{Result} \\
+\hline
+WRK-01 & \textbf{Redundancy Check:} User attempts to publish a private activity. The system runs a background check and finds an identical public path exists. & The system interrupts the creation flow and offers a choice: 1) Merge activity into the existing path, or 2) Create a duplicate path. & \textbf{Pass} \\
+\hline
+WRK-02 & \textbf{Merge Execution:} User chooses to ``Merge'' their activity into the existing public path. & No new row is created in the \texttt{paths} table. The activity's \texttt{path\_id} is updated to point to the existing public path. Statistics are aggregated. & \textbf{Pass} \\
+\hline
+\end{tabular}
+\caption{Workflow Logic Test Cases}
+\label{tab:workflow_tests}
+\end{table}

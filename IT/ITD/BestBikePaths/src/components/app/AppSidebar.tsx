@@ -17,6 +17,14 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
 
+<<<<<<< HEAD
+=======
+import { getSidebarItems } from "@/config/navigation";
+
+let isGuest = localStorage.getItem("guestMode") === "true";
+const navItems = getSidebarItems(isGuest);
+
+>>>>>>> 06cba6686ff98cddbb2978cda9aeff167877e21f
 const SidebarContent = ({ onNavClick }: { onNavClick?: () => void }) => {
   const { user, signOut } = useAuthStore();
   const navigate = useNavigate();
