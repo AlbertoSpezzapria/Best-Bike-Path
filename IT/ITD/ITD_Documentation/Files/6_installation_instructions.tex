@@ -1,0 +1,62 @@
+\section{Installation and Configuration}
+\label{chap:installation}
+
+This chapter provides a comprehensive guide to setting up the development environment, configuring the backend services, and deploying the application locally. The source code is version-controlled and hosted on GitHub.
+
+\subsection{Prerequisites}
+Before proceeding with the installation, ensure that the following software is installed on the local machine:
+
+\begin{itemize}
+    \item \textbf{Node.js} (Version 18.0 or higher): Required for the React runtime environment.
+    \item \textbf{npm} (Node Package Manager) or \textbf{yarn}: Required for dependency management.
+    \item \textbf{Git}: Required for cloning the repository.
+    \item \textbf{Supabase Account}: Required to provision the PostgreSQL database and authentication services.
+\end{itemize}
+
+\subsection{Getting the Source Code}
+The complete source code for the \textit{Best Bike Path} application is hosted on GitHub. To begin, clone the main repository to your local workspace and navigate to the web application directory:
+
+\begin{verbatim}
+$ git clone https://github.com/Alessio01103/PesaventoSpezzapriaSuzani.git
+$ cd PesaventoSpezzapriaSuzani/IT/ITD/BestBikePaths
+\end{verbatim}
+
+All subsequent commands (installation, startup) must be executed from within this \texttt{BestBikePaths} directory.
+
+\subsection{Frontend Setup}
+
+\subsubsection{Installing Dependencies}
+Once inside the project directory, install the required node modules defined in the \texttt{package.json} file. This includes the React framework, UI components (shadcn/ui), mapping libraries (Leaflet), and Supabase client SDKs.
+
+\begin{verbatim}
+$ npm install
+\end{verbatim}
+
+\subsection{Environment and Database Connection}
+
+The application relies on environment variables to communicate with the Supabase backend (PostgreSQL database and Authentication services).
+
+\subsubsection{Pre-configured Credentials}
+To facilitate the testing and evaluation process, the repository \textbf{already includes} the \texttt{.env} file populated with the necessary API credentials:
+
+\begin{verbatim}
+VITE_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY
+\end{verbatim}
+
+Therefore, \textbf{no manual configuration is required} to connect to the database. The application is pointed to a shared testing instance of Supabase populated with mock data for demonstration purposes.
+
+\begin{quotation}
+\textbf{Note on Security Best Practices:} \\
+We explicitly acknowledge that committing sensitive credentials (such as API Keys) to a version control system is considered a security anti-pattern in production environments. 
+However, for the specific scope of this academic project, we consciously chose to include the configuration file to ensure immediate reproducibility and eliminate setup friction for the evaluation committee. The exposed keys grant access only to a sandbox environment containing non-sensitive test data.
+\end{quotation}
+
+\subsection{Running the Application}
+Since the database connection is pre-configured, you can immediately start the local development server:
+
+\begin{verbatim}
+$ npm run dev
+\end{verbatim}
+
+The application will be accessible at \texttt{http://localhost:8080}.

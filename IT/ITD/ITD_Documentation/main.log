@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 FEB 2026 18:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 FEB 2026 19:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -565,29 +565,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [3
 
-] (./main.lof)
-\tf@lof=\write5
-\openout5 = `main.lof'.
-
-
-
-[4
-
-] (./main.lot)
-\tf@lot=\write6
-\openout6 = `main.lot'.
-
-
-
-[5
-
-]
-Chapter 1.
-(./Files/1_introduction.tex
-
-[6
-
-
 ]
 
 
@@ -597,7 +574,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[7]
+[4] (./main.lof)
+\tf@lof=\write5
+\openout5 = `main.lof'.
+
+
+
+[5
+
+] (./main.lot)
+\tf@lot=\write6
+\openout6 = `main.lot'.
+
+
+
+[6
+
+]
+Chapter 1.
+(./Files/1_introduction.tex
+
+[7
+
+
+]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -607,6 +607,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [8]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[9]
 Overfull \hbox (5.64731pt too wide) in paragraph at lines 123--124
 []\T1/ptm/b/n/10.95 For lin-guis-tic re-vi-sion: \T1/ptm/m/n/10.95 We in-put para-graphs or en-tire sec-tions writ-ten by us in Ital-ian/English,
  []
@@ -620,7 +629,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9])
+[10])
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -629,11 +638,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10]
+[11]
 Chapter 2.
 (./Files/2_implemented_requirements_functions.tex
 
-[11
+[12
 
 
 ])
@@ -645,11 +654,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[12]
+[13]
 Chapter 3.
 (./Files/3_adopted_frameworks_technologies.tex
 
-[13
+[14
 
 
 ])
@@ -661,7 +670,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14]
+[15]
 Chapter 4.
 (./Files/4_source_code_structure.tex
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1.
@@ -669,7 +678,7 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1.
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ))
 
-[15
+[16
 
 
 {/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
@@ -711,7 +720,7 @@ Overfull \hbox (0.67271pt too wide) in paragraph at lines 35--46
 
 
 
-[16
+[17
 
 
 ]
@@ -753,18 +762,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[17]
+[18]
 Chapter 6.
-(./Files/6_installation_instructions.tex)
+(./Files/6_installation_instructions.tex
 
-[18
+[19
 
 
-]
+])
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[20]
 Chapter 7.
 (./Files/7_effort.tex)
 
-[19
+[21
 
 
 ] (./main.aux)
@@ -773,21 +791,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D7DD6595399BA25F1BA032A2AD9DE409;4985.
+(rerunfilecheck)             Checksum: D637E4F933197BFAD596FD2667214CFD;6073.
  ) 
 Here is how much of TeX's memory you used:
- 15988 strings out of 473190
- 251403 string characters out of 5715800
- 667890 words of memory out of 5000000
- 38901 multiletter control sequences out of 15000+600000
+ 16009 strings out of 473190
+ 251774 string characters out of 5715800
+ 667948 words of memory out of 5000000
+ 38912 multiletter control sequences out of 15000+600000
  598234 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,98p,668b,736s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (19 pages, 149703 bytes).
+Output written on main.pdf (21 pages, 157867 bytes).
 PDF statistics:
- 317 PDF objects out of 1000 (max. 8388607)
- 277 compressed objects within 3 object streams
- 68 named destinations out of 1000 (max. 500000)
- 246 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 360 PDF objects out of 1000 (max. 8388607)
+ 317 compressed objects within 4 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 294 words of extra memory for PDF output out of 10000 (max. 10000000)
 
