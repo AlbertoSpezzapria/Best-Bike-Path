@@ -1,0 +1,9 @@
+The codebase is engineered to promote modularity and scalability, ensuring that individual components can be updated or reused without compromising the integrity of the entire system. A strict separation of concerns has been enforced by organizing the project into distinct directories, effectively decoupling UI elements, business logic, and external service integrations. All core PWA source code is contained within the \texttt{src} directory, structured as follows:
+
+\begin{description}
+    \item[Components:] This directory contains both bespoke project components and those derived from the \textbf{shadcn/ui} library. The \texttt{ui} subfolder is reserved for the foundational shadcn library components, while the \texttt{app} subfolder and the root of the directory house custom-built elements.
+    \item[Hooks:] This folder contains custom React Hooks, which encapsulate reusable logic to maintain clean components. They are specifically utilized for \textbf{Device Detection} (adapting the UI for mobile vs. desktop) and \textbf{Toast Notifications} (managing system feedback).
+    \item[Pages:] This directory follows a file-based routing logic, containing the main views of the application. The \texttt{app} subfolder organizes core views such as the \textbf{Dashboard}, \textbf{ExplorePaths}, and \textbf{RecordTrip}, ensuring a clear mapping between URL paths and UI controllers.
+    \item[Stores:] This directory houses global state management logic (e.g., via Zustand). Key files include \texttt{useAuthStore.ts} for authentication states and \texttt{useDebugStore.ts} for development-time performance monitoring.
+    \item[Lib:] Dedicated to utility functions and service configurations. It includes \texttt{utils.ts} for shared helpers and specialized modules like \texttt{weatherService.ts}, which abstracts the logic for processing external meteorological data.
+\end{description}
