@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 PWD c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/IT/ITD/ITD_Documentation
 INPUT c:/texlive/2025/texmf.cnf
 INPUT c:/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT c:/Users/Hp/Desktop/Universita/Software_Engineering/Software Engineering 2/Progetto/PesaventoSpezzapriaSuzani/IT/ITD/ITD_Documentation/main.tex
+=======
+PWD /Users/alepesa/Library/Mobile Documents/com~apple~CloudDocs/Università/2025-2026/Software Engineering 2/PesaventoSpezzapriaSuzani/IT/ITD/ITD_Documentation
+INPUT /usr/local/texlive/2025/texmf.cnf
+INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT main.tex
+>>>>>>> dfaeec9162196382f3b6920d8d264644a1b02c01
 OUTPUT main.log
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/report.cls
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/report.cls
