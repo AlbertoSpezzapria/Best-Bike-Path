@@ -260,7 +260,8 @@ const BikeMap = ({
   return (
     <div className="relative w-full h-full group overflow-hidden rounded-xl border border-border/50 bg-muted/20">
       
-      {/* SEARCH BAR */}
+      {/* SEARCH BAR - Only in Edit Mode */}
+      {mode === "edit" && (
       <div className={`absolute top-4 left-4 z-[1000] flex flex-col gap-2 transition-all duration-300 ${isSearchOpen ? "w-[85%] sm:w-[320px]" : "w-auto"}`}>
         <div className="flex gap-2">
             {!isSearchOpen ? (
@@ -295,6 +296,7 @@ const BikeMap = ({
             )}
         </div>
       </div>
+      )}
 
       {/* EDITOR TOOLBAR */}
       {mode === "edit" && (
