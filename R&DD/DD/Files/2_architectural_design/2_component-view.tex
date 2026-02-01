@@ -32,43 +32,47 @@ This section details the software components within the Client and Cloud tiers, 
     \item \textbf{Object Storage:} A specialized file storage system for large binary assets, such as user profile pictures or images attached to path reports.
 \end{itemize}
 
-\subsection{Edge Functions}
-These are stateless functions triggered by database events or scheduled cron jobs:
+\subsection{Backend Logic: Database Functions and Edge Functions}
+The system architecture differentiates between \textbf{Database Functions} (RPC and Triggers), which handle data-intensive geospatial operations, and \textbf{Edge Functions}, which manage external requests and orchestration.
+
+\subsubsection{Database Functions (RPC and Triggers)}
+The following functions are implemented within the PostgreSQL engine to leverage PostGIS spatial indexing and ensure data integrity:
+
 \begin{itemize}
-    \item \texttt{func\_path\_merging}
+    \item \texttt{check\_path\_similarity}
     \begin{itemize}
-        \item \textbf{Trigger:} Database event (INSERT on \texttt{Activities} or \texttt{Feedbacks} table).
-        \item \textbf{Responsibility:} It implements the \textbf{Data Consolidation \& Consensus Logic}. When new data (an activity trace or a manual report) is associated with a path, this function aggregates it with existing reports to determine the path's \texttt{CurrentCondition}. It applies a \textbf{Majority Voting Algorithm} weighted by data freshness (e.g., resolving a conflict where 3 recent reports say "Good" and 1 says "Bad" by marking the segment as "Good") to ensure the status reflects the actual road situation.
+        \item \textbf{Type:} Remote Procedure Call (RPC).
+        \item \textbf{Parameters:} \texttt{new\_geom\_wkt} (Text), \texttt{tolerance\_meters} (Default: 50), \texttt{length\_tolerance\_pct} (Default: 0.2).
+        \item \textbf{Responsibility:} Implements the \textbf{Geometric Integrity Control}. It compares a newly recorded or drawn track against the existing database using Fréchet distance and length heuristics. It returns a table of similar paths, enabling the system to prevent duplicates or suggest merging activities into existing community paths.
     \end{itemize}
 
+    \item \texttt{get\_path\_community\_usage}
+    \begin{itemize}
+        \item \textbf{Type:} Security Function (Definer).
+        \item \textbf{Responsibility:} Analyzes the usage of a specific path by checking the number of activities linked to it by users other than the owner. This is a critical \textbf{Data Protection} mechanism: if a path is actively used by the community, the original creator is restricted from deleting it or switching it to private mode.
+    \end{itemize}
+
+    \item \texttt{search\_best\_paths\_rpc}
+    \begin{itemize}
+        \item \textbf{Type:} Geospatial RPC.
+        \item \textbf{Responsibility:} Core of the \textbf{Search Algorithm}. It identifies candidate paths within a spatial buffer between the origin and destination coordinates. It calculates a match score based on how well the path's geometry aligns with the requested route, returning a ranked list of the best available options.
+    \end{itemize}
+
+    \item \texttt{handle\_new\_user}
+    \begin{itemize}
+        \item \textbf{Type:} Auth Trigger.
+        \item \textbf{Responsibility:} Automatically manages the creation of user profiles in the public schema upon a successful authentication event, ensuring consistent user management.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Edge Functions}
+These are serverless, stateless functions used for client-side interaction and external API orchestration:
+
+\begin{itemize}
     \item \texttt{func\_path\_search}
     \begin{itemize}
         \item \textbf{Trigger:} Direct Client Request.
-        \item \textbf{Responsibility:} It implements the \textbf{Search \& Ranking Algorithm} defined in the RASD. When a user queries for a route (specifying Origin and Destination), this function:
-        \begin{itemize}
-            \item Performs a spatial query to find candidate paths connecting the points.
-            \item Dynamically calculates a \textbf{Suitability Score} for each candidate. This score combines the \textbf{Geospatial match} (how well it fits the requested Start/End points) with the \textbf{Path Quality} (derived from the consolidated feedback and applying a time-decay factor to older data).
-            \item Returns the list of paths ordered by this score.
-        \end{itemize}
-    \end{itemize}
-
-    \item \texttt{func\_maintenance\_job}
-    \begin{itemize}
-        \item \textbf{Trigger:} Scheduled Cron Job (e.g., Nightly).
-        \item \textbf{Responsibility:} Periodically applies the \textbf{Time-Decay Function} to the database. It archives or lowers the weight of very old reports/feedbacks to ensure that the \texttt{func\_path\_search} always prioritizes fresh information without needing to process the entire history during every query.
-    \end{itemize}
-
-    \item \texttt{func\_weather\_enricher}
-    \begin{itemize}
-        \item \textbf{Trigger:} Database event (INSERT on \texttt{Activities}).
-        \item \textbf{Responsibility:} It securely calls external Meteorological APIs (using backend-only API keys) to fetch weather conditions for the specific time and location of the activity, enriching the path metadata.
-    \end{itemize}
-
-    \item \texttt{func\_path\_deduplication}
-    \begin{itemize}
-        \item \textbf{Trigger:} Direct Client Request (RPC via check\_path\_duplicate)
-        \item \textbf{Responsibility:} It implements the \textbf{Geometric Integrity Control Logic.} 
-        Before a new manual path is saved to the database, this function receives the geometry drawn by the user and executes a high-performance spatial query to verify the existence of already present public paths that are geometrically identical or extremely similar. It returns the validation result to the client, preventing the creation of redundant duplicates and ensuring path uniqueness within the system.
+        \item \textbf{Responsibility:} Acts as an \textbf{API Gateway} for the path search feature. It receives coordinates from the client, validates the request, and invokes the internal \texttt{search\_best\_paths\_rpc}. This separation allows for future implementation of multi-source data enrichment (e.g., combining database results with external routing engine data) before returning the ranked results to the UI.
     \end{itemize}
 \end{itemize}
 

@@ -723,7 +723,7 @@ const RecordTrip = () => {
 
       {/* --- SAVE DIALOG (TRACKING) --- */}
       <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent onCloseClick={resetTrackingSession} className="max-w-lg max-h-[90vh] overflow-y-auto">
             <DialogHeader>
                 <DialogTitle className={matchedPath ? "text-emerald-600 flex items-center gap-2" : ""}>
                     {matchedPath 

@@ -32,6 +32,75 @@ The system is composed of two main logical nodes:
 Since clients communicate directly with the database, security is enforced at the database layer using Row Level Security (RLS) policies.
 Upon login, the Auth Service issues a JSON Web Token (JWT) to the client, which is included in every database query. The database engine evaluates RLS policies for each row to determine if the operation is permitted. This ensures that "direct access" does not imply "unrestricted access", maintaining strict data isolation and integrity.
 
+The following table summarizes the RLS policies implemented to secure the core entities of the application.
+
+% Inizio Longtable (non serve l'ambiente table)
+\begin{small} % Riduce leggermente il font per far stare tutto meglio
+\renewcommand{\arraystretch}{1.5} % Spaziatura righe leggibile
+\begin{longtable}{|p{0.18\textwidth}|p{0.12\textwidth}|p{0.15\textwidth}|p{0.45\textwidth}|}
+\caption{Row Level Security (RLS) Implementation Matrix} \label{tab:rls_policies} \\
+
+% --- Intestazione Prima Pagina ---
+\hline
+\textbf{Table} & \textbf{Role} & \textbf{Operation} & \textbf{Policy Description} \\ 
+\hline
+\endfirsthead
+
+% --- Intestazione Pagine Successive (se la tabella si spezza) ---
+\multicolumn{4}{c}{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline
+\textbf{Table} & \textbf{Role} & \textbf{Operation} & \textbf{Policy Description} \\ 
+\hline
+\endhead
+
+% --- Footer Pagine Intermedie ---
+\hline \multicolumn{4}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+% --- Footer Ultima Pagina ---
+\hline
+\endlastfoot
+
+% --- CONTENUTO TABELLA ---
+
+% ACTIVITIES TABLE
+\multirow{5}{*}{\textbf{activities}} 
+& Public & SELECT & \textbf{Public Access:} Any user (authenticated or anonymous) can view activities marked as public for leaderboard purposes. \\
+& Auth & SELECT & \textbf{Own Data Read:} Authenticated users can view their own activity history (including private ones). \\
+& Auth & INSERT & \textbf{Creation:} Authenticated users can record new activities linked to their \texttt{user\_id}. \\
+& Auth & UPDATE & \textbf{Modification:} Users can edit metadata (e.g., description) only for activities they own. \\
+& Auth & DELETE & \textbf{Deletion:} Users can permanently delete their own activity logs. \\ 
+\hline
+
+% PATHS TABLE
+\multirow{6}{*}{\textbf{paths}} 
+& Public & SELECT & \textbf{Community Read:} Anyone can view paths marked as \texttt{is\_public = true}. \\
+& Auth & SELECT & \textbf{Private Read:} Users can view their own private paths (where \texttt{id\_owner = auth.uid()}). \\
+& Auth & INSERT & \textbf{Creation:} Authenticated users can create new paths. \\
+& Auth & UPDATE & \textbf{Ownership Update:} Users can modify details (e.g., status, difficulty) of paths they own. \\
+& Auth & DELETE & \textbf{Safe Deletion:} Users can delete their own paths \textit{only if} the path has not been used/linked by other users (enforced via the \texttt{get\_path\_community\_usage} function). \\
+& Auth & DELETE & \textbf{Private Clean-up:} Users can always delete their own private paths. \\
+\hline
+
+% PROFILES TABLE
+\multirow{3}{*}{\textbf{profiles}} 
+& Auth & SELECT & \textbf{Self Read:} Users can view their own profile data. \\
+& Auth & INSERT & \textbf{Onboarding:} Users can insert their profile row during the signup process. \\
+& Auth & UPDATE & \textbf{Self Edit:} Users can update their own profile information (avatar, bio, etc.). \\ 
+\hline
+
+% SAVED_PATHS TABLE
+\multirow{3}{*}{\textbf{saved\_paths}} 
+& Auth & SELECT & \textbf{Favorites Read:} Users can view their own list of saved/favorite paths. \\
+& Auth & INSERT & \textbf{Bookmark:} Users can add a public path to their favorites list. \\
+& Auth & DELETE & \textbf{Un-bookmark:} Users can remove a path from their favorites list. \\ 
+
+\end{longtable}
+\end{small}
+
+\paragraph{Critical Security Constraint: Path Deletion}
+A specific custom policy is applied to the \texttt{DELETE} operation on the \texttt{paths} table. To preserve community data integrity, an owner cannot delete a public path if it has active associations with other users' activities. This conditional logic is implemented using the SQL helper function \texttt{get\_path\_community\_usage(id)}.
+
 \subsection{Platform-Specific Feature Availability}
 While the Client Application is developed as a Progressive Web App (PWA) with a shared codebase, the feature set varies depending on the deployment target (Mobile vs Web) due to hardware access constraints:
 \begin{itemize}
