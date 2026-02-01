@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Play, Pause, Square, Navigation, Gauge, Clock, Route,
   Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock, CheckCircle, AlertTriangle, Trash2, MapPin,
-  UserSquare, AlertCircle, CheckCircle2, ThumbsDown, ThumbsUp, Activity
+  UserSquare, AlertCircle, CheckCircle2, ThumbsDown, ThumbsUp, Activity, User
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -85,6 +85,8 @@ const MOCK_ROUTE: [number, number][] = [
     [45.46450, 9.19205],
 ];
 
+const user = (await supabase.auth.getUser()).data.user;
+
 // --- MATH HELPERS ---
 function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371; 
@@ -126,6 +128,7 @@ const RecordTrip = () => {
 
   // Hazards State (Used for both Manual and Auto-detected)
   const [hazards, setHazards] = useState<Hazard[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   // Manual Form State
   const [manualDistance, setManualDistance] = useState<number>(0);
@@ -144,6 +147,17 @@ const RecordTrip = () => {
   const [newPathForm, setNewPathForm] = useState({ name: "", description: "", isPublic: true });
 
   const { isDebugMode, debugPathType } = useDebugStore();
+  const [linkToExisting, setLinkToExisting] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+        if (data?.user) {
+            setCurrentUserId(data.user.id);
+        }
+    });
+  }, []);
+
+  const isOwnPath = matchedPath?.id_owner === currentUserId;
 
   const handleStart = () => {
     setLivePath([]); 
@@ -253,7 +267,7 @@ const RecordTrip = () => {
   }, [isTracking, isPaused, currentPos, isDebugMode, debugPathType, livePath.length]);
 
   // --- STOP & CHECK ---
-  const handleStopPress = async () => {
+const handleStopPress = async () => {
     setIsTracking(false);
     setIsPaused(true); 
     
@@ -267,18 +281,39 @@ const RecordTrip = () => {
     try {
         const wktString = toWKT(livePath);
         
-        // RPC Call
+        // 1. Chiamata RPC
         const { data: matchedPaths, error } = await supabase.rpc('check_path_similarity', { 
             new_geom_wkt: wktString,
             tolerance_meters: 50,
-            length_tolerance_pct: 0.1
+            length_tolerance_pct: 0.2
         });
 
         if (error) console.error("Check error:", error);
 
         if (matchedPaths && matchedPaths.length > 0) {
-            setMatchedPath(matchedPaths[0]);
+            // --- LOGICA DI PRIORITÀ ---
+            // Cerchiamo se tra i risultati c'è un percorso che appartiene GIÀ all'utente
+            const myExistingPath = matchedPaths.find((p: any) => p.id_owner === user?.id);
+            
+            // Se trovo il MIO percorso, uso quello come match definitivo. 
+            // Altrimenti uso il primo risultato (che sarà il percorso pubblico migliore)
+            const bestMatch = myExistingPath || matchedPaths[0];
+
+            setMatchedPath(bestMatch);
+            setLinkToExisting(true); // Reset, linkiamo di default
+
+            // Se il match NON è mio, preparo il form per l'eventuale copia privata
+            // (Se è mio, questo non serve perché il Dialog nasconderà l'opzione di copia)
+            if (bestMatch.id_owner !== user?.id) {
+                setNewPathForm({
+                    name: bestMatch.name,
+                    description: bestMatch.description || "Private copy",
+                    isPublic: false
+                });
+            }
+
         } else {
+            // NESSUN MATCH -> Nuovo Percorso
             setMatchedPath(null);
             const today = new Date().toLocaleDateString();
             setNewPathForm({
@@ -289,6 +324,7 @@ const RecordTrip = () => {
         }
         setShowSaveDialog(true);
     } catch (e) {
+        console.error(e);
         toast.error("Error analyzing the path.");
     } finally {
         setIsCheckingPath(false);
@@ -326,13 +362,12 @@ const RecordTrip = () => {
             }
         }
 
-        const user = (await supabase.auth.getUser()).data.user;
         const wktString = toWKT(livePath); 
         
         let targetPathId: number;
         let targetPathName: string;
 
-        if (matchedPath) {
+        if (matchedPath && linkToExisting) {
             // MATCH FOUND
             targetPathId = matchedPath.id;
             targetPathName = matchedPath.name;
@@ -367,7 +402,7 @@ const RecordTrip = () => {
                 geom: wktString,
                 hazards: hazards, 
                 status: "good",
-                is_public: newPathForm.isPublic, 
+                is_public: (matchedPath && !linkToExisting) ? false : newPathForm.isPublic,
                 id_owner: user?.id,
                 is_manual_setup: false
             };
@@ -745,11 +780,15 @@ const RecordTrip = () => {
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
             <DialogHeader>
                 <DialogTitle className={matchedPath ? "text-emerald-600 flex items-center gap-2" : ""}>
-                    {matchedPath ? <><CheckCircle className="w-5 h-5" /> Path Recognized!</> : "New Path Detected"}
+                    {matchedPath 
+                        ? (isOwnPath ? <><User className="w-5 h-5" /> Welcome Back!</> : <><CheckCircle className="w-5 h-5" /> Path Recognized!</>)
+                        : "New Path Detected"}
                 </DialogTitle>
                 <DialogDescription>
                     {matchedPath 
-                        ? "Your track matches an existing public path. Your stats will be added to the leaderboard." 
+                        ? (isOwnPath 
+                            ? `You are recording an activity on your path "${matchedPath.name}".`
+                            : "Your track matches an existing public path. Link your activity to compare stats?")
                         : "You explored a new area! Give this track a name to save it."}
                 </DialogDescription>
             </DialogHeader>
@@ -758,13 +797,67 @@ const RecordTrip = () => {
                 
                 {/* 1. PATH IDENTITY */}
                 {matchedPath ? (
-                    <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900 rounded-lg flex flex-col gap-1">
-                        <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">Linking Activity to:</span>
-                        <span className="text-lg font-bold text-emerald-900 dark:text-emerald-100 flex items-center gap-2">
-                            <MapPin className="w-4 h-4" /> {matchedPath.name}
-                        </span>
+                    <div className="space-y-4">
+                        <div className={`p-4 border rounded-lg flex flex-col gap-3 transition-colors ${linkToExisting ? 'bg-emerald-50 border-emerald-200 dark:bg-emerald-950/20 dark:border-emerald-900' : 'bg-muted/30 border-border'}`}>
+                            
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                                        {isOwnPath ? "Your Path" : "Community Path"}
+                                    </span>
+                                    <div className="flex items-center gap-2 font-bold text-lg text-foreground">
+                                        <MapPin className="w-4 h-4 text-emerald-600" /> 
+                                        {matchedPath.name}
+                                    </div>
+                                </div>
+
+                                {/* SWITCH OPT-OUT (Visibile solo se NON è il mio percorso) */}
+                                {!isOwnPath ? (
+                                    <div className="flex flex-col items-end gap-1">
+                                        <div className="flex items-center gap-2">
+                                            <Label htmlFor="link-mode" className="text-xs cursor-pointer font-medium">Link Activity</Label>
+                                            <Switch 
+                                                id="link-mode"
+                                                checked={linkToExisting}
+                                                onCheckedChange={setLinkToExisting}
+                                                className="data-[state=checked]:bg-emerald-600"
+                                            />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    /* Se è mio, mostriamo un badge fisso */
+                                    <div className="px-2 py-1 bg-background/50 rounded text-xs font-medium text-emerald-600 border border-emerald-200 dark:border-emerald-800">
+                                        Auto-Linked
+                                    </div>
+                                )}
+                            </div>
+
+                            {!linkToExisting && !isOwnPath && (
+                                <div className="text-xs text-muted-foreground bg-background/50 p-2 rounded border border-dashed border-border">
+                                    You are creating a <strong>private copy</strong>. Your stats won't appear on the public leaderboard.
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Input per copia privata (Solo se NON è mio e ho spento lo switch) */}
+                        {!linkToExisting && !isOwnPath && (
+                            <div className="space-y-4 p-4 border rounded-lg bg-muted/20 animate-in fade-in slide-in-from-top-2">
+                                <div className="space-y-2">
+                                    <Label className="flex items-center gap-2">
+                                        Private Copy Name
+                                        <Lock className="w-3 h-3 text-amber-500" />
+                                    </Label>
+                                    <Input 
+                                        value={newPathForm.name} 
+                                        onChange={(e) => setNewPathForm({...newPathForm, name: e.target.value})}
+                                        placeholder="Name your private version..."
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 ) : (
+                    // --- CASO: NUOVO PERCORSO (NO MATCH) ---
                     <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
                         <div className="space-y-2">
                             <Label>Path Name</Label>

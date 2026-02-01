@@ -281,11 +281,10 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
     }
   };
 
-  const handleDuplicate = async () => {
-     if (pendingPathToPublic) {
-         await performUpdate(pendingPathToPublic.id, true);
-     }
+  const handleKeepPrivate = () => {
      setShowConflictDialog(false);
+     setPendingPathToPublic(null);
+     toast.info("Action cancelled. Path remains private.");
   };
 
   // Reusable Card Component
@@ -420,9 +419,11 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
             )}
         </TabsContent>
       </Tabs>
-
-      {/* --- CONFLICT DIALOG (PRIVATE -> PUBLIC) --- */}
-      <AlertDialog open={showConflictDialog} onOpenChange={setShowConflictDialog}>
+       
+    {/* --- CONFLICT DIALOG (PRIVATE -> PUBLIC) --- */}
+      <AlertDialog open={showConflictDialog} onOpenChange={(open) => {
+          if (!open) handleKeepPrivate(); // Chiudendo dall'esterno equivale a "Keep Private"
+      }}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2 text-amber-600">
@@ -431,41 +432,43 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
             <AlertDialogDescription>
               We found an existing public path <strong>"{conflictPath?.name}"</strong> that matches your route perfectly.
               <br /><br />
-              Do you want to merge your activities into the existing public leaderboard (recommended) or publish yours as a separate duplicate?
+              To maintain a clean leaderboard, <strong>we do not allow duplicate public paths</strong>.
+              You can merge your activity into the existing leaderboard, or keep your path private.
             </AlertDialogDescription>
           </AlertDialogHeader>
           
           <div className="flex flex-col gap-3 my-2">
-             {/* Opzione 1: Merge */}
+             {/* Opzione 1: Merge (Action) */}
              <button 
                 onClick={handleMerge}
-                className="flex items-center gap-3 p-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors text-left group"
+                className="flex items-center gap-3 p-3 rounded-lg border border-emerald-200 bg-emerald-50 dark:bg-emerald-950/20 dark:border-emerald-900 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors text-left group"
              >
-                <div className="bg-primary/20 p-2 rounded-full group-hover:bg-primary/30"><Merge className="w-4 h-4 text-primary" /></div>
+                <div className="bg-emerald-200 dark:bg-emerald-800 p-2 rounded-full group-hover:scale-110 transition-transform">
+                    <Merge className="w-4 h-4 text-emerald-800 dark:text-emerald-100" />
+                </div>
                 <div>
                     <p className="font-bold text-sm text-foreground">Merge & Delete Mine</p>
-                    <p className="text-xs text-muted-foreground">Link your rides to the existing leaderboard. Keeps the map clean.</p>
+                    <p className="text-xs text-muted-foreground">Join the existing leaderboard. Your private path will be removed.</p>
                 </div>
              </button>
 
-             {/* Opzione 2: Duplicate */}
+             {/* Opzione 2: Keep Private (Passive/Cancel) */}
              <button 
-                onClick={handleDuplicate}
+                onClick={handleKeepPrivate}
                 className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors text-left group"
              >
-                <div className="bg-muted p-2 rounded-full group-hover:bg-muted/80"><Copy className="w-4 h-4" /></div>
+                <div className="bg-muted p-2 rounded-full group-hover:bg-gray-300 dark:group-hover:bg-gray-700 transition-colors">
+                    <Lock className="w-4 h-4 text-muted-foreground" />
+                </div>
                 <div>
-                    <p className="font-bold text-sm text-foreground">Create Duplicate</p>
-                    <p className="text-xs text-muted-foreground">Publish my path anyway with its own separate leaderboard.</p>
+                    <p className="font-bold text-sm text-foreground">Keep Private</p>
+                    <p className="text-xs text-muted-foreground">Cancel publication. Only you can see this path.</p>
                 </div>
              </button>
           </div>
 
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => {
-                setShowConflictDialog(false);
-                setPendingPathToPublic(null);
-            }}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={handleKeepPrivate}>Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -1,9 +1,11 @@
-\section{Testing and Validation}
+\section{Testing}
 
-The implementation has undergone a rigorous testing phase focusing on the geospatial algorithms, data integrity constraints, and user permission logic (Row Level Security). The following subsections detail the critical test scenarios designed to validate the core functionalities: path similarity recognition, community usage protection, and the public/private data workflow.
+The implementation has undergone a rigorous testing phase focusing on the geospatial algorithms, data integrity constraints, user permission logic (Row Level Security), and privacy-aware workflows.  
+The following subsections describe the main validation scenarios designed to ensure correctness, usability, and protection of community data.
 
 \subsection{Geospatial Path Recognition}
-This module verifies the system's ability to identify if a newly recorded activity matches an existing path in the database using the PostGIS-powered \texttt{check\_path\_similarity} RPC function.
+
+This module verifies the system's ability to identify whether a newly recorded activity matches an existing path in the database using the PostGIS-powered \texttt{check\_path\_similarity} RPC function.
 
 \begin{table}[H]
 \centering
@@ -12,11 +14,11 @@ This module verifies the system's ability to identify if a newly recorded activi
 \hline
 \textbf{ID} & \textbf{Test Scenario} & \textbf{Expected Outcome} & \textbf{Result} \\
 \hline
-GEO-01 & \textbf{Perfect Match:} User records an activity that strictly follows the geometry of an existing public path within the 50m tolerance buffer. & The system identifies the existing path ID. The UI displays a ``Match Found'' dialog, prompting the user to link the activity to the existing path instead of creating a new one. & \textbf{Pass} \\
+GEO-01 & \textbf{Perfect Match:} User records an activity that strictly follows the geometry of an existing public path within the 50m tolerance buffer. & The system identifies the existing path ID. The UI displays a ``Match Found'' dialog prompting the user to link the activity to the existing path instead of creating a new one. & \textbf{Pass} \\
 \hline
 GEO-02 & \textbf{Partial Match / Deviation:} User records a track that overlaps with an existing path for 40\% of the length but deviates significantly for the rest. & The system returns no match (null). The UI prompts the user to create a new path with a new name and description. & \textbf{Pass} \\
 \hline
-GEO-03 & \textbf{Reverse Direction:} User traverses an existing path starting from the end point to the start point. & The algorithm (using un-directed Hausdroff distance or spatial buffering) recognizes the path regardless of the direction. & \textbf{Pass} \\
+GEO-03 & \textbf{Reverse Direction:} User traverses an existing path starting from the end point to the start point. & The algorithm recognizes the path regardless of the traversal direction. & \textbf{Pass} \\
 \hline
 \end{tabular}
 \caption{Geospatial Similarity Test Cases}
@@ -24,7 +26,8 @@ GEO-03 & \textbf{Reverse Direction:} User traverses an existing path starting fr
 \end{table}
 
 \subsection{Community Integrity and Data Protection}
-These tests validate the logic governed by the \texttt{get\_path\_community\_usage} function and RLS policies, ensuring that public resources used by the community cannot be destroyed by the original creator.
+
+These tests validate the logic governed by the \texttt{get\_path\_community\_usage} function and RLS policies, ensuring that public resources used by the community cannot be deleted or modified in ways that would compromise data integrity.
 
 \begin{table}[H]
 \centering
@@ -33,32 +36,41 @@ These tests validate the logic governed by the \texttt{get\_path\_community\_usa
 \hline
 \textbf{ID} & \textbf{Test Scenario} & \textbf{Expected Outcome} & \textbf{Result} \\
 \hline
-SEC-01 & \textbf{Safe Deletion:} An owner attempts to delete a path that has 0 associated activities from other users. & The deletion proceeds successfully. The path and the owner's personal activities are removed (Cascade delete). & \textbf{Pass} \\
+SEC-01 & \textbf{Safe Deletion:} An owner attempts to delete a path with 0 associated activities from other users. & The deletion proceeds successfully. The path and the owner's personal activities are removed (cascade delete). & \textbf{Pass} \\
 \hline
-SEC-02 & \textbf{Protected Deletion:} An owner attempts to delete a public path that has been used by at least one other rider (Activity count $> 0$). & The database rejects the operation. The frontend displays a warning toast: ``Cannot delete: Path is actively used by X riders''. The path remains persistent. & \textbf{Pass} \\
+SEC-02 & \textbf{Protected Deletion:} An owner attempts to delete a public path that has been used by at least one other rider. & The database rejects the operation. The frontend displays a warning: ``Cannot delete: Path is actively used by X riders''. & \textbf{Pass} \\
 \hline
-SEC-03 & \textbf{Privatization Attempt:} An owner attempts to switch a path from Public to Private while it has community activities. & The operation is blocked to prevent breaking data visibility for other users who have activities linked to that path. & \textbf{Pass} \\
+SEC-03 & \textbf{Privatization Attempt:} An owner switches a path from public to private while it has community activities. & The operation is blocked to preserve visibility and consistency of linked activities. & \textbf{Pass} \\
 \hline
 \end{tabular}
 \caption{Community Integrity Test Cases}
 \label{tab:integrity_tests}
 \end{table}
 
-\subsection{Public/Private Workflow and Merging}
-This section tests the user experience when transitioning a private activity into the public domain, ensuring data redundancy is minimized.
+\subsection{Privacy and Workflow Consistency}
+
+This subsection validates the advanced workflow logic designed to prevent data duplication and respect user ownership priority during path matching and publication.
 
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|l|p{6cm}|p{6cm}|c|}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|p{5cm}|p{6cm}|c|}
 \hline
 \textbf{ID} & \textbf{Test Scenario} & \textbf{Expected Outcome} & \textbf{Result} \\
 \hline
-WRK-01 & \textbf{Redundancy Check:} User attempts to publish a private activity. The system runs a background check and finds an identical public path exists. & The system interrupts the creation flow and offers a choice: 1) Merge activity into the existing path, or 2) Create a duplicate path. & \textbf{Pass} \\
+WRK-01 & \textbf{Ownership Priority:} User A has a private path $P_{priv}$. An identical public path $P_{pub}$ also exists. User A records an activity on this route. & The system detects both paths but prioritizes ownership. The UI automatically links the activity to $P_{priv}$ (``Welcome Back'') without prompting to link to the public version. & \textbf{Pass} \\
 \hline
-WRK-02 & \textbf{Merge Execution:} User chooses to ``Merge'' their activity into the existing public path. & No new row is created in the \texttt{paths} table. The activity's \texttt{path\_id} is updated to point to the existing public path. Statistics are aggregated. & \textbf{Pass} \\
+WRK-02 & \textbf{Tracking Opt-Out:} User records an activity on a public path but chooses not to appear on the leaderboard (unchecks ``Link Activity''). & The system creates a new \textbf{Private Copy} of the path for the user. The activity is linked to this new private entity, ensuring isolation from public stats. & \textbf{Pass} \\
 \hline
-\end{tabular}
-\caption{Workflow Logic Test Cases}
+WRK-03 & \textbf{Publication Conflict:} User attempts to toggle a private path to ``Public'', but an identical public path already exists in the system. & The system blocks the direct status change to prevent duplicates. A dialog offers a choice: Merge into the existing path or cancel the operation. & \textbf{Pass} \\
+\hline
+WRK-04 & \textbf{Merge Resolution:} User accepts the ``Merge'' option during a publication conflict. & The private path is deleted. All associated activities are transferred to the existing public path. The user receives a success confirmation. & \textbf{Pass} \\
+\hline
+WRK-05 & \textbf{Passive Cancellation:} User chooses ``Keep Private'' during a publication conflict. & The publication process is aborted. The path remains private and no changes are made to the database (zero-side-effect action). & \textbf{Pass} \\
+\hline
+\end{tabular}%
+}
+\caption{Privacy and Workflow Logic Test Cases}
 \label{tab:workflow_tests}
 \end{table}
