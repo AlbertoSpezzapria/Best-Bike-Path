@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 FEB 2026 17:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  1 FEB 2026 17:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -597,25 +597,34 @@ Chapter 2.
 
 ]
 Chapter 3.
-(./Files/3_adopted_frameworks_technologies.tex)
+(./Files/3_adopted_frameworks_technologies.tex
 
 [8
 
 
-]
+])
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[9]
 Chapter 4.
-(./Files/4_source_code_structure.tex)
-
-[9
-
-
-]
-Chapter 5.
-(./Files/5_testing.tex
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 8.
+(./Files/4_source_code_structure.tex
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
+))
+
+[10
+
+
+{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
+Chapter 5.
+(./Files/5_testing.tex
 Underfull \hbox (badness 2600) in paragraph at lines 19--19
 []|\T1/ptm/b/n/10.95 Partial Match / De-vi-a-tion: \T1/ptm/m/n/10.95 User
  []
@@ -652,10 +661,10 @@ Overfull \hbox (0.67271pt too wide) in paragraph at lines 35--46
 
 
 
-[10
+[11
 
 
-{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
+]
 Underfull \hbox (badness 10000) in paragraph at lines 73--73
 []|\T1/ptm/b/n/10.95 Tracking Opt-Out: \T1/ptm/m/n/10.95 User
  []
@@ -694,18 +703,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11]
+[12]
 Chapter 6.
 (./Files/6_installation_instructions.tex)
 
-[12
+[13
 
 
 ]
 Chapter 7.
 (./Files/7_effort.tex)
 
-[13
+[14
 
 
 ] (./main.aux)
@@ -714,21 +723,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E2FD3194E76FB36929C89A37C4265146;2323.
+(rerunfilecheck)             Checksum: 756CFFFE37D716302D2A0CD1440DB99B;2634.
  ) 
 Here is how much of TeX's memory you used:
- 15922 strings out of 473190
- 250425 string characters out of 5715800
- 668883 words of memory out of 5000000
- 38871 multiletter control sequences out of 15000+600000
+ 15940 strings out of 473190
+ 250733 string characters out of 5715800
+ 668888 words of memory out of 5000000
+ 38880 multiletter control sequences out of 15000+600000
  595386 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,98p,495b,616s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,20n,98p,668b,616s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (13 pages, 99797 bytes).
+Output written on main.pdf (14 pages, 108645 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
- 152 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
- 118 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 205 PDF objects out of 1000 (max. 8388607)
+ 175 compressed objects within 2 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 134 words of extra memory for PDF output out of 10000 (max. 10000000)
 

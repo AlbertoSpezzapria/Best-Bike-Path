@@ -2,9 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Play, Pause, Square, Navigation, Gauge, Clock, Route,
-  Thermometer, Wind, Cloud, Edit3, Upload, Loader2, Globe, Lock, CheckCircle, AlertTriangle, Trash2, MapPin,
-  UserSquare, AlertCircle, CheckCircle2, ThumbsDown, ThumbsUp, Activity, User
+  Edit3, Upload, Loader2, Globe, Lock, CheckCircle, AlertTriangle, Trash2, MapPin,
+  AlertCircle, CheckCircle2, ThumbsDown, ThumbsUp, Activity, User as UserIcon
 } from "lucide-react";
+
+// UI Components
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,81 +15,20 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch} from "@/components/ui/switch";
+import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "sonner";
+
+// Internal Logic & Services
 import BikeMap, { Hazard } from "@/components/BikeMap";
 import { supabase } from "@/supabaseClient";
-import { fetchWeather, WeatherData } from "@/lib/weatherService";
-import { toast } from "sonner";
+import { fetchWeather } from "@/lib/weatherService";
 import { useDebugStore } from "@/stores/useDebugStore"; 
-import { useAuthStore } from "@/stores/useAuthStore";
-import { diff } from "util";
 
-// Mock Route 
-const MOCK_ROUTE: [number, number][] = [
-    [45.46420, 9.19000], 
-    [45.46425, 9.19005],
-    [45.46430, 9.19010],
-    [45.46435, 9.19015],
-    [45.46440, 9.19020],
-    [45.46445, 9.19025],
-    [45.46450, 9.19030],
-    [45.46455, 9.19035],
-    [45.46460, 9.19040],
-    [45.46465, 9.19045],
-    [45.46470, 9.19050],
-    [45.46475, 9.19055],
-    [45.46480, 9.19060],
-    [45.46485, 9.19065],
-    [45.46490, 9.19070],
-    [45.46495, 9.19075],
-    [45.46500, 9.19080],
-    [45.46510, 9.19090], 
-    [45.46520, 9.19100], 
-    [45.46530, 9.19110], 
-    [45.46540, 9.19120],
-    [45.46550, 9.19130],
-    [45.46555, 9.19140],
-    [45.46560, 9.19150],
-    [45.46560, 9.19165],
-    [45.46560, 9.19180],
-    [45.46560, 9.19195],
-    [45.46560, 9.19210],
-    [45.46560, 9.19225],
-    [45.46560, 9.19240],
-    [45.46558, 9.19255],
-    [45.46555, 9.19270],
-    [45.46552, 9.19285],
-    [45.46550, 9.19300],
-    [45.46540, 9.19310],
-    [45.46530, 9.19320],
-    [45.46520, 9.19330],
-    [45.46510, 9.19340],
-    [45.46500, 9.19350],
-    [45.46490, 9.19360],
-    [45.46480, 9.19370],
-    [45.46470, 9.19380],
-    [45.46460, 9.19390],
-    [45.46450, 9.19400],
-    [45.46450, 9.19385],
-    [45.46450, 9.19370],
-    [45.46450, 9.19355],
-    [45.46450, 9.19340],
-    [45.46450, 9.19325],
-    [45.46450, 9.19310],
-    [45.46450, 9.19295],
-    [45.46450, 9.19280],
-    [45.46450, 9.19265],
-    [45.46450, 9.19250],
-    [45.46450, 9.19235],
-    [45.46450, 9.19220],
-    [45.46450, 9.19205],
-];
+// --- MATH & GEOMETRY HELPERS ---
 
-const user = (await supabase.auth.getUser()).data.user;
-
-// --- MATH HELPERS ---
+// Calculates distance between two coordinates in Kilometers
 function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371; 
   const dLat = deg2rad(lat2 - lat1);
@@ -100,37 +41,56 @@ function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon
 }
 function deg2rad(deg: number) { return deg * (Math.PI / 180); }
 
-// --- WKT BUILDER ---
+// Converts coordinate array to PostGIS WKT format (LINESTRING)
 const toWKT = (coords: [number, number][]) => {
   if (coords.length < 2) return null;
   const points = coords.map(c => `${c[1]} ${c[0]}`).join(", ");
   return `LINESTRING(${points})`;
 };
 
+// Formats seconds into HH:MM:SS
+const formatTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+};
+
 const RecordTrip = () => {  
   const navigate = useNavigate();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const mockIndexRef = useRef(0);
+  const { isDebugMode, debugPathType } = useDebugStore();
 
-  // Tracking States
+  // --- STATE MANAGEMENT ---
+
+  // 1. User & Auth
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+
+  // 2. Tracking Session Data
   const [isTracking, setIsTracking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
-  const [isCheckingPath, setIsCheckingPath] = useState(false);
-
   const [livePath, setLivePath] = useState<[number, number][]>([]);
   const [currentPos, setCurrentPos] = useState<[number, number]>([45.4642, 9.1900]); 
   const [stats, setStats] = useState({ distance: 0, duration: 0, currentSpeed: 0 });
+  const [hazards, setHazards] = useState<Hazard[]>([]); // Auto-detected or manual hazards
 
+  // 3. User Feedback States
   const [difficulty, setDifficulty] = useState<string>("medium");
   const [status, setStatus] = useState<string>("good");
 
-  // Hazards State (Used for both Manual and Auto-detected)
-  const [hazards, setHazards] = useState<Hazard[]>([]);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  // 4. UI & Flow States
+  const [isSaving, setIsSaving] = useState(false);
+  const [isCheckingPath, setIsCheckingPath] = useState(false);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  
+  // 5. Matching Logic States
+  const [matchedPath, setMatchedPath] = useState<{id: number, id_owner: string, name: string} | null>(null); 
+  const [linkToExisting, setLinkToExisting] = useState(true); // Toggle for Opt-out logic
+  const [newPathForm, setNewPathForm] = useState({ name: "", description: "", isPublic: true });
 
-  // Manual Form State
+  // 6. Manual Editor States
   const [manualDistance, setManualDistance] = useState<number>(0);
   const [manualPath, setManualPath] = useState<[number, number][]>([]);
   const [manualForm, setManualForm] = useState({ 
@@ -140,15 +100,13 @@ const RecordTrip = () => {
     difficulty: "easy", 
     isPublic: false 
   });
-  
-  // Modal States
-  const [showSaveDialog, setShowSaveDialog] = useState(false);
-  const [matchedPath, setMatchedPath] = useState<{id: number, id_owner: String, name: string} | null>(null); 
-  const [newPathForm, setNewPathForm] = useState({ name: "", description: "", isPublic: true });
 
-  const { isDebugMode, debugPathType } = useDebugStore();
-  const [linkToExisting, setLinkToExisting] = useState(true);
+  // Derived State: Check if the matched path belongs to the current user
+  const isOwnPath = matchedPath?.id_owner === currentUserId;
 
+  // --- EFFECTS ---
+
+  // Load User ID on mount
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
         if (data?.user) {
@@ -157,32 +115,7 @@ const RecordTrip = () => {
     });
   }, []);
 
-  const isOwnPath = matchedPath?.id_owner === currentUserId;
-
-  const handleStart = () => {
-    setLivePath([]); 
-    setStats({
-        distance: 0,
-        duration: 0,
-        currentSpeed: 0
-    });
-    
-    setIsTracking(true);
-    setStartTime(new Date());
-
-    if (isDebugMode) { 
-        if (debugPathType === 'fixed') {
-             mockIndexRef.current = 0;
-             toast.info("DEBUG: Fixed Path Simulation");
-        } else {
-             toast.info("DEBUG: Random Path Simulation");
-        }
-    } else {
-        toast.success("Tracking Started (GPS)");
-    }
-  };
-
-  // --- GPS & HAZARD SIMULATION ENGINE ---
+  // Tracking Engine (GPS + Simulation)
   useEffect(() => {
     if (isTracking && !isPaused) {
       timerRef.current = setInterval(() => {
@@ -193,6 +126,7 @@ const RecordTrip = () => {
                 if (livePath.length > 0) {
                     const lastPos = livePath[livePath.length - 1];
                     dist = getDistanceFromLatLonInKm(lastPos[0], lastPos[1], newPos[0], newPos[1]);
+                    // Filter noise: only count if moved > 1 meter (unless debugging)
                     if (dist > 1 && !isDebugMode) dist = 0;
                 }
                 return {
@@ -205,6 +139,7 @@ const RecordTrip = () => {
             setCurrentPos(newPos);
             setLivePath(prev => [...prev, newPos]);
 
+            // Simulation: Random hazard detection in debug mode
             if (isDebugMode && Math.random() > 0.85) { 
                  const types = ["pothole", "obstacle", "other"] as const;
                  const randomType = types[Math.floor(Math.random() * types.length)];
@@ -215,33 +150,31 @@ const RecordTrip = () => {
                  };
                  setHazards(prev => {
                      const updated = [...prev, newHazard];
-                     if (updated.length <= 3) toast.warning(`Simulazione: ${randomType} rilevato!`);
+                     if (updated.length <= 3) toast.warning(`Sim: ${randomType} detected!`);
                      return updated;
                  });
             }
         };
 
-        // --- LOGICA DI SCELTA SORGENTE POSIZIONE ---
+        // --- SOURCE SELECTION LOGIC ---
         if (isDebugMode) {
-            // DEBUG MODE
+            // DEBUG: Simulate movement
             let simPos: [number, number] | null = null;
 
             if (debugPathType === 'fixed') {
-                // 1. Fixed Path
-                if (mockIndexRef.current >= MOCK_ROUTE.length - 1) return; // Fine percorso
+                if (mockIndexRef.current >= MOCK_ROUTE.length - 1) return; 
                 mockIndexRef.current += 1;
                 simPos = MOCK_ROUTE[mockIndexRef.current];
             } else {
-                // 2. Random Walk
-                const latChange = (Math.random() - 0.5) * 0.001; // Random movement
+                // Random Walk
+                const latChange = (Math.random() - 0.5) * 0.001; 
                 const lngChange = (Math.random() - 0.5) * 0.001;
                 simPos = [currentPos[0] + latChange, currentPos[1] + lngChange];
             }
-
             if (simPos) updateSession(simPos);
 
         } else {
-            // PRODCUTION (GPS REALE)
+            // PRODUCTION: Real GPS
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -249,25 +182,61 @@ const RecordTrip = () => {
                         updateSession(realPos);
                     },
                     (error) => {
-                        console.error("Errore GPS:", error);
-                        toast.error("Errore nel recupero della posizione GPS.");
+                        console.error("GPS Error:", error);
+                        toast.error("Error retrieving GPS position.");
                     },
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                 );
             } else {
-                toast.error("GPS non disponibile su questo dispositivo");
+                toast.error("GPS not available.");
             }
         }
 
-      }, 1000); // Aggiornamento ogni secondo
+      }, 1000); // 1Hz Update Rate
     } else {
       if (timerRef.current) clearInterval(timerRef.current);
     }
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [isTracking, isPaused, currentPos, isDebugMode, debugPathType, livePath.length]);
 
-  // --- STOP & CHECK ---
-const handleStopPress = async () => {
+  // --- ACTIONS ---
+
+  const handleStart = () => {
+    setLivePath([]); 
+    setStats({ distance: 0, duration: 0, currentSpeed: 0 });
+    setIsTracking(true);
+    setStartTime(new Date());
+
+    if (isDebugMode) { 
+        if (debugPathType === 'fixed') {
+             mockIndexRef.current = 0;
+             toast.info("DEBUG: Fixed Path Simulation Started");
+        } else {
+             toast.info("DEBUG: Random Path Simulation Started");
+        }
+    } else {
+        toast.success("Tracking Started (GPS)");
+    }
+  };
+
+  const resetTrackingSession = () => {
+    setIsTracking(false);
+    setIsPaused(false);
+    setLivePath([]);
+    setHazards([]);
+    setStats({ distance: 0, duration: 0, currentSpeed: 0 });
+    setStartTime(null);
+    mockIndexRef.current = 0;
+    setShowSaveDialog(false);
+    toast.info("Session discarded");
+  };
+
+  const removeHazard = (index: number) => {
+    setHazards(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // --- STOP & MATCHING LOGIC ---
+  const handleStopPress = async () => {
     setIsTracking(false);
     setIsPaused(true); 
     
@@ -281,7 +250,7 @@ const handleStopPress = async () => {
     try {
         const wktString = toWKT(livePath);
         
-        // 1. Chiamata RPC
+        // 1. Database RPC Call to check for existing paths
         const { data: matchedPaths, error } = await supabase.rpc('check_path_similarity', { 
             new_geom_wkt: wktString,
             tolerance_meters: 50,
@@ -291,29 +260,26 @@ const handleStopPress = async () => {
         if (error) console.error("Check error:", error);
 
         if (matchedPaths && matchedPaths.length > 0) {
-            // --- LOGICA DI PRIORITÀ ---
-            // Cerchiamo se tra i risultati c'è un percorso che appartiene GIÀ all'utente
-            const myExistingPath = matchedPaths.find((p: any) => p.id_owner === user?.id);
+            // --- PRIORITY LOGIC ---
+            // 1. Check if the user already owns one of the matched paths (Private or Public)
+            const myExistingPath = matchedPaths.find((p: any) => p.id_owner === currentUserId);
             
-            // Se trovo il MIO percorso, uso quello come match definitivo. 
-            // Altrimenti uso il primo risultato (che sarà il percorso pubblico migliore)
+            // 2. Priority: Own Path > Best Public Match
             const bestMatch = myExistingPath || matchedPaths[0];
 
             setMatchedPath(bestMatch);
-            setLinkToExisting(true); // Reset, linkiamo di default
+            setLinkToExisting(true); // Default behavior: Link to match
 
-            // Se il match NON è mio, preparo il form per l'eventuale copia privata
-            // (Se è mio, questo non serve perché il Dialog nasconderà l'opzione di copia)
-            if (bestMatch.id_owner !== user?.id) {
+            // 3. Pre-fill form for "Private Copy" scenario (only if match is NOT mine)
+            if (bestMatch.id_owner !== currentUserId) {
                 setNewPathForm({
                     name: bestMatch.name,
                     description: bestMatch.description || "Private copy",
                     isPublic: false
                 });
             }
-
         } else {
-            // NESSUN MATCH -> Nuovo Percorso
+            // NO MATCH -> Create New Path
             setMatchedPath(null);
             const today = new Date().toLocaleDateString();
             setNewPathForm({
@@ -331,34 +297,20 @@ const handleStopPress = async () => {
     }
   };
 
-  const resetTrackingSession = () => {
-    setIsTracking(false);
-    setIsPaused(false);
-    setLivePath([]);
-    setHazards([]);
-    setStats({ distance: 0, duration: 0, currentSpeed: 0 });
-    setStartTime(null);
-    
-    mockIndexRef.current = 0;
-    
-    setShowSaveDialog(false);
-    
-    toast.info("Session discarded");
-};
-
-  // --- SAVE LOGIC ---
+  // --- SAVE WORKFLOW ---
   const confirmSaveTracking = async () => {
     setIsSaving(true);
     setShowSaveDialog(false);
 
     try {
+        // 1. Fetch Weather Data for the endpoint
         let finalWeather = { temp: 0, condition: "--", wind: 0, humidity: 0 };
         if (livePath.length > 0) {
             const lastPos = livePath[livePath.length - 1];
             try {
                 finalWeather = await fetchWeather(lastPos[0], lastPos[1]);
             } catch (wError) {
-                console.error("Weather fetch failed during save:", wError);
+                console.error("Weather fetch failed:", wError);
             }
         }
 
@@ -367,32 +319,34 @@ const handleStopPress = async () => {
         let targetPathId: number;
         let targetPathName: string;
 
+        // --- BRANCHING LOGIC: LINK vs CREATE ---
+        
         if (matchedPath && linkToExisting) {
-            // MATCH FOUND
+            // CASE A: Link to Existing Path (Public or Own)
             targetPathId = matchedPath.id;
             targetPathName = matchedPath.name;
 
-            if (matchedPath.id_owner !== user?.id) {
+            // If it's a public path I don't own, add it to my favorites
+            if (matchedPath.id_owner !== currentUserId) {
                 try {
                     await supabase
                         .from('saved_paths')
                         .upsert(
-                            { 
-                                user_id: user?.id, 
-                                path_id: matchedPath.id 
-                            }, 
+                            { user_id: currentUserId, path_id: matchedPath.id }, 
                             { onConflict: 'user_id, path_id' } 
                         );
-                    
-                    toast.info("New public path added to your saved list!");
+                    toast.info("Added to your saved paths!");
                 } catch (favError) {
                     console.error("Silent error saving favorite:", favError);
                 }
-    }
+            }
+            toast.success(`Activity linked to: ${matchedPath.name}`);
 
-            toast.success(`Activity saved! Linked to: ${matchedPath.name}`);
         } else {
-            // NEW PATH
+            // CASE B: Create New Path (or Private Copy of a Public Match)
+            // If we have a match but linkToExisting is false, we force Private visibility
+            const isForcedPrivate = matchedPath && !linkToExisting;
+
             const pathPayload = {
                 name: newPathForm.name, 
                 description: newPathForm.description,
@@ -401,31 +355,37 @@ const handleStopPress = async () => {
                 path_data: livePath,
                 geom: wktString,
                 hazards: hazards, 
-                status: "good",
-                is_public: (matchedPath && !linkToExisting) ? false : newPathForm.isPublic,
-                id_owner: user?.id,
+                status: "good", // Default status for new path
+                is_public: isForcedPrivate ? false : newPathForm.isPublic,
+                id_owner: currentUserId,
                 is_manual_setup: false
             };
-            const { data: newPath, error: createError } = await supabase.from('paths').insert([pathPayload]).select().single();
+
+            const { data: newPath, error: createError } = await supabase
+                .from('paths')
+                .insert([pathPayload])
+                .select()
+                .single();
+
             if (createError) throw createError;
             
             targetPathId = newPath.id;
             targetPathName = newPath.name;
-            toast.success("New path created successfully!");
+            toast.success(isForcedPrivate ? "Saved as private copy." : "New path created successfully!");
         }
 
-        // SAVE ACTIVITY (With Hazards!)
+        // 2. Save the Activity Entry
         const activityPayload = {
-            name: `${user?.email?.split('@')[0] || 'User'} on ${targetPathName}`,
+            name: `${targetPathName} Ride`, // Simply use path name
             path_id: targetPathId,
-            user_id: user?.id,
+            user_id: currentUserId,
             started_at: startTime?.toISOString(),
             ended_at: new Date().toISOString(),
             duration_second: stats.duration,
             duration_meters: stats.distance * 1000,
             average_speed: stats.duration > 0 ? (stats.distance * 1000) / stats.duration : 0,
             raw_data: livePath, 
-            path: wktString,
+            path: wktString, // Store geometry snapshot
             hazards: hazards, 
             weather_data: finalWeather,
             difficulty: difficulty,
@@ -444,9 +404,8 @@ const handleStopPress = async () => {
     }
   };
 
-  // --- MANUAL SAVE ---
+  // --- MANUAL EDITOR SAVE ---
   const handleSaveManualPath = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
     if (manualPath.length < 2) {
         toast.error("Please draw a path on the map.");
         return;
@@ -469,7 +428,7 @@ const handleStopPress = async () => {
             status: manualForm.status,
             difficulty: manualForm.difficulty, 
             is_public: manualForm.isPublic,
-            id_owner: user?.id,
+            id_owner: currentUserId,
             is_manual_setup: true
         };
 
@@ -486,28 +445,14 @@ const handleStopPress = async () => {
     }
   };
 
-  // Helpers
-  const formatTime = (seconds: number) => {
-      const h = Math.floor(seconds / 3600);
-      const m = Math.floor((seconds % 3600) / 60);
-      const s = seconds % 60;
-      return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
-
   const handlePathCreated = (coords: [number, number][], dist: number, haz: Hazard[]) => {
     setManualPath(coords);
     setHazards(haz);
-
     if(coords.length >= 2 && dist > 0) {
         setManualDistance(parseFloat((dist / 1000).toFixed(2)));
-    } else if(coords.length < 2) {
+    } else {
         setManualDistance(0);
     }
-
-  };
-
-  const removeHazard = (index: number) => {
-      setHazards(prev => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -532,7 +477,7 @@ const handleStopPress = async () => {
           <TabsTrigger value="manual" className="gap-2"><Edit3 className="w-4 h-4" /> Manual Editor</TabsTrigger>
         </TabsList>
 
-        {/* --- AUTOMATIC TAB --- */}
+        {/* --- AUTOMATIC TRACKER UI --- */}
         <TabsContent value="auto" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="grid lg:grid-cols-3 gap-6">
             
@@ -540,7 +485,7 @@ const handleStopPress = async () => {
             <Card className="lg:col-span-2 border-border/50 overflow-hidden h-[500px] flex flex-col relative shadow-md">
               <div className="absolute inset-0 z-0">
                   <BikeMap 
-                    mode="record" // Usa mode record per mostrare la posizione live
+                    mode="record" 
                     initialCenter={[45.4642, 9.1900]} 
                     currentLocation={currentPos} 
                     recordedPath={livePath} 
@@ -549,7 +494,7 @@ const handleStopPress = async () => {
                   />
               </div>
 
-              {/* Overlay Start Hint */}
+              {/* Start Overlay */}
               {!isTracking && livePath.length === 0 && (
                  <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none backdrop-blur-[2px]">
                      <p className="bg-background/90 px-4 py-2 rounded-full text-sm font-medium shadow-lg border animate-pulse">
@@ -599,7 +544,7 @@ const handleStopPress = async () => {
               </div>
             </Card>
 
-            {/* RIGHT COLUMN: STATS & HAZARDS */}
+            {/* RIGHT COLUMN: STATS */}
             <div className="space-y-4">
                {/* LIVE STATS */}
                <Card className="border-border/50 bg-card/50 backdrop-blur shadow-sm">
@@ -632,7 +577,7 @@ const handleStopPress = async () => {
                 </CardContent>
               </Card>
 
-              {/* DETECTED HAZARDS LIST */}
+              {/* HAZARDS LIST */}
               <Card className="border-border/50 flex-1 shadow-sm h-[200px] flex flex-col">
                 <CardHeader className="pb-2 border-b border-border/50 bg-muted/20">
                     <CardTitle className="text-base font-display flex items-center gap-2">
@@ -661,9 +606,12 @@ const handleStopPress = async () => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
-                                            #{i+1}
-                                        </span>
+                                        <Button 
+                                            variant="ghost" size="icon" className="h-6 w-6"
+                                            onClick={() => removeHazard(i)}
+                                        >
+                                            <Trash2 className="w-3 h-3 text-muted-foreground" />
+                                        </Button>
                                     </div>
                                 ))}
                             </div>
@@ -675,10 +623,9 @@ const handleStopPress = async () => {
           </div>
         </TabsContent>
 
-        {/* --- MANUAL TAB --- */}
+        {/* --- MANUAL EDITOR UI --- */}
         <TabsContent value="manual" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="grid lg:grid-cols-2 gap-6">
-                {/* Manual Editor Map */}
                 <Card className="border-border/50 h-[600px] overflow-hidden flex flex-col shadow-md">
                     <CardHeader className="p-4 bg-muted/20 border-b flex flex-row items-center justify-between">
                         <CardTitle className="text-base flex items-center gap-2"><Edit3 className="w-4 h-4" /> Geometry Editor</CardTitle>
@@ -693,7 +640,6 @@ const handleStopPress = async () => {
                     </div>
                 </Card>
 
-                {/* Manual Details Form */}
                 <Card className="border-border/50 shadow-md">
                     <CardHeader>
                         <CardTitle className="font-display">Path Details</CardTitle>
@@ -737,7 +683,6 @@ const handleStopPress = async () => {
                             />
                         </div>
                         
-                        {/* Selectors aligned with DB Schema */}
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label>Condition</Label>
@@ -781,7 +726,7 @@ const handleStopPress = async () => {
             <DialogHeader>
                 <DialogTitle className={matchedPath ? "text-emerald-600 flex items-center gap-2" : ""}>
                     {matchedPath 
-                        ? (isOwnPath ? <><User className="w-5 h-5" /> Welcome Back!</> : <><CheckCircle className="w-5 h-5" /> Path Recognized!</>)
+                        ? (isOwnPath ? <><UserIcon className="w-5 h-5" /> Welcome Back!</> : <><CheckCircle className="w-5 h-5" /> Path Recognized!</>)
                         : "New Path Detected"}
                 </DialogTitle>
                 <DialogDescription>
@@ -795,7 +740,7 @@ const handleStopPress = async () => {
 
             <div className="space-y-6 py-2">
                 
-                {/* 1. PATH IDENTITY */}
+                {/* 1. PATH IDENTITY / MATCH INFO */}
                 {matchedPath ? (
                     <div className="space-y-4">
                         <div className={`p-4 border rounded-lg flex flex-col gap-3 transition-colors ${linkToExisting ? 'bg-emerald-50 border-emerald-200 dark:bg-emerald-950/20 dark:border-emerald-900' : 'bg-muted/30 border-border'}`}>
@@ -811,7 +756,7 @@ const handleStopPress = async () => {
                                     </div>
                                 </div>
 
-                                {/* SWITCH OPT-OUT (Visibile solo se NON è il mio percorso) */}
+                                {/* SWITCH OPT-OUT (Visible only if it's NOT my path) */}
                                 {!isOwnPath ? (
                                     <div className="flex flex-col items-end gap-1">
                                         <div className="flex items-center gap-2">
@@ -825,7 +770,7 @@ const handleStopPress = async () => {
                                         </div>
                                     </div>
                                 ) : (
-                                    /* Se è mio, mostriamo un badge fisso */
+                                    /* If it is mine, show a static badge */
                                     <div className="px-2 py-1 bg-background/50 rounded text-xs font-medium text-emerald-600 border border-emerald-200 dark:border-emerald-800">
                                         Auto-Linked
                                     </div>
@@ -839,7 +784,7 @@ const handleStopPress = async () => {
                             )}
                         </div>
 
-                        {/* Input per copia privata (Solo se NON è mio e ho spento lo switch) */}
+                        {/* Input for Private Copy Name (Only if NOT mine and Switch is OFF) */}
                         {!linkToExisting && !isOwnPath && (
                             <div className="space-y-4 p-4 border rounded-lg bg-muted/20 animate-in fade-in slide-in-from-top-2">
                                 <div className="space-y-2">
@@ -857,7 +802,7 @@ const handleStopPress = async () => {
                         )}
                     </div>
                 ) : (
-                    // --- CASO: NUOVO PERCORSO (NO MATCH) ---
+                    // --- CASE: NEW PATH (NO MATCH) ---
                     <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
                         <div className="space-y-2">
                             <Label>Path Name</Label>
@@ -888,13 +833,12 @@ const handleStopPress = async () => {
                     </div>
                 )}
 
-                {/* 2. RIDE FEEDBACK */}
+                {/* 2. RIDE FEEDBACK (Status & Difficulty) */}
                 <div className="space-y-4 border-t pt-4">
                     <h3 className="text-sm font-semibold flex items-center gap-2">
                         <Activity className="w-4 h-4 text-primary" /> How was the ride?
                     </h3>
                     
-                    {/* Difficulty */}
                     <div className="space-y-2">
                         <Label className="text-[10px] text-muted-foreground uppercase">Difficulty Level</Label>
                         <div className="grid grid-cols-4 gap-2">
@@ -915,7 +859,6 @@ const handleStopPress = async () => {
                         </div>
                     </div>
 
-                    {/* Status */}
                     <div className="space-y-2">
                         <Label className="text-[10px] text-muted-foreground uppercase">Path Condition</Label>
                         <div className="grid grid-cols-2 gap-2">
@@ -943,7 +886,7 @@ const handleStopPress = async () => {
                     </div>
                 </div>
 
-                {/* 3. HAZARDS REVIEW */}
+                {/* 3. HAZARDS CONFIRMATION */}
                 {hazards.length > 0 && (
                     <div className="space-y-2 pt-2 border-t mt-2">
                         <div className="flex items-center justify-between">
@@ -1007,3 +950,17 @@ const handleStopPress = async () => {
 };
 
 export default RecordTrip;
+
+// --- MOCK DATA FOR DEBUGGING ---
+const MOCK_ROUTE: [number, number][] = [
+    [45.46420, 9.19000], [45.46425, 9.19005], [45.46430, 9.19010],
+    [45.46435, 9.19015], [45.46440, 9.19020], [45.46445, 9.19025],
+    [45.46450, 9.19030], [45.46455, 9.19035], [45.46460, 9.19040],
+    [45.46465, 9.19045], [45.46470, 9.19050], [45.46475, 9.19055],
+    [45.46480, 9.19060], [45.46485, 9.19065], [45.46490, 9.19070],
+    [45.46495, 9.19075], [45.46500, 9.19080], [45.46510, 9.19090], 
+    [45.46520, 9.19100], [45.46530, 9.19110], [45.46540, 9.19120],
+    [45.46550, 9.19130], [45.46555, 9.19140], [45.46560, 9.19150],
+    [45.46560, 9.19165], [45.46560, 9.19180], [45.46560, 9.19195],
+    [45.46560, 9.19210], [45.46560, 9.19225], [45.46560, 9.19240]
+];

@@ -1,47 +1,58 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/supabaseClient";
+
+// UI Components
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Plus, Route as RouteIcon, Calendar, Globe, Lock, Trash2, Heart, ArrowUpDown, AlertTriangle, Copy, Merge } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction } from "@/components/ui/alert-dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "sonner";
 
-// --- WKT BUILDER ---
+// Icons
+import { 
+  Loader2, Plus, Route as RouteIcon, Calendar, Globe, 
+  Lock, Trash2, Heart, ArrowUpDown, AlertTriangle, Merge 
+} from "lucide-react";
+
+// --- UTILS ---
+
+/** Converts coordinate array to Well-Known Text (WKT) Linestring for PostGIS */
 const toWKT = (coords: [number, number][]) => {
-  if (coords.length < 2) return null;
-  const points = coords.map(c => `${c[1]} ${c[0]}`).join(", ");
-  return `LINESTRING(${points})`;
+  if (!coords || coords.length < 2) return null;
+  return `LINESTRING(${coords.map(c => `${c[1]} ${c[0]}`).join(", ")})`;
 };
 
 const MyPaths = () => {
   const navigate = useNavigate();
+
+  // State Management
   const [createdPaths, setCreatedPaths] = useState<any[]>([]);
   const [savedPaths, setSavedPaths] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  
+  // Dialog & Conflict Management
   const [showConflictDialog, setShowConflictDialog] = useState(false);
   const [conflictPath, setConflictPath] = useState<any>(null); 
   const [pendingPathToPublic, setPendingPathToPublic] = useState<any>(null); 
   const [pathToDelete, setPathToDelete] = useState<any>(null);
   
-  // Sort State
   const [sortOption, setSortOption] = useState<string>("date_desc");
-
-  // Loading state for visibility toggle
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
+  /** Fetches both user-created paths and community paths saved as favorites */
   const fetchData = async () => {
     setLoading(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
     setUserId(user.id);
 
-    // 1. Fetch CREATED BY ME
+    // Fetch paths owned by user
     const { data: created } = await supabase
       .from('paths')
       .select('*')
@@ -49,235 +60,142 @@ const MyPaths = () => {
 
     if (created) setCreatedPaths(created);
 
-    // 2. Fetch SAVED
+    // Fetch paths saved by user 
     const { data: saved } = await supabase
       .from('saved_paths')
       .select(`path_id, created_at, paths:path_id (*)`)
       .eq('user_id', user.id);
 
     if (saved) {
-        const cleanSaved = saved.map((item: any) => item.paths).filter((p: any) => p !== null);
-        setSavedPaths(cleanSaved);
+        setSavedPaths(saved.map((item: any) => item.paths).filter((p: any) => p !== null));
     }
     setLoading(false);
   };
 
   useEffect(() => { fetchData(); }, []);
 
-  // --- SORTING LOGIC ---
+  // --- LOGIC ---
+
+  /** Client-side sorting based on Select input */
   const getSortedPaths = (list: any[]) => {
       const sorted = [...list];
       switch (sortOption) {
-          case "date_desc": // Newest
-              return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-          case "date_asc": // Oldest
-              return sorted.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
-          case "dist_desc": // Longest
-              return sorted.sort((a, b) => (b.distance || 0) - (a.distance || 0));
-          case "dist_asc": // Shortest
-              return sorted.sort((a, b) => (a.distance || 0) - (b.distance || 0));
-          default:
-              return sorted;
+          case "date_desc": return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+          case "date_asc":  return sorted.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+          case "dist_desc": return sorted.sort((a, b) => (b.distance || 0) - (a.distance || 0));
+          case "dist_asc":  return sorted.sort((a, b) => (a.distance || 0) - (b.distance || 0));
+          default:          return sorted;
       }
   };
 
-   // Smart Visibility Toggle
+  /** Handles visibility changes with community usage and geometric duplicate checks */
   const toggleVisibility = async (e: React.MouseEvent, path: any) => {
     e.stopPropagation();
+    setTogglingId(path.id);
     
-    // --- CASE A: PUBLIC -> PRIVATE (Blocco se usato da altri) ---
+    // Case 1: Making a Public path Private
     if (path.is_public) {
-        setTogglingId(path.id);
-        console.log("RPC Call Payload:", { p_path_id: path.id, type: typeof path.id });
-
-        if (!path.id) {
-            toast.error("Error: Path ID is missing");
-            setTogglingId(null);
-            return;
-        }
-        
-        // 1. Controlla se qualcuno altro lo sta usando
-        // Nota: Assicurati di aver creato la funzione RPC 'get_path_community_usage' su Supabase come discusso prima
-        const { data: usageCount, error } = await supabase.rpc('get_path_community_usage', {
-            p_path_id: path.id,
-        });
-
-        if (error) {
-            console.error("RPC Error Details:", error);
-            toast.error(`Error checking usage: ${error.message}`);
-            setTogglingId(null);
-            return;
-        }
+        const { data: usageCount } = await supabase.rpc('get_path_community_usage', { p_path_id: path.id });
 
         if (usageCount > 0) {
-            toast.warning("Cannot make private", {
-                description: `This path is actively used by ${usageCount} other rider(s). It must remain public.`
-            });
+            toast.warning("Cannot make private", { description: `Actively used by ${usageCount} other riders.` });
             setTogglingId(null);
             return;
         }
-
-        // Se nessuno lo usa, procedi pure a renderlo privato
         await performUpdate(path.id, false);
         return;
     }
 
-    // --- CASE B: PRIVATE -> PUBLIC (Controllo Duplicati) ---
-    if (!path.is_public) {
-        setTogglingId(path.id);
+    // Case 2: Making a Private path Public (check for duplicates)
+    const wktString = toWKT(path.path_data);
+    const { data: matches, error } = await supabase.rpc('check_path_similarity', {
+        new_geom_wkt: wktString,
+        tolerance_meters: 20,
+        length_tolerance_pct: 0.1
+    });
 
-        const wktString = toWKT(path.path_data);
-
-
-        // 1. Cerca duplicati geometrici
-        const { data: matches, error } = await supabase.rpc('check_path_similarity', {
-            new_geom_wkt: wktString,
-            tolerance_meters: 20,
-            length_tolerance_pct: 0.1
-        });
-
-        if (error) {
-             console.error("Match error", error);
-             // In caso di errore tecnico, procediamo con cautela permettendo l'update
-             await performUpdate(path.id, true);
-             return;
-        }
-
-        // Cerchiamo se esiste UN ALTRO percorso pubblico diverso dal mio
+    if (!error) {
         const existingPublic = matches?.find((m: any) => m.id !== path.id && m.is_public === true);
-
         if (existingPublic) {
             setConflictPath(existingPublic);
             setPendingPathToPublic(path);
             setShowConflictDialog(true);
-            setTogglingId(null); // Sblocca lo spinner
+            setTogglingId(null);
             return;
         }
-
-        // Nessun duplicato, procedi
-        await performUpdate(path.id, true);
     }
+    await performUpdate(path.id, true);
   };
 
-  // Funzione helper per l'update effettivo
+  /** Helper to execute visibility update on DB */
   const performUpdate = async (pathId: string, newStatus: boolean) => {
-      const { error } = await supabase
-          .from('paths')
-          .update({ is_public: newStatus })
-          .eq('id', pathId);
+      const { error } = await supabase.from('paths').update({ is_public: newStatus }).eq('id', pathId);
 
       if (error) {
           toast.error("Update failed");
       } else {
-          setCreatedPaths(prev => prev.map(p => 
-              p.id === pathId ? { ...p, is_public: newStatus } : p
-          ));
+          setCreatedPaths(prev => prev.map(p => p.id === pathId ? { ...p, is_public: newStatus } : p));
           toast.success(newStatus ? "Path is now Public" : "Path is now Private");
       }
       setTogglingId(null);
   };
 
-const handleDeleteFavorite = async (pathId: string) => {
+  /** Removes a path from user's favorites list */
+  const handleDeleteFavorite = async (pathId: string) => {
     if (!confirm("Remove from favorites?")) return;
-    const { error } = await supabase
-        .from('saved_paths')
-        .delete()
-        .eq('user_id', userId)
-        .eq('path_id', pathId);
-    
+    const { error } = await supabase.from('saved_paths').delete().eq('user_id', userId).eq('path_id', pathId);
     if (!error) { 
         toast.success("Removed from favorites"); 
         fetchData(); 
     }
-};
+  };
 
-const confirmDeletePath = async () => {
+  /** Permanently deletes path if not utilized by other community members */
+  const confirmDeletePath = async () => {
     if (!pathToDelete) return;
-    const pathId = pathToDelete.id;
-
-    // 1. Check utilizzo community
-    const { data: usageCount } = await supabase.rpc('get_path_community_usage', {
-        p_path_id: pathId,
-    });
+    const { data: usageCount } = await supabase.rpc('get_path_community_usage', { p_path_id: pathToDelete.id });
 
     if (usageCount > 0) {
-        toast.warning("Cannot delete", {
-            description: `This path is actively used by ${usageCount} other rider(s). It cannot be deleted.`
-        });
+        toast.warning("Cannot delete", { description: "Path is actively used by other riders." });
         setPathToDelete(null);
         return;
     }
 
-    // 2. Cancellazione
-    const { error, count } = await supabase
-        .from('paths')
-        .delete()
-        .eq('id', pathId)
-        .eq('id_owner', userId) 
-        .select(); 
+    const { error, count } = await supabase.from('paths').delete().eq('id', pathToDelete.id).eq('id_owner', userId).select(); 
 
-    if (error) {
-        toast.error("Error deleting path.");
-    } else if (count === 0) {
-        toast.warning("Cannot delete", { description: "You don't have permission or path is protected." });
-    } else {
+    if (error) toast.error("Error deleting path.");
+    else if (count === 0) toast.warning("Delete failed", { description: "Path is protected or restricted." });
+    else {
         toast.success("Path deleted permanently");
         fetchData();
     }
     setPathToDelete(null);
-};
+  };
 
-
-const handleMerge = async () => {
-const { data: { user } } = await supabase.auth.getUser();    
-if (!conflictPath || !pendingPathToPublic) return;
-setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
+  /** Resolves duplicate conflict by moving activities to existing public path and deleting local copy */
+  const handleMerge = async () => {
+    if (!conflictPath || !pendingPathToPublic || !userId) return;
+    setTogglingId(pendingPathToPublic.id);
 
     try {
-        // 1. Sposta le mie attività sul path pubblico esistente
-        const { error: moveError } = await supabase
-            .from('activities')
-            .update({ path_id: conflictPath.id })
-            .eq('path_id', pendingPathToPublic.id);
-        
+        // Transfer activity ownership to existing public path
+        const { error: moveError } = await supabase.from('activities').update({ path_id: conflictPath.id }).eq('path_id', pendingPathToPublic.id);
         if (moveError) throw moveError;
 
-        const { error: saveError } = await supabase
-            .from('saved_paths')
-            .upsert({ 
-                user_id: user.id, 
-                path_id: conflictPath.id 
-            }, { onConflict: 'user_id, path_id' }); 
+        // Ensure existing path is in user's favorites
+        await supabase.from('saved_paths').upsert({ user_id: userId, path_id: conflictPath.id }, { onConflict: 'user_id, path_id' });
 
-        if (saveError) {
-            console.error("Errore nel salvataggio dei preferiti:", saveError);
-        }
-
-        // 2. Elimina il mio path privato (non serve più)
-        const { error: deleteError } = await supabase
-            .from('paths')
-            .delete()
-            .eq('id', pendingPathToPublic.id);
+        // Delete the redundant private path
+        await supabase.from('paths').delete().eq('id', pendingPathToPublic.id);
         
-        if (deleteError) throw deleteError;
-
-        // 3. Aggiorna la UI rimuovendo il path vecchio
         setCreatedPaths(prev => prev.filter(p => p.id !== pendingPathToPublic.id));
-
         await fetchData(); 
-    
-        toast.success("Merged successfully!", { 
-            description: `Rides moved to "${conflictPath.name}" and added to your favorites.` 
-        });
-
+        toast.success("Merged successfully!");
     } catch (e) {
-        console.error(e);
-        toast.error("Merge failed. Try again.");
+        toast.error("Merge failed. Please try again.");
     } finally {
         setShowConflictDialog(false);
         setTogglingId(null);
-        setConflictPath(null);
-        setPendingPathToPublic(null);
     }
   };
 
@@ -287,17 +205,16 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
      toast.info("Action cancelled. Path remains private.");
   };
 
-  // Reusable Card Component
+  // --- SUB-COMPONENTS ---
+
   const PathCard = ({ path, isSavedView }: { path: any, isSavedView: boolean }) => (
     <Card 
         className="group cursor-pointer hover:shadow-lg transition-all border-border/50 hover:border-primary/50 overflow-hidden relative"
         onClick={() => navigate(`/app/path/${path.id}`)}
     >
         <div className="h-32 bg-muted/50 w-full flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
             <RouteIcon className="w-10 h-10 text-muted-foreground/30" />
             
-            {/* Visibility Badge/Toggle */}
             <div className="absolute top-2 right-2 z-10">
                 {!isSavedView ? (
                     <TooltipProvider>
@@ -306,7 +223,7 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
                                 <Button
                                     size="sm"
                                     variant={path.is_public ? "secondary" : "destructive"} 
-                                    className={`h-6 text-[10px] px-2 gap-1 shadow-sm opacity-90 hover:opacity-100 transition-opacity ${path.is_public ? 'bg-white/90 text-green-700 hover:bg-white' : 'bg-red-100 text-red-700 hover:bg-red-200'}`}
+                                    className={`h-6 text-[10px] px-2 gap-1 shadow-sm ${path.is_public ? 'bg-white/90 text-green-700' : 'bg-red-100 text-red-700'}`}
                                     onClick={(e) => toggleVisibility(e, path)}
                                     disabled={togglingId === path.id}
                                 >
@@ -318,11 +235,11 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
                                     )}
                                 </Button>
                             </TooltipTrigger>
-                            <TooltipContent><p>Click to make {path.is_public ? "Private" : "Public"}</p></TooltipContent>
+                            <TooltipContent><p>Switch to {path.is_public ? "Private" : "Public"}</p></TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
                 ) : (
-                    <Badge variant={path.is_public ? "default" : "secondary"} className="shadow-sm gap-1 cursor-default">
+                    <Badge variant={path.is_public ? "default" : "secondary"} className="shadow-sm gap-1">
                         {path.is_public ? <Globe className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
                         {path.is_public ? "Public" : "Private"}
                     </Badge>
@@ -345,14 +262,10 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
             </div>
             <Button 
                 variant="ghost" size="icon" 
-                className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:bg-destructive/10"
+                className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 text-destructive"
                 onClick={(e) => {
                     e.stopPropagation();
-                    if (isSavedView) {
-                        handleDeleteFavorite(path.id); // Funzione diretta per i preferiti
-                    } else {
-                        setPathToDelete(path); // Apre il Dialog per il percorso creato da te
-                    }
+                    isSavedView ? handleDeleteFavorite(path.id) : setPathToDelete(path);
                 }}
             >
                 {isSavedView ? <Heart className="w-4 h-4 fill-current" /> : <Trash2 className="w-4 h-4" />}
@@ -372,7 +285,6 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
         </div>
         
         <div className="flex items-center gap-3 w-full sm:w-auto">
-             {/* SORT DROPDOWN */}
              <Select value={sortOption} onValueChange={setSortOption}>
                 <SelectTrigger className="w-[180px]">
                     <ArrowUpDown className="w-4 h-4 mr-2 text-muted-foreground" />
@@ -385,20 +297,19 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
                     <SelectItem value="dist_asc">Distance: Shortest</SelectItem>
                 </SelectContent>
             </Select>
-
             <Button onClick={() => navigate("/app/record")} className="gap-2 shadow-lg"><Plus className="w-4 h-4" /> New</Button>
         </div>
       </div>
 
       <Tabs defaultValue="created" className="space-y-6">
         <TabsList>
-            <TabsTrigger value="created">Created by me ({createdPaths.length})</TabsTrigger>
+            <TabsTrigger value="created">Created ({createdPaths.length})</TabsTrigger>
             <TabsTrigger value="saved">Saved ({savedPaths.length})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="created" className="space-y-6">
             {createdPaths.length === 0 ? (
-                <div className="text-center py-20 bg-muted/20 rounded-xl border border-dashed"><p className="text-muted-foreground">You haven't created any paths yet.</p></div>
+                <div className="text-center py-20 bg-muted/20 rounded-xl border border-dashed"><p className="text-muted-foreground">No paths created yet.</p></div>
             ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {getSortedPaths(createdPaths).map(path => <PathCard key={path.id} path={path} isSavedView={false} />)}
@@ -420,82 +331,50 @@ setTogglingId(pendingPathToPublic.id); // Mostra loading sulla card
         </TabsContent>
       </Tabs>
        
-    {/* --- CONFLICT DIALOG (PRIVATE -> PUBLIC) --- */}
-      <AlertDialog open={showConflictDialog} onOpenChange={(open) => {
-          if (!open) handleKeepPrivate(); // Chiudendo dall'esterno equivale a "Keep Private"
-      }}>
+      {/* CONFLICT DIALOG */}
+      <AlertDialog open={showConflictDialog} onOpenChange={(open) => !open && handleKeepPrivate()}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2 text-amber-600">
-               <AlertTriangle className="w-5 h-5" /> Duplicate Path Detected
+               <AlertTriangle className="w-5 h-5" /> Duplicate Detected
             </AlertDialogTitle>
             <AlertDialogDescription>
-              We found an existing public path <strong>"{conflictPath?.name}"</strong> that matches your route perfectly.
-              <br /><br />
-              To maintain a clean leaderboard, <strong>we do not allow duplicate public paths</strong>.
-              You can merge your activity into the existing leaderboard, or keep your path private.
+              A public path <strong>"{conflictPath?.name}"</strong> matches your route. Duplicate public paths are not allowed.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          
           <div className="flex flex-col gap-3 my-2">
-             {/* Opzione 1: Merge (Action) */}
-             <button 
-                onClick={handleMerge}
-                className="flex items-center gap-3 p-3 rounded-lg border border-emerald-200 bg-emerald-50 dark:bg-emerald-950/20 dark:border-emerald-900 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors text-left group"
-             >
-                <div className="bg-emerald-200 dark:bg-emerald-800 p-2 rounded-full group-hover:scale-110 transition-transform">
-                    <Merge className="w-4 h-4 text-emerald-800 dark:text-emerald-100" />
-                </div>
+             <button onClick={handleMerge} className="flex items-center gap-3 p-3 rounded-lg border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 transition-colors text-left group">
+                <Merge className="w-4 h-4 text-emerald-800" />
                 <div>
-                    <p className="font-bold text-sm text-foreground">Merge & Delete Mine</p>
+                    <p className="font-bold text-sm">Merge & Delete Mine</p>
                     <p className="text-xs text-muted-foreground">Join the existing leaderboard. Your private path will be removed.</p>
                 </div>
              </button>
-
-             {/* Opzione 2: Keep Private (Passive/Cancel) */}
-             <button 
-                onClick={handleKeepPrivate}
-                className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors text-left group"
-             >
-                <div className="bg-muted p-2 rounded-full group-hover:bg-gray-300 dark:group-hover:bg-gray-700 transition-colors">
-                    <Lock className="w-4 h-4 text-muted-foreground" />
-                </div>
+             <button onClick={handleKeepPrivate} className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors text-left group">
+                <Lock className="w-4 h-4 text-muted-foreground" />
                 <div>
-                    <p className="font-bold text-sm text-foreground">Keep Private</p>
+                    <p className="font-bold text-sm">Keep Private</p>
                     <p className="text-xs text-muted-foreground">Cancel publication. Only you can see this path.</p>
                 </div>
              </button>
           </div>
-
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleKeepPrivate}>Cancel</AlertDialogCancel>
-          </AlertDialogFooter>
+          <AlertDialogFooter><AlertDialogCancel onClick={handleKeepPrivate}>Cancel</AlertDialogCancel></AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
       
-        {/* --- CONFIRM DELETE DIALOG --- */}
-        <AlertDialog open={!!pathToDelete} onOpenChange={(open) => !open && setPathToDelete(null)}>
+      {/* DELETE DIALOG */}
+      <AlertDialog open={!!pathToDelete} onOpenChange={(open) => !open && setPathToDelete(null)}>
         <AlertDialogContent>
             <AlertDialogHeader>
                 <AlertDialogTitle>Delete Path?</AlertDialogTitle>
-                <AlertDialogDescription>
-                    Are you sure you want to delete <strong>"{pathToDelete?.name}"</strong>? 
-                    This will permanently remove the path and all its associated data. This action cannot be undone.
-                </AlertDialogDescription>
+                <AlertDialogDescription>Are you sure? This permanently removes <strong>"{pathToDelete?.name}"</strong> and all its data.</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction 
-                    onClick={confirmDeletePath} 
-                    className="bg-red-600 hover:bg-red-700"
-                >
-                    Delete
-                </AlertDialogAction>
+                <AlertDialogAction onClick={confirmDeletePath} className="bg-red-600 hover:bg-red-700">Delete</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
-        </AlertDialog>
-
-
+      </AlertDialog>
     </div>
   );
 };
