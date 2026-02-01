@@ -1,3 +1,4 @@
+
 The codebase is engineered to promote modularity and scalability, ensuring that individual components can be updated or reused without compromising the integrity of the entire system. A strict separation of concerns has been enforced by organizing the project into distinct directories, effectively decoupling UI elements, business logic, and external service integrations. All core PWA source code is contained within the \texttt{src} directory, structured as follows:
 
 \begin{description}
@@ -7,3 +8,232 @@ The codebase is engineered to promote modularity and scalability, ensuring that 
     \item[Stores:] This directory houses global state management logic (e.g., via Zustand). Key files include \texttt{useAuthStore.ts} for authentication states and \texttt{useDebugStore.ts} for development-time performance monitoring.
     \item[Lib:] Dedicated to utility functions and service configurations. It includes \texttt{utils.ts} for shared helpers and specialized modules like \texttt{weatherService.ts}, which abstracts the logic for processing external meteorological data.
 \end{description}
+
+\section{Backend Logic and Database Functions}
+The backend logic is implemented using Supabase, leveraging PostgreSQL for data storage and spatial operations (PostGIS), and Edge Functions for complex computational logic. Below is a description of the key functions and triggers implemented.
+
+\subsubsection{Edge Functions}
+\begin{itemize}
+    \item \textbf{func\_path\_search:} 
+    This TypeScript-based Edge Function acts as the main entry point for the route search algorithm. It handles the API request containing origin and destination coordinates and invokes the database RPC \texttt{search\_best\_paths\_rpc} to retrieve candidate paths. 
+    Crucially, it implements a ranking algorithm that sorts results based on a composite score derived from:
+    \begin{itemize}
+        \item \textbf{Geometric Quality:} Derived from the spatial match score (exponential decay).
+        \item \textbf{Data Freshness:} Penalizing paths that haven't been updated recently (time-decay factor).
+        \item \textbf{Path Status:} Weighting paths classified as "optimal" higher than those with "sufficient" or "bad" conditions.
+    \end{itemize}
+    \textbf{Code:}
+    \begin{lstlisting} 
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    };
+
+    Deno.serve(async (req) => {
+    if (req.method === "OPTIONS") {
+        return new Response("ok", { headers: corsHeaders });
+    }
+
+    try {
+        const supabaseClient = createClient(
+        Deno.env.get("SUPABASE_URL") ?? "",
+        Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+        {
+            global: {
+            headers: { Authorization: req.headers.get("Authorization")! },
+            },
+        }
+        );
+
+        const { origin_lat, origin_lon, dest_lat, dest_lon } = await req.json();
+
+        const { data: candidates, error } = await supabaseClient.rpc(
+        "search_best_paths_rpc",
+        { origin_lat, origin_lon, dest_lat, dest_lon, buffer_meters: 20000}
+        );
+
+        if (error) throw error;
+
+        if (!candidates || candidates.length === 0) {
+        return new Response(JSON.stringify([]), { 
+            headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        });
+        }
+
+        const rankedPaths = candidates.map((path: any) => {
+        // Geometric Quality: exp(-0.001 * x)
+        let geo_match_score = 0;
+        if(path.geo_match_score >= path.geo_match_score_rev){
+            geo_match_score = path.geo_match_score_rev;
+        }else{
+            geo_match_score = path.geo_match_score;
+        }
+        const geometricQuality = Math.exp(-0.001 * geo_match_score);
+
+        // Days since last status update 
+        const daysSinceUpdate = (new Date().getTime() - new Date(path.last_update).getTime()) / (1000 * 3600 * 24);
+        // Every 30 days the score lost 10% of his value 
+        const freshnessFactor = Math.exp(-0.003 * daysSinceUpdate);
+
+        let ratingStatus = 0;
+        switch (path.status) {
+            case "optimal": ratingStatus = 1; break;
+            case "good": ratingStatus = 0.8; break;
+            case "sufficient": ratingStatus = 0.6; break;
+            default: ratingStatus = 0.3;
+        }
+
+        const finalScore = ((geometricQuality * 0.4) + (ratingStatus * freshnessFactor * 0.6))*100;
+
+        return {
+            ...path,
+            score: finalScore,
+        };
+        });
+        
+        rankedPaths.sort((a: any, b: any) => b.score - a.score);
+
+        return new Response(JSON.stringify(rankedPaths.slice(0, 10)), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+        });
+
+    } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+        });
+    }
+    });
+    \end{lstlisting}
+\end{itemize}
+
+\subsubsection{Database Functions (RPCs)}
+\begin{itemize}
+    \item \textbf{check\_path\_similarity:} 
+    A PostGIS spatial function designed to prevent the creation of duplicate paths. Before saving a new route, this function compares the geometry of the new activity against existing paths using the \textbf{Fréchet distance} and length tolerance. If a matching path is found (within the specified tolerance meters), the system associates the activity with the existing path instead of creating a new one. \\
+    \textbf{Code:}
+    \begin{lstlisting}
+    DECLARE
+        new_geom GEOMETRY;
+        new_len FLOAT;
+    BEGIN
+        new_geom := ST_SetSRID(ST_GeomFromText(new_geom_wkt), 4326);
+        new_len := ST_Length(new_geom::geography);
+
+        RETURN QUERY
+        SELECT 
+            p.id,
+            p.name,
+            p.description, 
+            p.id_owner,    
+            p.is_public,
+            ST_FrechetDistance(
+                ST_Transform(p.geom::geometry, 3857), 
+                ST_Transform(new_geom, 3857)
+            ) as similarity_score
+        FROM 
+            paths p
+        WHERE 
+            p.geom IS NOT NULL
+            AND (p.is_public = true OR p.id_owner = auth.uid()) 
+            AND ABS(ST_Length(p.geom::geography) - new_len) < (new_len * length_tolerance_pct)
+            AND ST_DWithin(p.geom::geography, new_geom::geography, tolerance_meters * 2)
+            AND ST_FrechetDistance(ST_Transform(p.geom::geometry, 3857), ST_Transform(new_geom, 3857)) < tolerance_meters
+        ORDER BY similarity_score ASC
+        LIMIT 5; 
+    END;
+    \end{lstlisting}
+
+    \item \textbf{get\_path\_community\_usage:} 
+    A utility function that calculates the popularity of a specific path. It counts the number of distinct users (excluding the current requester) who have recorded activities on that path, providing a metric for community usage. \\
+    \textbf{Code:}
+    \begin{lstlisting}
+    DECLARE
+    usage_count int;
+    BEGIN
+    IF p_path_id IS NULL THEN
+        RETURN 0;
+    END IF;
+
+    SELECT count(distinct user_id)
+    INTO usage_count
+    FROM activities
+    WHERE path_id = p_path_id
+    AND user_id != auth.uid(); 
+    END;
+    \end{lstlisting}
+    
+    \item \textbf{search\_best\_paths\_rpc:} 
+    The core spatial query invoked by the Edge Function. It utilizes PostGIS functions (such as \texttt{ST\_DWithin} and \texttt{ST\_Distance}) to efficiently query the \texttt{paths} table. It identifies all public or user-owned paths that spatially connect the requested origin and destination points within a 20km buffer, calculating the geometric match score for both forward and reverse directions. \\
+    \textbf{Code:}
+    \begin{lstlisting}
+    DECLARE
+        origin_pt geography;
+        dest_pt geography;
+    BEGIN
+        origin_pt := ST_SetSRID(ST_MakePoint(origin_lon, origin_lat), 4326)::geography;
+        dest_pt := ST_SetSRID(ST_MakePoint(dest_lon, dest_lat), 4326)::geography;
+
+        RETURN QUERY
+        SELECT 
+        p.id, p.name, p.status, p.last_update,
+        (
+            ST_Distance(ST_StartPoint(p.geom)::geography, origin_pt) +
+            ST_Distance(ST_EndPoint(p.geom)::geography, dest_pt)
+        )::float8 as geo_match_score,
+        (
+            ST_Distance(ST_StartPoint(p.geom)::geography, dest_pt) +
+            ST_Distance(ST_EndPoint(p.geom)::geography, origin_pt)
+        )::float8 as geo_match_score_rev
+        FROM public.paths p
+        WHERE 
+        (
+            p.is_public IS TRUE OR p.id_owner = auth.uid()
+        )
+        AND
+        (
+            (
+            ST_DWithin(ST_StartPoint(p.geom)::geography, origin_pt, buffer_meters)
+            AND
+            ST_DWithin(ST_EndPoint(p.geom)::geography, dest_pt, buffer_meters)
+            )
+            OR 
+            (
+            ST_DWithin(ST_StartPoint(p.geom)::geography, dest_pt, buffer_meters)
+            AND
+            ST_DWithin(ST_EndPoint(p.geom)::geography, origin_pt, buffer_meters)
+            )
+        );
+    END;
+    \end{lstlisting}
+\end{itemize}
+
+\subsubsection{Database Triggers}
+\begin{itemize}
+    \item \textbf{before\_insert\_set\_last\_update:} 
+    Ensures data consistency by automatically initializing the \texttt{last\_update} timestamp to the record's creation time (\texttt{created\_at}) upon insertion. \\
+    \textbf{Code:}
+    \begin{lstlisting}
+    BEGIN
+    NEW.last_update := NEW.created_at;
+    RETURN NEW;
+    END;
+    \end{lstlisting}
+
+    \item \textbf{set\_last\_update\_after\_status\_update:} 
+    Monitors changes to the \texttt{status} column of a path. Whenever the status is modified (e.g., from "good" to "bad"), this trigger automatically refreshes the \texttt{last\_update} timestamp to \texttt{now()}, ensuring the "Data Freshness" score in the search algorithm remains accurate. \\
+    \textbf{Code:}
+    \begin{lstlisting}
+    BEGIN
+    IF OLD.status IS DISTINCT FROM NEW.status THEN
+        UPDATE public.paths
+        SET last_update = now()
+        WHERE id = NEW.id;
+    END IF;
+    RETURN NEW;
+    END;
+    \end{lstlisting}
+\end{itemize}

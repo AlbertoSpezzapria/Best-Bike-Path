@@ -28,6 +28,32 @@
     frame=single
 }
 
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Definizione stile Clean / Bianco e Nero
+\lstdefinestyle{cleanstyle}{
+    backgroundcolor={},             % Nessun colore di sfondo
+    commentstyle=\itshape,          % Commenti in corsivo
+    keywordstyle=\bfseries,         % Keyword in grassetto (es. if, while, SELECT)
+    numberstyle={},                 % Nessuno stile per i numeri (per sicurezza)
+    stringstyle=\ttfamily,          % Stringhe normali
+    basicstyle=\ttfamily\footnotesize, % Font monospaziato
+    breakatwhitespace=false,         
+    breaklines=true,                % A capo automatico
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=none,                   % DISABILITA I NUMERI DI RIGA
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single,                   % Aggiunge una cornice nera sottile (opzionale, rimuovilo se non ti piace)
+    rulecolor=\color{black}         % Colore della cornice
+}
+
+\lstset{style=cleanstyle}
+
 \begin{document}
 
 %TITLE PAGE
