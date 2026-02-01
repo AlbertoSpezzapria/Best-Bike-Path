@@ -356,6 +356,7 @@ const RecordTrip = () => {
                 geom: wktString,
                 hazards: hazards, 
                 status: "good", // Default status for new path
+                difficulty: "medium", // Default difficulty for new path
                 is_public: isForcedPrivate ? false : newPathForm.isPublic,
                 id_owner: currentUserId,
                 is_manual_setup: false
@@ -496,7 +497,7 @@ const RecordTrip = () => {
 
               {/* Start Overlay */}
               {!isTracking && livePath.length === 0 && (
-                 <div className="absolute inset-0 bg-background/40 z-[400] flex items-center justify-center pointer-events-none backdrop-blur-[2px]">
+                 <div className="absolute inset-0 bg-background/40 z-[10] flex items-center justify-center pointer-events-none backdrop-blur-[2px]">
                      <p className="bg-background/90 px-4 py-2 rounded-full text-sm font-medium shadow-lg border animate-pulse">
                         Press Play to start recording
                      </p>
@@ -504,7 +505,7 @@ const RecordTrip = () => {
               )}
 
               {/* Controls Overlay */}
-              <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center justify-end z-20 gap-4 pointer-events-none">
+              <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center justify-end z-50 gap-4 pointer-events-none">
                 <div className="pointer-events-auto flex gap-4 items-center">
                   {!isTracking ? (
                     <Button 
