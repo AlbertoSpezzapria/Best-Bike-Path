@@ -1,8 +1,8 @@
-PWD /Users/alepesa/Library/Mobile Documents/com~apple~CloudDocs/Università/2025-2026/Software Engineering 2/PesaventoSpezzapriaSuzani/IT/ATD
+PWD /Users/alberto/Developement/se2_project/IT/ATD
 INPUT /usr/local/texlive/2025/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT main.tex
+INPUT /Users/alberto/Developement/se2_project/IT/ATD/main.tex
 OUTPUT main.log
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
@@ -314,9 +314,6 @@ INPUT ./Files/4_documentation_code_quality.tex
 INPUT ./Files/4_documentation_code_quality.tex
 INPUT ./Files/4_documentation_code_quality.tex
 INPUT Files/4_documentation_code_quality.tex
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmr8t.vf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT ./Files/5_effort.tex
 INPUT ./Files/5_effort.tex
 INPUT ./Files/5_effort.tex
