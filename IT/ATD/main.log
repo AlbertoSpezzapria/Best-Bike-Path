@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  4 FEB 2026 23:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.8)  8 FEB 2026 17:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -583,37 +583,73 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
 Chapter 1.
-(./Files/1_introduction.tex)
+(./Files/1_introduction.tex
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 18.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Overfull \hbox (22.91177pt too wide) in paragraph at lines 21--22
+[]\T1/ptm/m/n/10.95 Specific fo-cus was placed on the \T1/lmtt/m/n/10.95 /Implementation \T1/ptm/m/n/10.95 folder for the source code and the \T1/lmtt/m/n/10.95 /DeliveryFolder
+ []
+
+
 
 [6
 
 
-]
+{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}])
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[7]
 Chapter 2.
 (./Files/2_installation_setup.tex)
 
-[7
+[8
 
 
 ]
 Chapter 3.
 (./Files/3_acceptance_test_cases.tex)
 
-[8
-
-
-]
-Chapter 4.
-(./Files/4_documentation_code_quality.tex)
-
 [9
 
 
 ]
+Chapter 4.
+(./Files/4_documentation_code_quality.tex
+
+[10
+
+
+]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[11])
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[12]
 Chapter 5.
 (./Files/5_effort.tex)
 
-[10
+[13
 
 
 ] (./main.aux)
@@ -622,21 +658,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 31CF1F66E49E9CD6F8EABF699225AA06;1296.
+(rerunfilecheck)             Checksum: F8597E432CF02670CCD06C9DB11785BB;3048.
  ) 
 Here is how much of TeX's memory you used:
- 15832 strings out of 473190
- 248492 string characters out of 5715800
- 656933 words of memory out of 5000000
- 38807 multiletter control sequences out of 15000+600000
- 586173 words of font info for 76 fonts, out of 8000000 for 9000
+ 15926 strings out of 473190
+ 249919 string characters out of 5715800
+ 662948 words of memory out of 5000000
+ 38870 multiletter control sequences out of 15000+600000
+ 596509 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,20n,98p,338b,616s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (10 pages, 46868 bytes).
+ 94i,20n,98p,553b,616s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (13 pages, 101188 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
- 94 compressed objects within 1 object stream
- 22 named destinations out of 1000 (max. 500000)
- 70 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 200 PDF objects out of 1000 (max. 8388607)
+ 173 compressed objects within 2 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 142 words of extra memory for PDF output out of 10000 (max. 10000000)
 
