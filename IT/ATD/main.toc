@@ -1,31 +1,30 @@
 \contentsline {section}{Table of Contents}{3}{table.caption.2}%
-\contentsline {section}{List of Figures}{4}{chapter*.3}%
-\contentsline {section}{List of Tables}{4}{chapter*.4}%
-\contentsline {chapter}{\numberline {1}{Introduction and Project Identification}}{6}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Purpose}{6}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Reviwed Project Identification}{6}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Source Code Repository}{6}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Reference Documents}{6}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Testing Team}{7}{section.1.5}%
-\contentsline {chapter}{\numberline {2}{Installation Setup}}{8}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Installation Procedure}{8}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Documentation Strengths}{8}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Critical Issues and Problems Encountered}{9}{section.2.3}%
-\contentsline {chapter}{\numberline {3}{Acceptance Test Cases and Results}}{10}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Manual Path Creation \& Constraints}{10}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Path Search Logic \& Ranking Transparency}{10}{section.3.2}%
-\contentsline {section}{\numberline {3.3}History \& Statistics Consistency}{11}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Data Persistence Anomaly}{11}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Summary of Issues}{11}{section.3.5}%
-\contentsline {chapter}{\numberline {4}{Documentation and Code Quality}}{12}{chapter.4}%
-\contentsline {section}{\numberline {4.1}RASD (Requirement Analysis and Specification Document)}{12}{section.4.1}%
-\contentsline {paragraph}{Strengths}{12}{section*.7}%
-\contentsline {paragraph}{Weaknesses}{12}{section*.8}%
-\contentsline {section}{\numberline {4.2}DD (Design Document)}{12}{section.4.2}%
-\contentsline {paragraph}{Strengths}{12}{section*.9}%
-\contentsline {paragraph}{Weaknesses }{13}{section*.10}%
-\contentsline {section}{\numberline {4.3}ITD (Implementation and Test Document)}{13}{section.4.3}%
-\contentsline {paragraph}{Strengths}{13}{section*.11}%
-\contentsline {paragraph}{Weaknesses}{13}{section*.12}%
-\contentsline {section}{\numberline {4.4}Presentation and Editorial Quality}{13}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Effort Spent}{15}{chapter.5}%
+\contentsline {section}{List of Tables}{4}{chapter*.3}%
+\contentsline {chapter}{\numberline {1}{Introduction and Project Identification}}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Purpose}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Reviwed Project Identification}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Source Code Repository}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Reference Documents}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Testing Team}{6}{section.1.5}%
+\contentsline {chapter}{\numberline {2}{Installation Setup}}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Installation Procedure}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Documentation Strengths}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Critical Issues and Problems Encountered}{8}{section.2.3}%
+\contentsline {chapter}{\numberline {3}{Acceptance Test Cases and Results}}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Manual Path Creation \& Constraints}{9}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Path Search Logic \& Ranking Transparency}{9}{section.3.2}%
+\contentsline {section}{\numberline {3.3}History \& Statistics Consistency}{10}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Data Persistence Anomaly}{10}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Summary of Issues}{10}{section.3.5}%
+\contentsline {chapter}{\numberline {4}{Documentation and Code Quality}}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}RASD (Requirement Analysis and Specification Document)}{11}{section.4.1}%
+\contentsline {paragraph}{Strengths}{11}{section*.6}%
+\contentsline {paragraph}{Weaknesses}{11}{section*.7}%
+\contentsline {section}{\numberline {4.2}DD (Design Document)}{11}{section.4.2}%
+\contentsline {paragraph}{Strengths}{11}{section*.8}%
+\contentsline {paragraph}{Weaknesses }{12}{section*.9}%
+\contentsline {section}{\numberline {4.3}ITD (Implementation and Test Document)}{12}{section.4.3}%
+\contentsline {paragraph}{Strengths}{12}{section*.10}%
+\contentsline {paragraph}{Weaknesses}{12}{section*.11}%
+\contentsline {section}{\numberline {4.4}Presentation and Editorial Quality}{12}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Effort Spent}{14}{chapter.5}%

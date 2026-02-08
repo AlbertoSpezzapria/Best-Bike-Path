@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1770587512.11941 "/Users/alberto/Developement/se2_project/IT/ATD/main.tex" "main.pdf" "main" 1770587512.70079 0
-  "/Users/alberto/Developement/se2_project/IT/ATD/main.tex" 1770586528.77773 4685 35afd774883e2ae3973d26ec5ca0519c ""
+["pdflatex"] 1770587674.83409 "/Users/alberto/Developement/se2_project/IT/ATD/main.tex" "main.pdf" "main" 1770587675.35646 0
+  "/Users/alberto/Developement/se2_project/IT/ATD/main.tex" 1770587674.09927 4622 dd5e7be8bda84984591f47eaebcd44f3 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -140,15 +140,13 @@
   "Files/5_effort.tex" 1770587511.9185 913 3619cc27bd9a3f04ebbb8741b2bb5b37 ""
   "Images/PolimiLogo.png" 1770243504.81792 9009 7e2f788c721025ccfc9d873928f74371 ""
   "commandsFile.tex" 1770243872.63926 2414 4f2fc4d463d3b5b268a92848e393d144 ""
-  "main.aux" 1770587512.64948 5325 f85c8d1fca6ba5e363973b7775727969 "pdflatex"
-  "main.lof" 1770587512.65038 100 4353d675f6b597e3aa3d5147c8369dec "pdflatex"
-  "main.lot" 1770587512.6504 388 27b7acd3dd1ea466b72d4c8d81cbb11e "pdflatex"
-  "main.out" 1770587512.65018 4723 d8a1846ef286f470e04e9991b0734371 "pdflatex"
-  "main.tex" 1770586528.77773 4685 35afd774883e2ae3973d26ec5ca0519c ""
-  "main.toc" 1770587512.65035 2431 56d52104e802b98145639c1ecd0e1bd2 "pdflatex"
+  "main.aux" 1770587675.30771 5222 31335589b8ea80ffcac74c7770018a46 "pdflatex"
+  "main.lot" 1770587675.30866 388 85a27ee8f0ef707299300bd7a9c85384 "pdflatex"
+  "main.out" 1770587675.30847 4597 3a88492a245db6cd5d71eb91671e47d8 "pdflatex"
+  "main.tex" 1770587674.09927 4622 dd5e7be8bda84984591f47eaebcd44f3 ""
+  "main.toc" 1770587675.30863 2370 024168e5224f30efd6edbc03f3f4ae48 "pdflatex"
   (generated)
   "main.aux"
-  "main.lof"
   "main.log"
   "main.lot"
   "main.out"
