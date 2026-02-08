@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  8 FEB 2026 22:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.7)  8 FEB 2026 22:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -681,21 +681,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 7BC85D8EB45D8E31967C85900E44E389;5058.
+(rerunfilecheck)             Checksum: D8A1846EF286F470E04E9991B0734371;4723.
  ) 
 Here is how much of TeX's memory you used:
- 15954 strings out of 473190
- 250150 string characters out of 5715800
+ 15949 strings out of 473190
+ 250044 string characters out of 5715800
  663015 words of memory out of 5000000
- 38882 multiletter control sequences out of 15000+600000
- 600956 words of font info for 87 fonts, out of 8000000 for 9000
+ 38879 multiletter control sequences out of 15000+600000
+ 596509 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,20n,98p,607b,616s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (15 pages, 122121 bytes).
+Output written on main.pdf (15 pages, 121917 bytes).
 PDF statistics:
- 267 PDF objects out of 1000 (max. 8388607)
- 235 compressed objects within 3 object streams
- 59 named destinations out of 1000 (max. 500000)
- 214 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 262 PDF objects out of 1000 (max. 8388607)
+ 230 compressed objects within 3 object streams
+ 58 named destinations out of 1000 (max. 500000)
+ 206 words of extra memory for PDF output out of 10000 (max. 10000000)
 

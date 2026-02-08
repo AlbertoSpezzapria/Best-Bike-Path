@@ -12,12 +12,11 @@
 \contentsline {section}{\numberline {2.2}Documentation Strengths}{8}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Critical Issues and Problems Encountered}{9}{section.2.3}%
 \contentsline {chapter}{\numberline {3}{Acceptance Test Cases and Results}}{10}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Acceptance Test Cases and Experimental Results}{10}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Manual Path Creation \& Constraints}{10}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Path Search Logic \& Ranking Transparency}{10}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}History \& Statistics Consistency}{11}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Data Persistence Anomaly}{11}{subsection.3.1.4}%
-\contentsline {subsection}{\numberline {3.1.5}Summary of Issues}{11}{subsection.3.1.5}%
+\contentsline {section}{\numberline {3.1}Manual Path Creation \& Constraints}{10}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Path Search Logic \& Ranking Transparency}{10}{section.3.2}%
+\contentsline {section}{\numberline {3.3}History \& Statistics Consistency}{11}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Data Persistence Anomaly}{11}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Summary of Issues}{11}{section.3.5}%
 \contentsline {chapter}{\numberline {4}{Documentation and Code Quality}}{12}{chapter.4}%
 \contentsline {section}{\numberline {4.1}RASD (Requirement Analysis and Specification Document)}{12}{section.4.1}%
 \contentsline {paragraph}{Strengths}{12}{section*.7}%

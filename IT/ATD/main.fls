@@ -309,10 +309,6 @@ INPUT ./Files/3_acceptance_test_cases.tex
 INPUT ./Files/3_acceptance_test_cases.tex
 INPUT ./Files/3_acceptance_test_cases.tex
 INPUT Files/3_acceptance_test_cases.tex
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT ./Files/4_documentation_code_quality.tex
 INPUT ./Files/4_documentation_code_quality.tex
 INPUT ./Files/4_documentation_code_quality.tex

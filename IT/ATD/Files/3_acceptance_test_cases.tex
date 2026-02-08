@@ -1,10 +1,8 @@
-\section{Acceptance Test Cases and Experimental Results}
-
 This chapter illustrates the results of the system validation phase. The tests were conducted by simulating real-world usage scenarios to verify functional compliance with initial requirements, interface usability, and the consistency of business logic.
 
 The following sections detail the discrepancies found between the \textit{Expected Behavior} and the \textit{Actual Behavior}.
 
-\subsection{Manual Path Creation \& Constraints}
+\section{Manual Path Creation \& Constraints}
 \textbf{Test Objective:} To evaluate the efficiency and ergonomics of the manual path creation process and the insertion of crowd-sourced data.
 
 \begin{itemize}
@@ -13,7 +11,7 @@ The following sections detail the discrepancies found between the \textit{Expect
     \item \textbf{Status Reporting:} The functionality for reporting road conditions (\textit{Status}) is correctly implemented, allowing the enrichment of the path with safety attributes.
 \end{itemize}
 
-\subsection{Path Search Logic \& Ranking Transparency}
+\section{Path Search Logic \& Ranking Transparency}
 \textbf{Test Objective:} To verify the visualization of search results and the transparency of the ranking algorithm ("Best Path").
 
 \begin{itemize}
@@ -22,7 +20,7 @@ The following sections detail the discrepancies found between the \textit{Expect
     \item \textbf{Missing Preview:} It is not possible to view the route on the map before starting the activity, limiting the user's ability to visually evaluate the proposed path.
 \end{itemize}
 
-\subsection{History \& Statistics Consistency}
+\section{History \& Statistics Consistency}
 \textbf{Test Objective:} To verify the persistence of historical data and the availability of post-activity metrics.
 
 \begin{itemize}
@@ -30,14 +28,14 @@ The following sections detail the discrepancies found between the \textit{Expect
     \item \textbf{Functional Limitation:} The only allowed interaction with a history item is restarting a new activity on the same path, without the possibility of consulting previous performance details.
 \end{itemize}
 
-\subsection{Data Persistence Anomaly}
+\section{Data Persistence Anomaly}
 \textbf{Test Objective:} To verify the correctness of the data lifecycle (Save/Discard activity).
 
 \begin{itemize}
     \item \textbf{Logic Error in Saving:} A functional defect was identified at the end of an activity. When the system requests confirmation to save data, the user's negative input (selecting "No") is ignored: the activity is archived in the \textit{History} regardless. This bug compromises local database consistency and violates the user's explicit choice.
 \end{itemize}
 
-\subsection{Summary of Issues}
+\section{Summary of Issues}
 The following table summarizes the critical issues identified during the acceptance testing phase.
 
 \begin{table}[h!]
