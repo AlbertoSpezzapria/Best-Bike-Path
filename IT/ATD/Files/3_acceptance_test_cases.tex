@@ -1,0 +1,55 @@
+\section{Acceptance Test Cases and Experimental Results}
+
+This chapter illustrates the results of the system validation phase. The tests were conducted by simulating real-world usage scenarios to verify functional compliance with initial requirements, interface usability, and the consistency of business logic.
+
+The following sections detail the discrepancies found between the \textit{Expected Behavior} and the \textit{Actual Behavior}.
+
+\subsection{Manual Path Creation \& Constraints}
+\textbf{Test Objective:} To evaluate the efficiency and ergonomics of the manual path creation process and the insertion of crowd-sourced data.
+
+\begin{itemize}
+    \item \textbf{Design Constraint \& Usability (150m Limit):} The system imposes a design constraint that limits the maximum distance between two consecutive nodes to 150 meters. While logically functional, this design choice significantly degrades the user experience (\textit{UX Friction}), forcing the operator to perform a high number of interactions to cover real geographical distances. The operation results in being slow and unintuitive.
+    \item \textbf{Input Handling (Touch Interaction):} An anomaly was detected in tactile interaction: selecting a point in the immediate vicinity of the last inserted node is interpreted by the system as a command to delete the existing node rather than as a new insertion or a null touch. This behavior increases the risk of accidental errors during mapping.
+    \item \textbf{Status Reporting:} The functionality for reporting road conditions (\textit{Status}) is correctly implemented, allowing the enrichment of the path with safety attributes.
+\end{itemize}
+
+\subsection{Path Search Logic \& Ranking Transparency}
+\textbf{Test Objective:} To verify the visualization of search results and the transparency of the ranking algorithm ("Best Path").
+
+\begin{itemize}
+    \item \textbf{System Opacity:} The system proposes a "Best Path" and selectable alternatives to the user but provides no visibility regarding the calculated numerical score (\textit{Score}) or the complete ranking of the analyzed paths. The user has no access to data justifying the selection of one path over another.
+    \item \textbf{Inference on Ranking Logic:} In the absence of visible scores, empirical observation of the results suggests that the algorithm prioritizes efficiency metrics (shortest time/distance) at the expense of safety. It was observed that the system tends to recommend short paths as the "Best Path" even in the presence of danger warnings ("Dangerous"), while safer but longer paths are penalized or relegated to secondary alternatives. This behavior appears to contradict the project's \textit{SafetyFirst} philosophy.
+    \item \textbf{Missing Preview:} It is not possible to view the route on the map before starting the activity, limiting the user's ability to visually evaluate the proposed path.
+\end{itemize}
+
+\subsection{History \& Statistics Consistency}
+\textbf{Test Objective:} To verify the persistence of historical data and the availability of post-activity metrics.
+
+\begin{itemize}
+    \item \textbf{Absence of Statistics:} The \textit{History} section is functionally limited regarding data analysis expectations. The system does not display essential metrics such as duration, average speed, or detailed timestamps of past activities.
+    \item \textbf{Functional Limitation:} The only allowed interaction with a history item is restarting a new activity on the same path, without the possibility of consulting previous performance details.
+\end{itemize}
+
+\subsection{Data Persistence Anomaly}
+\textbf{Test Objective:} To verify the correctness of the data lifecycle (Save/Discard activity).
+
+\begin{itemize}
+    \item \textbf{Logic Error in Saving:} A functional defect was identified at the end of an activity. When the system requests confirmation to save data, the user's negative input (selecting "No") is ignored: the activity is archived in the \textit{History} regardless. This bug compromises local database consistency and violates the user's explicit choice.
+\end{itemize}
+
+\subsection{Summary of Issues}
+The following table summarizes the critical issues identified during the acceptance testing phase.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|p{6cm}|l|}
+\hline
+\textbf{Functional Area} & \textbf{Issue Type} & \textbf{Description} & \textbf{Severity} \\ \hline
+Path Creation & Usability / Design & 150m constraint is overly limiting; Accidental point deletion error. & Medium \\ \hline
+Ranking & Transparency / Logic & Hidden Scores; Ranking appears to be based on duration rather than safety. & High \\ \hline
+History & Missing Feature & Performance statistics are not viewable. & Medium \\ \hline
+Persistence & Functional Bug & Activity is saved even if the user declines. & Low \\ \hline
+\end{tabular}
+\caption{Summary of Acceptance Test Results}
+\label{tab:test_results}
+\end{table}
