@@ -1,0 +1,39 @@
+This section describes the activities performed to install the \textit{Best Bike Paths} (BBP) system prototype and analyzes the overall experience, highlighting both the effectiveness of the instructions provided in the ITD document and the technical issues and gaps encountered.
+
+\section{Installation Procedure}
+
+The installation was executed by faithfully following the instructions reported in Chapter 6 of the ITD document. The environment was configured on a single machine hosting both the server and the client (via emulator), as suggested by the prerequisites.
+The procedure followed the indicated logical order:
+
+\begin{enumerate}
+    \item Configuration of the PostgreSQL database and the PostGIS extension.
+    \item Import of the schema and data via the \texttt{DatabaseDump.sql} file.
+    \item Startup of the Server component using the provided \texttt{.jar} executable.
+    \item Installation of the Android Client via drag-and-drop of the \texttt{.apk} file into the emulator.
+\end{enumerate}
+
+\section{Documentation Strengths}
+
+The analysis of the installation guide highlighted several positive aspects that facilitated the initial startup:
+
+\begin{itemize}
+    \item \textbf{Availability of Executables:} The provision of pre-compiled files \texttt{BestBikePathsServer.jar} and \texttt{BestBikePathsClient.apk} was fundamental. This allowed testing the system without necessarily having to recompile the entire source code, reducing potential build errors in the first instance.
+    \item \textbf{Logical Sequence:} The structure of Chapter 6 is well-organized, guiding the user through the application layers in the correct order (Database $\rightarrow$ Server $\rightarrow$ Client), which is essential to avoid connection errors during the first startup.
+    \item \textbf{Explicit Commands:} The commands provided for importing the database and starting the server (including flags to overwrite the default username and password) proved to be syntactically correct and functional.
+\end{itemize}
+
+\section{Critical Issues and Problems Encountered}
+
+Despite the logical structure, the installation phase proved to be significantly time-consuming and complex due to various incompatibilities and informational gaps:
+
+\begin{itemize}
+    \item \textbf{Software Compatibility Issues:} The use of different or older versions created conflicts that required time to resolve, forcing a non-trivial update or specific configuration of the environment.
+    \item \textbf{Missing Configuration Details:} Although the main commands are present, the guide tends to take prior knowledge of specific tools for granted, creating difficulties for users not expert with certain software:
+    \begin{itemize}
+        \item \textbf{Database Management:} The instructions for importing the SQL dump (\texttt{\textbackslash i 'path/to/file'}) lack details regarding potential file read permission issues or path handling on different operating systems, which often generate silent errors.
+        \item \textbf{External API Configuration:} For those wishing to compile the client, the instructions on API key management are too brief. It is indicated to insert them into the \texttt{local.properties} file, but no guide is provided on how to generate these keys or which specific SDKs to enable in the respective developer consoles, risking having an installed app with non-functional maps.
+    \end{itemize}
+    \item \textbf{Overall Setup Time:} Due to the aforementioned issues, the actual time required to obtain a functioning system was much higher than expected, turning what should have been a simple prototype installation into an execution environment debugging process.
+\end{itemize}
+
+In conclusion, the installation process proved to be \textbf{notably long and burdensome}. Although the documentation covers the necessary logical steps, the practical experience highlighted several points of friction due to software incompatibilities and a level of detail not always adequate for those approaching the ecosystem from scratch.

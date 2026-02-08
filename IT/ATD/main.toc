@@ -8,16 +8,19 @@
 \contentsline {section}{\numberline {1.4}Reference Documents}{6}{section.1.4}%
 \contentsline {section}{\numberline {1.5}Testing Team}{7}{section.1.5}%
 \contentsline {chapter}{\numberline {2}{Installation Setup}}{8}{chapter.2}%
-\contentsline {chapter}{\numberline {3}{Acceptance Test Cases and Results}}{9}{chapter.3}%
-\contentsline {chapter}{\numberline {4}{Documentation and Code Quality}}{10}{chapter.4}%
-\contentsline {section}{\numberline {4.1}RASD (Requirement Analysis and Specification Document)}{10}{section.4.1}%
-\contentsline {paragraph}{Strengths}{10}{section*.6}%
-\contentsline {paragraph}{Weaknesses}{10}{section*.7}%
-\contentsline {section}{\numberline {4.2}DD (Design Document)}{10}{section.4.2}%
-\contentsline {paragraph}{Strengths}{10}{section*.8}%
-\contentsline {paragraph}{Weaknesses }{11}{section*.9}%
-\contentsline {section}{\numberline {4.3}ITD (Implementation and Test Document)}{11}{section.4.3}%
-\contentsline {paragraph}{Strengths}{11}{section*.10}%
-\contentsline {paragraph}{Weaknesses}{11}{section*.11}%
-\contentsline {section}{\numberline {4.4}Presentation and Editorial Quality}{11}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Effort Spent}{13}{chapter.5}%
+\contentsline {section}{\numberline {2.1}Installation Procedure}{8}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Documentation Strengths}{8}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Critical Issues and Problems Encountered}{9}{section.2.3}%
+\contentsline {chapter}{\numberline {3}{Acceptance Test Cases and Results}}{10}{chapter.3}%
+\contentsline {chapter}{\numberline {4}{Documentation and Code Quality}}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}RASD (Requirement Analysis and Specification Document)}{11}{section.4.1}%
+\contentsline {paragraph}{Strengths}{11}{section*.6}%
+\contentsline {paragraph}{Weaknesses}{11}{section*.7}%
+\contentsline {section}{\numberline {4.2}DD (Design Document)}{11}{section.4.2}%
+\contentsline {paragraph}{Strengths}{11}{section*.8}%
+\contentsline {paragraph}{Weaknesses }{12}{section*.9}%
+\contentsline {section}{\numberline {4.3}ITD (Implementation and Test Document)}{12}{section.4.3}%
+\contentsline {paragraph}{Strengths}{12}{section*.10}%
+\contentsline {paragraph}{Weaknesses}{12}{section*.11}%
+\contentsline {section}{\numberline {4.4}Presentation and Editorial Quality}{12}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Effort Spent}{14}{chapter.5}%
